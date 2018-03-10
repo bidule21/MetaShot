@@ -17,11 +17,15 @@ MetaShot is designed to enhance the traditional approach to sighting a rifle. A 
 * Provide user ability to view past usage records
 
 ## User stories
-As a user, I want to view previous shots, so I can view my progression.
+
+
+As a user, I want to view previous shots, so I can view differences in days.
 * A graph is viewable for the three seconds before and after each shot has been fired.
+* The enviremental data is viewable.
+* The barrel tempature is viewable.
 
 As a user, I want to associate each shot with its accuracy on a target, so that I can determine if my scope needs adjusting.
-* a input field is available for each entry/shot made to take negative and positive values.
+* A input field is available for each entry/shot made to take negative and positive values.
 
 As a user, I want to store the enviremental variables for the current day, so that I can adjust my scope to accommodate the variables.
 * Input fields exist to allow user to manually enter enviremental variables.
