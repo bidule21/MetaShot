@@ -37,20 +37,21 @@ A Shot record contains
 * Graph of movement 3 seconds before and after shot. This could be an array of x,y,z values
 * Temperature of the barrel???
 * Target (x & y values)
+* Barrel tempature
 
 Technical Review
 =======
-Native android or Hybrid?
+Native android or Hybrid? (Native)
 
 * Hybrid would use ember, might be easier
 * Android would use Java, might give us better control, lab exercise to work off of.
 
-Do we want to support ads?
+Do we want to support ads? (Yes, low priority)
 
-Do we want to mine data?
+Do we want to mine data? (No)
 * Would require a Django API service
 
-Where are we going to store user data?
+Where are we going to store user data? (on device)
 * Do we store on device?
 * - Not sure how difficult
 * - Probably use sqllite, tutorial found
@@ -66,14 +67,15 @@ What Android API’s will we use
 * GPS
 * Weather API
 * BlueTooth
+* Local Storage
 
 What third party tool will we be using
 * Chart view
 
 What Meta Wear features will we use
-* Accelerometer + Gyroscope
-* Pressure (Barometer) ???
-* Temperature??? Barrel temperature
+* Accelerometer + Gyroscope (yes)
+* Pressure (Barometer) ??? (Maybe)
+* Temperature (Yes)
 
 Future Features If we have time
 ========
@@ -92,6 +94,7 @@ Hunting mode
 * Provide hunting related information such as sun rise and set times
 
 Web Page interface (might be possible if we store all data, and do a hybrid app)
+* We will collect user data and store it on the web
 
 Allow users to view there shooting/shot records online.
 * Would require us to store all data and credential management.
