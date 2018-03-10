@@ -12,6 +12,10 @@ Provide the user the ability to manually enter GPS, Weather, Description and sho
 
 Provide the user the ability to automatically populate the GPS and Weather
 
+Provide the user with recommended scope adjustments based on environmental factors
+
+* Provide the user with the ability to reset the scope after environmental adjustments (i.e.: revert to scope position prior to recommended environmental adjustments)
+
 Provide the user the ability to start the metawear recording of shots
 
 Provide the ability to create a shot record when the metawear identifies that a shot has been fired
@@ -52,8 +56,8 @@ Where are we going to store user data?
 * - Probably use sqllite, tutorial found
 * - Internal memory or SD card?
 * Store data on web
-* - Would require a Django API service 
-* - Would use ajax call, similar to the ad server attack lab. 
+* - Would require a Django API service
+* - Would use ajax call, similar to the ad server attack lab.
 * - Would make mining data easy
 * - Would tie user to be connected to the internet.
 * - Require account information
@@ -91,4 +95,3 @@ Web Page interface (might be possible if we store all data, and do a hybrid app)
 
 Allow users to view there shooting/shot records online.
 * Would require us to store all data and credential management.
-
