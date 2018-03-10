@@ -58,6 +58,8 @@ Sub component description here
 #### Barometer Sensor
 Sub component description here
 
+---
+
 ### Android Mobile Device
 Component 2 description here
 
@@ -70,11 +72,17 @@ Sub component description here
 #### Local Storage Medium
 Sub component description here
 
+---
+
 ### Ad Server
 Component 3 description here
 
+---
+
 ### Weather Server
 Component 4 description here
+
+---
 
 ## Security analysis
 Text describing high level diagram with red or other callouts identifying problem points or attacks.
