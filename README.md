@@ -11,9 +11,11 @@ MetaShot is designed to enhance the traditional approach to sighting a rifle. A 
 
 ## Project Goals
 * Create a harness for the MetaShot device to attach to a rifle scope
+* Develop native android app for recording, storing, and displaying data
+* Utilize internal storage API for storing data
 * Provide reliable recommendations for scope adjustment based on environmental factors
   - Recommendations based on expert/industry-standard research
-* etc
+* Provide user ability to view past usage records
 
 ## User stories
 As a user, I want to view the accelerometer data of my rifle before and after a shot has been fired, so I can focus on steadying my hand.
