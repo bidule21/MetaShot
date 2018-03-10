@@ -43,23 +43,38 @@ As an enviremental activist, I deploy a rogue bluetooth access point, so that ap
 ![Tooltip for visually disabled](./path-to-image-file.imgextension)
 
 ## Component List
-### Component 1 Name here
+### Metawear
 Component description here
 
-#### Sub-component 1.1 name here
+#### Accelerometer Sensor
 Sub component description here
 
-#### Sub-component 1.2 name here
+#### Gyroscope Sensor
 Sub component description here
 
-### Component 2 Name here
+#### Temperature Sensor
+Sub component description here
+
+#### Barometer Sensor
+Sub component description here
+
+### Android Mobile Device
 Component 2 description here
 
-#### Sub-component 2.1 name here
+#### Bluetooth LE
 Sub component description here
 
-#### Sub-component 2.2 name here
+#### GPS API
 Sub component description here
+
+#### Local Storage Medium
+Sub component description here
+
+### Ad Server
+Component 3 description here
+
+### Weather Server
+Component 4 description here
 
 ## Security analysis
 Text describing high level diagram with red or other callouts identifying problem points or attacks.
