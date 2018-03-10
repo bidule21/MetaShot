@@ -10,8 +10,9 @@ A likely reason is that special equipment is commonly used to sight in a rifle. 
 MetaShot is designed to enhance the traditional approach to sighting a rifle. A bench rest is still recommended as a first step to ensure the scope is accurately aligned. Then, MetaShot is attached. MetaShot leverages human error factors (such as pulling the rifle in one direction prior to firing) to further fine tune the sighting process and account for real-world situations. MetaShot also accounts for environmental variables (temperature, wind, etc.) and provides recommendations for scope adjustment. If the novice hunter was using MetaShot, he/she could have a trophy mount hanging above their fireplace.
 
 ## Project Goals
-* Bulleted list item 1
-* Bulleted list item 2
+* Create a harness for the MetaShot device to attach to a rifle scope
+* Provide reliable recommendations for scope adjustment based on environmental factors
+  - Recommendations based on expert/industry-standard research
 * etc
 
 ## User stories
