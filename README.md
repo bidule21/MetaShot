@@ -21,7 +21,7 @@ MetaShot is designed to enhance the traditional approach to sighting a rifle. A 
 
 As a user, I want to view previous shots, so I can view differences in days.
 * A graph of accelerometer data for a span of three seconds before and after the shot is viewable
-* The enviremental data is viewable.
+* The environmental data is viewable.
 * The barrel tempature is viewable.
 
 As a user, I want to associate each shot with its accuracy on a target, so that I can determine if my scope needs adjusting.
