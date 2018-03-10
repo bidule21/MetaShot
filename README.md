@@ -90,4 +90,7 @@ Text describing high level diagram with red or other callouts identifying proble
 
 | Component name | Category of vulnerability | Issue Description | Mitigation |
 |----------------|---------------------------|-------------------|------------|
-| Component 1 name | Privilege Escalation | This component exposes an interface | Sandboxing techniques|
+| Metawear | Rogue Access Point | A rogue access point could impersonate this component. | Functions sent by any device identified as Metawear will not be executed. |
+| Android Mobile Device | Unauthorized modification of locally stored data | Another app modifies locally stored MetaShot data. | I/O validation |
+| Ad Server | Cross-Site Scripting | Ad server sends JavaScript functions in payload. | Sanitize input from ad server. |
+| Weather Server | Cross-Site Scripting | Weather server send JavaScript functions in payload. | Sanitize input from weather server. |
