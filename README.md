@@ -21,19 +21,19 @@ As a user, I want to view previous shots, so I can view my progression.
 * A graph is viewable for the three seconds before and after each shot has been fired.
 
 As a user, I want to associate each shot with its accuracy on a target, so that I can determine if my scope needs adjusting.
-* a input field is available for each entry/shot made to take negative and positive values
+* a input field is available for each entry/shot made to take negative and positive values.
 
 As a user, I want to store the enviremental variables for the current day, so that I can adjust my scope to accommodate the variables.
-* Input fields exist to allow user to manually enter enviremental variables
-* A button exists to automatically input enviremental variables information
+* Input fields exist to allow user to manually enter enviremental variables.
+* A button exists to automatically input enviremental variables information.
 
 ## Misuser stories
 As an attacker, I want to Inject script through an ad server, so that i can steal user data.
-* sanitize all incoming ads for Cross-site Scripting
+* Sanitize all incoming ads for Cross-site Scripting.
 
 As an enviremental activist, I deploy a rogue bluetooth access point, so that app thinks that its connecting to the metashot.
-* ensure that we are connecting to metashot approved device
-* we will not execute any functions that are returned from the metashot device.
+* Ensure that we are connecting to metashot approved device.
+* We will not execute any functions that are returned from the metashot device.
 
 ## High Level Design
 ![Tooltip for visually disabled](./path-to-image-file.imgextension)
