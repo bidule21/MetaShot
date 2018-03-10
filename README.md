@@ -85,7 +85,7 @@ Component 4 description here
 ---
 
 ## Security analysis
-<img "src=https://www.lucidchart.com/publicSegments/view/9ef6d7c9-9bbc-4ee9-ae6e-42d66eacbda0/image.png">
+<img src="https://www.lucidchart.com/publicSegments/view/9ef6d7c9-9bbc-4ee9-ae6e-42d66eacbda0/image.png">
 ![Tooltip for visually disabled](./path-to-image-file.imgextension)
 
 | Diagram Mapping | Component Name | Category of Vulnerability | Issue Description | Mitigation |
