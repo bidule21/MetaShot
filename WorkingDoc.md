@@ -50,6 +50,7 @@ Where are we going to store user data?
 * Do we store on device?
 * - Not sure how difficult
 * - Probably use sqllite, tutorial found
+* - Internal memory or SD card?
 * Store data on web
 * - Would require a Django API service 
 * - Would use ajax call, similar to the ad server attack lab. 
