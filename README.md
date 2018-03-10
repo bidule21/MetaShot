@@ -27,19 +27,13 @@ As a user, I want to store the enviremental variables for the current day, so th
 * Input fields exist to allow user to manually enter enviremental variables
 * A button exists to automatically input enviremental variables information
 
-
-As a **user/role**, I want to **goal** so I can **rationale**.
-**Acceptance Criteria:**
-* Insert criteria 1 here
-* Insert criteria 2 here
-* etc.
-
 ## Misuser stories
-As a **misuser/misuser-role**, I want to **misuse goal** so I can **bad rationale**.
-**Mitigations:**
-* Mitigation technique 1 to be used goes here
-* Mitigation technique 2 to be used goes here
-* etc.
+As an attacker, I want to Inject script through an ad server, so that i can steal user data.
+* sanitize all incoming ads for Cross-site Scripting
+
+As an enviremental activist, I deploy a rogue bluetooth access point, so that app thinks that its connecting to the metashot.
+* ensure that we are connecting to metashot approved device
+* we will not execute any functions that are returned from the metashot device.
 
 ## High Level Design
 ![Tooltip for visually disabled](./path-to-image-file.imgextension)
