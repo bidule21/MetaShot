@@ -85,12 +85,12 @@ Component 4 description here
 ---
 
 ## Security analysis
-Text describing high level diagram with red or other callouts identifying problem points or attacks.
+<img "src=https://www.lucidchart.com/publicSegments/view/9ef6d7c9-9bbc-4ee9-ae6e-42d66eacbda0/image.png">
 ![Tooltip for visually disabled](./path-to-image-file.imgextension)
 
-| Component name | Category of vulnerability | Issue Description | Mitigation |
-|----------------|---------------------------|-------------------|------------|
-| Metawear | Rogue Access Point | A rogue access point could impersonate this component. | Functions sent by any device identified as Metawear will not be executed. |
-| Android Mobile Device | Unauthorized modification of locally stored data | Another app modifies locally stored MetaShot data. | I/O validation |
-| Ad Server | Cross-Site Scripting | Ad server sends JavaScript functions in payload. | Sanitize input from ad server. |
-| Weather Server | Cross-Site Scripting | Weather server send JavaScript functions in payload. | Sanitize input from weather server. |
+| Diagram Mapping | Component Name | Category of Vulnerability | Issue Description | Mitigation |
+|--------|----------------|---------------------------------|-------------------|------------|
+| 1 |  Metawear | Rogue Access Point | A rogue access point could impersonate this component. | Functions sent by any device identified as Metawear will not be executed. |
+| 2 | Android Mobile Device | Improper Data Validation | Unauthorized modification of locally stored data | I/O validation |
+| 3 | Ad Server | Cross-Site Scripting | Ad server sends JavaScript functions in payload. | Sanitize input from ad server. |
+| 4 | Weather Server | Cross-Site Scripting | Weather server send JavaScript functions in payload. | Sanitize input from weather server. |
