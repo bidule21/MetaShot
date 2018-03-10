@@ -40,7 +40,7 @@ As an enviremental activist, I deploy a rogue bluetooth access point, so that ap
 * We will not execute any functions that are returned from the metashot device.
 
 ## High Level Design
-![Tooltip for visually disabled]<img src="https://www.lucidchart.com/publicSegments/view/9c46c0a3-7a5c-454a-864a-e963f673ee68/image.png">
+![Tooltip for visually disabled]<img src="https://www.lucidchart.com/publicSegments/view/f299fef4-df7a-4128-8ee8-1a863f3d3661/image.png">
 
 ## Component List
 ### Metawear
