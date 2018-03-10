@@ -5,7 +5,7 @@ It's opening day of rifle season for deer hunting. A novice hunter sees a trophy
 
 A likely reason is that special equipment is commonly used to sight in a rifle. A bench rest is a piece of equipment that a rifle sets into for sighting purposes. The advantage of using a bench rest is the ability to eliminate human error as much as possible. This allows for tweaking a scope and sighting the rifle for perfect accuracy at a predetermined distance. The disadvantage of using a bench rest is diminishing human interaction with the rifle. When in the field, it is unlikely a hunter will use a bench rest. Therefore, no matter how accurately the rifle is sighted, human error can result in missing the perfect shot.
 
-<img src="./misc/img/zeroing-in_1_rest.jpg">Photo of a rifle bench rest used for sighting
+<img src="./misc/img/zeroing-in_1_rest.jpg">(Photo of a rifle bench rest used for sighting)
 
 MetaShot is designed to enhance the traditional approach to sighting a rifle. A bench rest is still recommended as a first step to ensure the scope is accurately aligned. Then, MetaShot is attached. MetaShot leverages human error factors (such as pulling the rifle in one direction prior to firing) to further fine tune the sighting process and account for real-world situations. MetaShot also accounts for environmental variables (temperature, wind, etc.) and provides recommendations for scope adjustment. If the novice hunter was using MetaShot, he/she could have a trophy mount hanging above their fireplace.
 
