@@ -44,43 +44,56 @@ As an enviremental activist, I deploy a rogue bluetooth access point, so that ap
 
 ## Component List
 ### Metawear
-Component description here
+* MeatMotionR+ is a motion tracking board that comes with Bluetooth, and ARM core, and various sensors.
+* This component records sensor data and sends the data over Bluetooth to another component.
 
 #### Accelerometer Sensor
-Sub component description here
+* This sensor measures acceleration (i.e.: the rate of change in velocity).
+* This subcomponent records rifle pull prior to firing a shot.
 
 #### Gyroscope Sensor
-Sub component description here
+* This sensor measures orientation.
+* This subcomponent records rifle kickback.
 
 #### Temperature Sensor
-Sub component description here
+* This sensor measures ambient temperature.
+* This subcomponent records rifle barrel temperature.
 
 #### Barometer Sensor
-Sub component description here
+* This sensor measures atmospheric pressure and altitude.
+* This subcomponent records atmospheric pressure and altitude of the shooter's current location.
 
 ---
 
 ### Android Mobile Device
-Component 2 description here
+* Samsung Galaxy S7
+  - Model Number: SM-G930P
+  - Android Version: Nougat
+* This component receives data from the Metawear, Ad Server, and Weather Server components.
+* The device displays and stores the data.
 
 #### Bluetooth LE
-Sub component description here
+* This subcomponent provides a means of communication between the Metawear and Android Mobile Device components.
 
 #### GPS API
-Sub component description here
+* This subcomponent is the android native GPS API.
+* This subcomponent is used for geotagging shooting records.
 
 #### Local Storage Medium
-Sub component description here
+* This subcomponent uses SQLite to create and store records in internal storage.
+* This subcomponent reads from and writes to an external SD card.
 
 ---
 
 ### Ad Server
-Component 3 description here
+* This component is a third party server that will retrieve and display ads.
 
 ---
 
 ### Weather Server
-Component 4 description here
+* This component is a third party server that retrieves weather data for a given location.
+  - The given location can be manually input or transmitted via GPS location.
+* This component records data to shooting records and provides live weather conditions for recommended scope adjustments.
 
 ---
 
