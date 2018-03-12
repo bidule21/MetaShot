@@ -27,17 +27,17 @@ As a user, I want to view previous shots, so I can view differences in days.
 As a user, I want to associate each shot with its accuracy on a target, so that I can determine if my scope needs adjusting.
 * An input field is available for each entry/shot made to take negative and positive values.
 
-As a user, I want to store the environmental variables for the current day, so that I can adjust my scope to accommodate the variables.
+As a user, I want to store the environmental variables for the current day, so that I can adjust my scope to accommodate for the variables.
 * Input fields exist to allow user to manually enter environmental variables.
-* A button exists to automatically input environmental variables information.
+* A button exists to automatically input environmental variables.
 
 ## Misuser stories
-As an attacker, I want to Inject script through an ad server, so that i can steal user data.
-* Sanitize all incoming ads for Cross-site Scripting.
+As an attacker, I want to inject a script through an ad server, so that I can steal user data.
+* We will sanitize all incoming ads to mitigate Cross-Site Scripting.
 
-As an environmental activist, I deploy a rogue Bluetooth access point, so that app thinks that its connecting to the Metashot.
-* Ensure that we are connecting to Metashot approved device.
-* We will not execute any functions that are returned from the Metashot device.
+As an environmental activist, I want to deploy a rogue Bluetooth access point, so that the app thinks it is connecting to the MetaShot device.
+* We will ensure mobile device is only connecting to MetaShot approved device.
+* We will not execute any functions that are returned from the MetaShot device.
 
 ## High Level Design
 ![Tooltip for visually disabled](https://www.lucidchart.com/publicSegments/view/f299fef4-df7a-4128-8ee8-1a863f3d3661/image.png)
