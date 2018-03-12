@@ -27,7 +27,7 @@ As a user, I want to view previous shots, so I can view differences in days.
 As a user, I want to associate each shot with its accuracy on a target, so that I can determine if my scope needs adjusting.
 * An input field is available for each entry/shot made to take negative and positive values.
 
-As a user, I want to store the enviremental variables for the current day, so that I can adjust my scope to accommodate the variables.
+As a user, I want to store the environmental variables for the current day, so that I can adjust my scope to accommodate the variables.
 * Input fields exist to allow user to manually enter environmental variables.
 * A button exists to automatically input environmental variables information.
 
