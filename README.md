@@ -25,26 +25,26 @@ As a user, I want to view previous shots, so I can view differences in days.
 * The barrel temperature is viewable.
 
 As a user, I want to associate each shot with its accuracy on a target, so that I can determine if my scope needs adjusting.
-* A input field is available for each entry/shot made to take negative and positive values.
+* An input field is available for each entry/shot made to take negative and positive values.
 
 As a user, I want to store the enviremental variables for the current day, so that I can adjust my scope to accommodate the variables.
-* Input fields exist to allow user to manually enter enviremental variables.
-* A button exists to automatically input enviremental variables information.
+* Input fields exist to allow user to manually enter environmental variables.
+* A button exists to automatically input environmental variables information.
 
 ## Misuser stories
 As an attacker, I want to Inject script through an ad server, so that i can steal user data.
 * Sanitize all incoming ads for Cross-site Scripting.
 
-As an enviremental activist, I deploy a rogue bluetooth access point, so that app thinks that its connecting to the metashot.
-* Ensure that we are connecting to metashot approved device.
-* We will not execute any functions that are returned from the metashot device.
+As an environmental activist, I deploy a rogue Bluetooth access point, so that app thinks that its connecting to the Metashot.
+* Ensure that we are connecting to Metashot approved device.
+* We will not execute any functions that are returned from the Metashot device.
 
 ## High Level Design
 ![Tooltip for visually disabled](https://www.lucidchart.com/publicSegments/view/f299fef4-df7a-4128-8ee8-1a863f3d3661/image.png)
 
 ## Component List
-### Metawear
-* MeatMotionR+ is a motion tracking board that comes with Bluetooth, and ARM core, and various sensors.
+### MetaWear
+* MetaMotionR+ is a motion tracking board that comes with Bluetooth, and ARM core, and various sensors.
 * This component records sensor data and sends the data over Bluetooth to another component.
 
 #### Accelerometer Sensor
@@ -69,11 +69,11 @@ As an enviremental activist, I deploy a rogue bluetooth access point, so that ap
 * Samsung Galaxy S7
   - Model Number: SM-G930P
   - Android Version: Nougat
-* This component receives data from the Metawear, Ad Server, and Weather Server components.
+* This component receives data from the MetaWear, Ad Server, and Weather Server components.
 * The device displays and stores the data.
 
 #### Bluetooth LE
-* This subcomponent provides a means of communication between the Metawear and Android Mobile Device components.
+* This subcomponent provides a means of communication between the MetaWear and Android Mobile Device components.
 
 #### GPS API
 * This subcomponent is the android native GPS API.
@@ -86,12 +86,12 @@ As an enviremental activist, I deploy a rogue bluetooth access point, so that ap
 ---
 
 ### Ad Server
-* This component is a third party server that will retrieve and display ads.
+* This component is a third-party server that will retrieve and display ads.
 
 ---
 
 ### Weather Server
-* This component is a third party server that retrieves weather data for a given location.
+* This component is a third-party server that retrieves weather data for a given location.
   - The given location can be manually input or transmitted via GPS location.
 * This component records data to shooting records and provides live weather conditions for recommended scope adjustments.
 
@@ -102,7 +102,7 @@ As an enviremental activist, I deploy a rogue bluetooth access point, so that ap
 
 | Diagram Mapping | Component Name | Category of Vulnerability | Issue Description | Mitigation |
 |--------|----------------|---------------------------------|-------------------|------------|
-| 1 |  Metawear | Rogue Access Point | A rogue access point could impersonate this component. | Functions sent by any device identified as Metawear will not be executed. |
+| 1 |  MetaWear | Rogue Access Point | A rogue access point could impersonate this component. | Functions sent by any device identified as MetaWear will not be executed. |
 | 2 | Android Mobile Device | Improper Data Validation | Unauthorized modification of locally stored data | I/O validation |
 | 3 | Ad Server | Cross-Site Scripting | Ad server sends JavaScript functions in payload. | Sanitize input from ad server. |
 | 4 | Weather Server | Cross-Site Scripting | Weather server send JavaScript functions in payload. | Sanitize input from weather server. |
