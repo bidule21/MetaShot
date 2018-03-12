@@ -1,4 +1,5 @@
-# MetaShot
+![logo](./misc/img/logo.png)
+<div>(Logo made with <a href="https://www.designevo.com/" title="Free Online Logo Maker">DesignEvo</a>)</div>
 
 ## Executive Summary
 It's opening day of rifle season for deer hunting. A novice hunter sees a trophy buck 100 yards out. The hunter spent months tweaking his/her scope settings to sight in their rifle at 100 yards. The hunter takes a deep breath and pulls the trigger. The shot misses, and the buck runs off. How did the shot miss when the rifle was accurately sighted?
