@@ -40,7 +40,7 @@ As an environmental activist, I want to deploy a rogue Bluetooth access point, s
 * We will not execute any functions that are returned from the MetaShot device.
 
 ## High Level Design
-![Tooltip for visually disabled](https://www.lucidchart.com/publicSegments/view/f299fef4-df7a-4128-8ee8-1a863f3d3661/image.png)
+![Tooltip for visually disabled](https://www.lucidchart.com/publicSegments/view/0a675a0f-6ce4-43f5-98fc-0a1f10ebfb77/image.png)
 
 ## Component List
 ### MetaWear
@@ -98,7 +98,7 @@ As an environmental activist, I want to deploy a rogue Bluetooth access point, s
 ---
 
 ## Security analysis
-![Tooltip for visually disabled](https://www.lucidchart.com/publicSegments/view/9ef6d7c9-9bbc-4ee9-ae6e-42d66eacbda0/image.png)
+![Tooltip for visually disabled](https://www.lucidchart.com/publicSegments/view/d4a249f9-782f-4444-b5ef-816b8e9e79dd/image.png)
 
 | Diagram Mapping | Component Name | Category of Vulnerability | Issue Description | Mitigation |
 |--------|----------------|---------------------------------|-------------------|------------|
