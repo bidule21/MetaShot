@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MetaShot</string>
+    <string name="shooting_new">Create New \nShooting Record</string>
+    <string name="shooting_view">View Previous \nShooting Record</string>
+    <string name="hunting_mode">Hunting Mode</string>
 </resources>
