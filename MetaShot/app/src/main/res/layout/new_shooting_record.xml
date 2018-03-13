@@ -6,7 +6,7 @@
     <include layout="@layout/logo" />
 
     <EditText
-        android:id="@+id/record-name"
+        android:id="@+id/recordName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/logo"
@@ -16,64 +16,64 @@
         android:text="Name of Record" />
 
     <Button
-        android:id="@+id/autofill-gps-location"
+        android:id="@+id/autofillGpsLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/record-name"
+        android:layout_below="@id/recordName"
         android:layout_centerHorizontal="true"
         android:text="@string/autofill_GPS_location" />
 
     <EditText
-        android:id="@+id/gps-manual"
+        android:id="@+id/gpsManual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/autofill-gps-location"
+        android:layout_below="@id/autofillGpsLocation"
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:inputType="text"
         android:text="GPS Location" />
 
     <EditText
-        android:id="@+id/weather-manual"
+        android:id="@+id/weatherManual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gps-manual"
+        android:layout_below="@id/gpsManual"
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:inputType="text"
         android:text="Weather" />
 
     <Spinner
-        android:id="@+id/weapon-select"
+        android:id="@+id/weaponSelect"
         android:spinnerMode="dropdown"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/weather-manual"
+        android:layout_below="@id/weatherManual"
         android:layout_centerHorizontal="true" />
 
     <EditText
-        android:id="@+id/other-details"
+        android:id="@+id/otherDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/weapon-select"
+        android:layout_below="@id/weaponSelect"
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:inputType="textMultiLine"
         android:text="Other Details"/>
 
     <Button
-        android:id="@+id/new-shooting-cancel"
+        android:id="@+id/newShootingCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/other-details"
-        android:layout_toLeftOf="@+id/new-shooting-create"
+        android:layout_below="@id/otherDetails"
+        android:layout_toLeftOf="@+id/newShootingCreate"
         android:text="@string/cancel" />
 
     <Button
-        android:id="@+id/new-shooting-create"
+        android:id="@+id/newShootingCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/other-details"
+        android:layout_below="@id/otherDetails"
         android:layout_alignParentRight="true"
         android:text="@string/create" />
 </RelativeLayout>
