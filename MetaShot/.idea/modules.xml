@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/MetaShot.iml" filepath="$PROJECT_DIR$/MetaShot.iml" />
       <module fileurl="file://$PROJECT_DIR$/adservicelib/adservicelib.iml" filepath="$PROJECT_DIR$/adservicelib/adservicelib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/interfacelib/interfacelib.iml" filepath="$PROJECT_DIR$/interfacelib/interfacelib.iml" />
       <module fileurl="file://$PROJECT_DIR$/metawearlib/metawearlib.iml" filepath="$PROJECT_DIR$/metawearlib/metawearlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/servicelib/servicelib.iml" filepath="$PROJECT_DIR$/servicelib/servicelib.iml" />
     </modules>
