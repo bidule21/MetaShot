@@ -12,17 +12,26 @@ public class GunRecord implements IGun {
 
     private String _gunName;
 
+    private String _details;
+
     @Override
     public int id() {
         return _id;
     }
-
     public void setId(int id) {
         _id = id;
     }
 
     @Override
-    public String GunName() {
+    public String details() {
+        return _details;
+    }
+    public void setDetails(String details){
+        _details = details;
+    }
+
+    @Override
+    public String gunName() {
         return _gunName;
     }
 

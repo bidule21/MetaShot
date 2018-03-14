@@ -7,5 +7,7 @@ package com.andersonlucier.android.servicelib.interfaces.shooting;
 public interface IGun {
     int id();
 
-    String GunName();
+    String gunName();
+
+    String details();
 }

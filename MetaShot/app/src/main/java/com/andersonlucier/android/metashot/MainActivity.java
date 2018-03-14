@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.landing_page);
 
         Service service = new Service();
-        ShootingRecord shooting = service.getShootingRecordById();
+        ShootingRecord shooting = service.getShootingRecordById(1);
         Log.d("attempt", shooting.description());
     }
 }

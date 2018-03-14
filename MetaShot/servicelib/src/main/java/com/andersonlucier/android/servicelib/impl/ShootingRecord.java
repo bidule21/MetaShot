@@ -12,6 +12,8 @@ import java.util.List;
 public class ShootingRecord implements IShooting {
     private int _id;
 
+    private String _title;
+
     private Date _datetime;
 
     private double _lat;
@@ -36,6 +38,14 @@ public class ShootingRecord implements IShooting {
     }
     public void setId(int id) {
         _id = id;
+    }
+
+    @Override
+    public String title() {
+        return _title;
+    }
+    public void setTitle(String title) {
+        _title = title;
     }
 
     @Override

@@ -11,6 +11,8 @@ public interface IShooting {
 
     int Id();
 
+    String title();
+
     Date datetime();
 
     double lat();
