@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".NewShootingRecord" />
-        <activity android:name=".WeaponInventory"></activity>
+        <activity android:name=".WeaponInventory" />
+        <activity android:name=".WeaponInventory_AddWeapon"></activity>
     </application>
 
 </manifest>
