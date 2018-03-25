@@ -64,7 +64,7 @@ public class NewShootingRecord extends AppCompatActivity {
 
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.autofillGpsLocation:
+            /*case R.id.autofillGpsLocation:
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                     locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -91,7 +91,7 @@ public class NewShootingRecord extends AppCompatActivity {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_LOCATION_PERMISSIONS);
                 }
 
-                break;
+                break;*/
             case R.id.newShootingCreate:
                 if (recordName.getText().length() == 0) {
                     recordName.setText(R.string.recordNameDefault);
