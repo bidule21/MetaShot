@@ -1,13 +1,18 @@
 <resources>
     <string name="app_name">MetaShot</string>
-    <!-- buttons -->
+    <!-- ALL BUTTONS -->
+    <!-- landing page buttons -->
     <string name="shooting_new">Create New \nShooting Record</string>
     <string name="shooting_view">View Previous \nShooting Record</string>
     <string name="inventory">View/Edit Weapon \nInventory</string>
     <string name="hunting_mode">Hunting Mode \n(Coming Soon)</string>
+    <!-- create new shooting record buttons -->
     <string name="autofill_GPS_location">Autofill GPS Location \nand Weather</string>
     <string name="cancel">Cancel</string>
     <string name="create">Create</string>
+    <!-- weapon inventory buttons -->
+    <string name="addWeapon">Add Weapon</string>
+
     <!-- Input field hints -->
     <string name="recordNameHint">Name of Record</string>
     <string name="gpsHint">GPS Location</string>
@@ -16,6 +21,7 @@
     <string name="recordNameDefault">Default</string>
     <!-- Text Labels -->
     <string name="weaponSpinnerLabel">Select a\nweapon:</string>
+    <string name="inventoryHeader">Weapon Inventory:</string>
     <!-- Weapon Select Spinner -->
     <string-array name="weaponSelect">
         <item>Weapon Select</item>
