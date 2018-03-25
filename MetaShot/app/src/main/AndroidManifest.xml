@@ -3,6 +3,7 @@
     package="com.andersonlucier.android.metashot">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
@@ -19,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewShootingRecord"></activity>
+        <activity android:name=".NewShootingRecord" />
+        <activity android:name=".WeaponInventory"></activity>
     </application>
 
 </manifest>
