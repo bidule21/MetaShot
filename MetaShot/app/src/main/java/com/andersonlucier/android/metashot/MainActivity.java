@@ -25,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.newRecord:
                 startActivity(new Intent(MainActivity.this, NewShootingRecord.class));
+                break;
+            case R.id.viewRecord:
+                break;
+            case R.id.weaponInventory:
+                break;
         }
     }
 }
