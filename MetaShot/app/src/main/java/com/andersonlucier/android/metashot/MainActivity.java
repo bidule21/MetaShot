@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.viewRecord:
                 break;
             case R.id.weaponInventory:
+                startActivity(new Intent(MainActivity.this, WeaponInventory.class));
                 break;
         }
     }
