@@ -19,6 +19,7 @@
     <string name="weatherHint">Weather</string>
     <string name="detailsHint">Other Details</string>
     <string name="recordNameDefault">Default</string>
+    <string name="nicknameHint">Weapon Nickname</string>
     <!-- Text Labels -->
     <string name="weaponSpinnerLabel">Select a\nweapon:</string>
     <string name="inventoryHeader">Weapon Inventory:</string>
