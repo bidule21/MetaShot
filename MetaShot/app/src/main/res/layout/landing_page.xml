@@ -24,6 +24,7 @@
         android:layout_marginTop="30dp"
         android:layout_below="@id/newRecord"
         android:layout_centerHorizontal="true"
+        android:onClick="onClick"
         android:text="@string/shooting_view" />
 
     <Button
@@ -33,6 +34,7 @@
         android:layout_marginTop="30dp"
         android:layout_below="@id/viewRecord"
         android:layout_centerHorizontal="true"
+        android:onClick="onClick"
         android:text="@string/inventory" />
 
     <Button

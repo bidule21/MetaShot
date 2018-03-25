@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/logo"
         android:layout_alignParentEnd="true"
+        android:onClick="onClick"
         android:text="@string/addWeapon"/>
 
     <ListView
