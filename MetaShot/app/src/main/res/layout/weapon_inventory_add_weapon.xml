@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/logo" />
+
+    <EditText
+        android:id="@+id/weaponNickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_below="@id/logo"
+        android:layout_centerHorizontal="true"
+        android:inputType="text"
+        android:hint="@string/nicknameHint" />
+
+    <EditText
+        android:id="@+id/weaponOtherDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_below="@id/weaponNickname"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:inputType="textMultiLine"
+        android:hint="@string/detailsHint"/>
+
+    <Button
+        android:id="@+id/addNewWeapon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/weaponOtherDetails"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:onClick="onClick"
+        android:text="@string/addWeapon" />
+
+</RelativeLayout>

@@ -9,28 +9,40 @@
     <include layout="@layout/logo" />
 
     <Button
-        android:id="@+id/new-record"
+        android:id="@+id/newRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/logo"
-        android:text="@+string/shooting_new" />
+        android:onClick="onClick"
+        android:text="@string/shooting_new" />
 
     <Button
-        android:id="@+id/view-record"
+        android:id="@+id/viewRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_below="@id/new-record"
+        android:layout_below="@id/newRecord"
         android:layout_centerHorizontal="true"
-        android:text="@+string/shooting_view" />
+        android:onClick="onClick"
+        android:text="@string/shooting_view" />
 
     <Button
-        android:id="@+id/hunting-mode"
+        android:id="@+id/weaponInventory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_below="@id/view-record"
+        android:layout_below="@id/viewRecord"
         android:layout_centerHorizontal="true"
-        android:text="@+string/hunting_mode" />
+        android:onClick="onClick"
+        android:text="@string/inventory" />
+
+    <Button
+        android:id="@+id/huntingMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/weaponInventory"
+        android:layout_centerHorizontal="true"
+        android:text="@string/hunting_mode" />
 </RelativeLayout>
