@@ -27,11 +27,20 @@
         android:text="@string/shooting_view" />
 
     <Button
-        android:id="@+id/huntingMode"
+        android:id="@+id/weaponInventory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_below="@id/viewRecord"
+        android:layout_centerHorizontal="true"
+        android:text="@string/inventory" />
+
+    <Button
+        android:id="@+id/huntingMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/weaponInventory"
         android:layout_centerHorizontal="true"
         android:text="@string/hunting_mode" />
 </RelativeLayout>

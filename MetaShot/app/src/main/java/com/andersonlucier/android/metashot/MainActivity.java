@@ -22,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d("attempt", shooting.description());
     }
     public void onClick(View view){
-        if (view.getId() == R.id.newRecord) {
-            startActivity(new Intent(MainActivity.this, NewShootingRecord.class));
+        switch (view.getId()) {
+            case R.id.newRecord:
+                startActivity(new Intent(MainActivity.this, NewShootingRecord.class));
         }
     }
 }

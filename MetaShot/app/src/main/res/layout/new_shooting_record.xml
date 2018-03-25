@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:inputType="text"
-        android:text="Name of Record" />
+        android:hint="@string/recordNameHint" />
 
     <Button
         android:id="@+id/autofillGpsLocation"
@@ -21,6 +21,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/recordName"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:onClick="onClick"
         android:text="@string/autofill_GPS_location" />
 
     <EditText
@@ -31,7 +33,8 @@
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:inputType="text"
-        android:text="GPS Location" />
+        android:layout_marginTop="5dp"
+        android:hint="@string/gpsHint" />
 
     <EditText
         android:id="@+id/weatherManual"
@@ -41,15 +44,28 @@
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:inputType="text"
-        android:text="Weather" />
+        android:layout_marginTop="5dp"
+        android:hint="@string/weatherHint" />
+
+    <TextView
+        android:id="@+id/spinnerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/weatherManual"
+        android:layout_toStartOf="@id/weaponSelect"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:text="@string/weaponSpinnerLabel" />
 
     <Spinner
         android:id="@+id/weaponSelect"
-        android:spinnerMode="dropdown"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/weatherManual"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="@android:drawable/btn_dropdown"
+        android:entries="@array/weaponSelect"
+        android:spinnerMode="dropdown" />
 
     <EditText
         android:id="@+id/otherDetails"
@@ -57,16 +73,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/weaponSelect"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
         android:ems="10"
         android:inputType="textMultiLine"
-        android:text="Other Details"/>
+        android:hint="@string/detailsHint"/>
 
     <Button
         android:id="@+id/newShootingCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/otherDetails"
-        android:layout_toLeftOf="@+id/newShootingCreate"
+        android:layout_toStartOf="@+id/newShootingCreate"
+        android:onClick="onClick"
         android:text="@string/cancel" />
 
     <Button
@@ -74,6 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/otherDetails"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="onClick"
         android:text="@string/create" />
 </RelativeLayout>
