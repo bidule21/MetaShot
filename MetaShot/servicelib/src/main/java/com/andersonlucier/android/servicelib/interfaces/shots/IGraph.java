@@ -9,5 +9,5 @@ import java.util.List;
  */
 
 public interface IGraph {
-    List<GraphRecord> graph();
+    List<GraphRecord> getGraph();
 }

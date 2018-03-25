@@ -9,9 +9,15 @@ import java.util.List;
  */
 
 public class GraphRecords implements IGraph {
+
+    private List<GraphRecord> _graph;
+
     @Override
-    public List<GraphRecord> graph() {
-        return null;
+    public List<GraphRecord> getGraph() {
+        return _graph;
     }
 
+    public void addGraph(GraphRecord graph) {
+        _graph.add(graph);
+    }
 }
