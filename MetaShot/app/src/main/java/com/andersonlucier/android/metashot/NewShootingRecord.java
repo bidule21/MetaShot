@@ -101,7 +101,7 @@ public class NewShootingRecord extends AppCompatActivity {
                 Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n" +
                         "GPS Location: " + gpsLocation.getText().toString() + "\n Weather: " +
                         weather.getText().toString() + "\n Weapon: " + item + "\n Other Details: " + otherDetails.getText().toString(), Toast.LENGTH_LONG).show();
-                //startActivity(new Intent(NewShootingRecord.this, MainActivity.class));
+                startActivity(new Intent(NewShootingRecord.this, NewShotRecord.class));
                 break;
             case R.id.newShootingCancel:
                 startActivity(new Intent(NewShootingRecord.this, MainActivity.class));
