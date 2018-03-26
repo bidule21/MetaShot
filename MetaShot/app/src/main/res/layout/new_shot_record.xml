@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/logo" />
+
+    <TextView
+        android:id="@+id/shootingRecordName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true"
+        android:text="@string/recordNameDefault" />
+
+    <Button
+        android:id="@+id/autoRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shootingRecordName"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClick"
+        android:text="@string/autoRecord" />
+
+    <Button
+        android:id="@+id/manualCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/autoRecord"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClick"
+        android:text="@string/manualCreate" />
+
+    <ListView
+        android:id="@+id/shotRecords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/manualCreate"
+        android:layout_centerHorizontal="true" >
+    </ListView>
+
+</RelativeLayout>
