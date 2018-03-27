@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/logo" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/metawearGraph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo" />
+
+    <ListView
+        android:id="@+id/shotRecordsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/metawearGraph" >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/saveRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/shotRecordsList"
+        android:onClick="onClick"
+        android:text="@string/save" />
+
+    <Button
+        android:id="@+id/cancelRecord"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/saveRecord"
+        android:layout_below="@id/shotRecordsList"
+        android:onClick="onClick"
+        android:text="@string/cancel" />
+
+</RelativeLayout>
+
