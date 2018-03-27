@@ -25,7 +25,7 @@
         android:id="@+id/saveRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_below="@id/shotRecordsList"
         android:onClick="onClick"
         android:text="@string/save" />
@@ -34,7 +34,7 @@
         android:id="@+id/cancelRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/saveRecord"
+        android:layout_toStartOf="@id/saveRecord"
         android:layout_below="@id/shotRecordsList"
         android:onClick="onClick"
         android:text="@string/cancel" />

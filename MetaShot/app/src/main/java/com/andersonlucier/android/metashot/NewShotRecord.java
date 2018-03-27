@@ -15,7 +15,7 @@ public class NewShotRecord extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.autoRecord:
-                startActivity(new Intent(NewShotRecord.this, MainActivity.class));
+                startActivity(new Intent(NewShotRecord.this, NewShotRecord_AutoRecord.class));
                 break;
             case R.id.manualCreate:
                 startActivity(new Intent(NewShotRecord.this, MainActivity.class));
