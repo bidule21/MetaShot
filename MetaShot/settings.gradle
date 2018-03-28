@@ -1,1 +1,1 @@
-include ':app', ':servicelib', ':adservicelib', ':metawearlib'
+include ':app', ':adservicelib', ':metawearlib', ':databaseservicelib', ':datalib'

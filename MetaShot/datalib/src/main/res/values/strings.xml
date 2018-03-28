@@ -1,0 +1,4 @@
+<resources>
+    <string name="createdatabase">CREATE TABLE shootingRecord( id integer primary key autoincrement not null, description TEXT);</string>
+    <string name="deletedatabase">CREATE TABLE shootingRecord( id integer primary key autoincrement TEXT not null, description TEXT);</string>
+</resources>
