@@ -17,7 +17,9 @@ public class WeaponInventory extends AppCompatActivity {
             case R.id.addWeapon:
                 startActivity(new Intent(WeaponInventory.this, WeaponInventory_AddWeapon.class));
                 break;
-
+            case R.id.goToHome:
+                startActivity(new Intent(WeaponInventory.this, MainActivity.class));
+                break;
         }
     }
 }

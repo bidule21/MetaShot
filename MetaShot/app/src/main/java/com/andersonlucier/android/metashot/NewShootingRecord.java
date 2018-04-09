@@ -27,6 +27,7 @@ public class NewShootingRecord extends AppCompatActivity {
     private String item, coordLat, coordLong;
     private LocationManager locationManager;
     private LocationListener locationListener;
+    private Location location;
     private double latitude;
     private double longitude;
     public static final int GPS_LOCATION_PERMISSIONS = 99;
@@ -42,6 +43,7 @@ public class NewShootingRecord extends AppCompatActivity {
         otherDetails = findViewById(R.id.otherDetails);
 
         Spinner spinner = findViewById(R.id.weaponSelect);
+        //TODO: Add code for populating selections from database list
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.weaponSelect, android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -64,8 +66,9 @@ public class NewShootingRecord extends AppCompatActivity {
 
     public void onClick(View view) {
         switch (view.getId()) {
-            /*case R.id.autofillGpsLocation:
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            case R.id.autofillGpsLocation:
+                //TODO: MAKE THIS WORK!!!
+                /*if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                     locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
                     locationListener = new LocationListener() {
@@ -82,28 +85,36 @@ public class NewShootingRecord extends AppCompatActivity {
                         }
 
                         public void onProviderEnabled(String provider) {
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+                            coordLat = Double.toString(latitude);
+                            coordLong = Double.toString(longitude);
+                            gpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));
                         }
 
                         public void onProviderDisabled(String provider) {
                         }
+
                     };
                 } else {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_LOCATION_PERMISSIONS);
                 }
-
-                break;*/
+                locationManager.removeUpdates(locationListener);*/
+                break;
             case R.id.newShootingCreate:
                 if (recordName.getText().length() == 0) {
                     recordName.setText(R.string.recordNameDefault);
                 }
-                locationManager.removeUpdates(locationListener);
-                //need to add code for sending data to database for storage
+                //TODO: Add code for sending data to database for storage
                 Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n" +
                         "GPS Location: " + gpsLocation.getText().toString() + "\n Weather: " +
                         weather.getText().toString() + "\n Weapon: " + item + "\n Other Details: " + otherDetails.getText().toString(), Toast.LENGTH_LONG).show();
                 startActivity(new Intent(NewShootingRecord.this, NewShotRecord.class));
                 break;
             case R.id.newShootingCancel:
+                startActivity(new Intent(NewShootingRecord.this, MainActivity.class));
+                break;
+            case R.id.goToHome:
                 startActivity(new Intent(NewShootingRecord.this, MainActivity.class));
                 break;
         }
@@ -131,6 +142,11 @@ public class NewShootingRecord extends AppCompatActivity {
                             }
 
                             public void onProviderEnabled(String provider) {
+                                latitude = location.getLatitude();
+                                longitude = location.getLongitude();
+                                coordLat = Double.toString(latitude);
+                                coordLong = Double.toString(longitude);
+                                gpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));
                             }
 
                             public void onProviderDisabled(String provider) {
@@ -140,6 +156,7 @@ public class NewShootingRecord extends AppCompatActivity {
                         Toast.makeText(this, "Unable to populate GPS data due to denied permission", Toast.LENGTH_LONG).show();
 
                     }
+                    locationManager.removeUpdates(locationListener);
                     break;
                 }
         }

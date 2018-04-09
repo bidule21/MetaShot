@@ -18,6 +18,9 @@ public class NewShotRecord extends AppCompatActivity {
                 startActivity(new Intent(NewShotRecord.this, NewShotRecord_AutoRecord.class));
                 break;
             case R.id.manualCreate:
+                startActivity(new Intent(NewShotRecord.this, NewShotRecord_ManualCreate.class));
+                break;
+            case R.id.goToHome:
                 startActivity(new Intent(NewShotRecord.this, MainActivity.class));
                 break;
         }

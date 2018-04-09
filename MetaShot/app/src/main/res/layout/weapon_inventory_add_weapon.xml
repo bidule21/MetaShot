@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:layout_below="@id/logo"
+        android:layout_below="@id/logoHeader"
         android:layout_centerHorizontal="true"
         android:inputType="text"
         android:hint="@string/nicknameHint" />

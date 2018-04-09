@@ -6,27 +6,12 @@
 
     <include layout="@layout/logo" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/metawearGraph"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/logo" />
-
-    <ListView
-        android:id="@+id/shotRecordsList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/metawearGraph" >
-
-    </ListView>
-
     <Button
         android:id="@+id/saveRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/shotRecordsList"
+        android:layout_below="@id/logoHeader"
         android:onClick="onClick"
         android:text="@string/save" />
 
@@ -35,9 +20,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toStartOf="@id/saveRecord"
-        android:layout_below="@id/shotRecordsList"
+        android:layout_below="@id/logoHeader"
         android:onClick="onClick"
         android:text="@string/cancel" />
+
+    <ListView
+        android:id="@+id/shotRecordsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/saveRecord" >
+
+    </ListView>
 
 </RelativeLayout>
 

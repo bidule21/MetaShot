@@ -10,7 +10,7 @@
         android:id="@+id/inventoryHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/logo"
+        android:layout_below="@id/logoHeader"
         android:textColor="@color/black"
         android:text="@string/inventoryHeader"/>
 
@@ -18,7 +18,7 @@
         android:id="@+id/addWeapon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/logo"
+        android:layout_below="@id/logoHeader"
         android:layout_alignParentEnd="true"
         android:onClick="onClick"
         android:text="@string/addWeapon"/>

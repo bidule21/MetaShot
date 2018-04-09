@@ -15,11 +15,14 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity {
     public void onClick (View view){
         switch (view.getId()){
             case R.id.saveRecord:
-                //add code for sending data to database
+                //TODO: add code for sending data to database
                 startActivity(new Intent(NewShotRecord_AutoRecord.this, NewShotRecord.class));
                 break;
             case R.id.cancelRecord:
                 startActivity(new Intent(NewShotRecord_AutoRecord.this, NewShotRecord.class));
+                break;
+            case R.id.goToHome:
+                startActivity(new Intent(NewShotRecord_AutoRecord.this, MainActivity.class));
                 break;
         }
     }
