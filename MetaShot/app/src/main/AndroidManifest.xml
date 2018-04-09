@@ -24,7 +24,8 @@
         <activity android:name=".WeaponInventory" />
         <activity android:name=".WeaponInventory_AddWeapon" />
         <activity android:name=".NewShotRecord" />
-        <activity android:name=".NewShotRecord_AutoRecord"></activity>
+        <activity android:name=".NewShotRecord_AutoRecord" />
+        <activity android:name=".NewShotRecord_ManualCreate"></activity>
     </application>
 
 </manifest>

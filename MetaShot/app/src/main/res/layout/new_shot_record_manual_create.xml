@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/logo" />
+
+    <TextView
+        android:id="@+id/barrelTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logoHeader"
+        android:layout_toStartOf="@id/barrelTempInput"
+        android:textColor="@color/black"
+        android:text="@string/barrelTemp" />
+
+    <EditText
+        android:id="@+id/barrelTempInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logoHeader"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/barrelTempHint" />
+
+    <TextView
+        android:id="@+id/verticalDist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/barrelTemp"
+        android:layout_toStartOf="@id/verticalDistInput"
+        android:layout_marginTop="60dp"
+        android:textColor="@color/black"
+        android:text="@string/verticalDist" />
+
+    <EditText
+        android:id="@+id/verticalDistInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/barrelTempInput"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/verticalDistHint" />
+
+    <TextView
+        android:id="@+id/horizontalDist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/verticalDist"
+        android:layout_toStartOf="@id/horizontalDistInput"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/black"
+        android:text="@string/horizontalDist" />
+
+    <EditText
+        android:id="@+id/horizontalDistInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/verticalDistInput"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/horizontalDistHint" />
+
+    <Button
+        android:id="@+id/createShot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/horizontalDist"
+        android:layout_alignParentEnd="true"
+        android:onClick="onClick"
+        android:text="@string/create" />
+
+    <Button
+        android:id="@+id/cancelShot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/horizontalDist"
+        android:layout_toStartOf="@id/createShot"
+        android:onClick="onClick"
+        android:text="@string/cancel" />
+
+</RelativeLayout>
