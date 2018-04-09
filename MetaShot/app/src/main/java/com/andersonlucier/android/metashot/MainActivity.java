@@ -1,13 +1,14 @@
 package com.andersonlucier.android.metashot;
 
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.util.Log;
 
-import com.andersonlucier.android.servicelib.Service;
-import com.andersonlucier.android.servicelib.impl.ShootingRecord;
+import com.andersonlucier.android.metashot.databaseservicelib.DatabaseService;
+import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_page);
 
-        Service service = new Service();
+        DatabaseService service = new DatabaseService(this);
         ShootingRecord shooting = service.getShootingRecordById(1);
         Log.d("attempt", shooting.description());
     }
