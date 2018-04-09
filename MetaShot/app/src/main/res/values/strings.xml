@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MetaShot</string>
     <!-- ALL BUTTONS -->
+    <string name="homeScreen">Home</string>
     <string name="shooting_new">Create New \nShooting Record</string>
     <string name="shooting_view">View Previous \nShooting Record</string>
     <string name="inventory">View/Edit Weapon \nInventory</string>
@@ -20,9 +21,15 @@
     <string name="detailsHint">Other Details</string>
     <string name="recordNameDefault">Default</string>
     <string name="nicknameHint">Weapon Nickname</string>
+    <string name="barrelTempHint">Temperature</string>
+    <string name="verticalDistHint">Vertical Distance</string>
+    <string name="horizontalDistHint">Horizontal Distance</string>
     <!-- Text Labels -->
     <string name="weaponSpinnerLabel">Select a\nweapon:</string>
     <string name="inventoryHeader">Weapon Inventory:</string>
+    <string name="barrelTemp">Barrel Temperature</string>
+    <string name="verticalDist">Vertical Distance From Target Center</string>
+    <string name="horizontalDist">Horizontal Distance From Target Center</string>
 
     <!-- Weapon Select Spinner -->
     <string-array name="weaponSelect">
