@@ -28,6 +28,9 @@ public class WeaponInventory_AddWeapon extends AppCompatActivity {
                 Toast.makeText(this, "Nickname: " + weaponNickname.getText().toString() + "\n" + "Details: " + weaponDetails.getText().toString(), Toast.LENGTH_LONG).show();
                 startActivity(new Intent(WeaponInventory_AddWeapon.this, WeaponInventory.class));
                 break;
+            case R.id.cancelNewWeapon:
+                startActivity(new Intent(WeaponInventory_AddWeapon.this, WeaponInventory.class));
+                break;
             case R.id.goToHome:
                 startActivity(new Intent(WeaponInventory_AddWeapon.this, MainActivity.class));
                 break;

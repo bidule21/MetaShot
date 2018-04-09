@@ -37,4 +37,14 @@
         android:onClick="onClick"
         android:text="@string/addWeapon" />
 
+    <Button
+        android:id="@+id/cancelNewWeapon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/weaponOtherDetails"
+        android:layout_centerHorizontal="true"
+        android:layout_toEndOf="@id/addNewWeapon"
+        android:layout_marginTop="30dp"
+        android:onClick="onClick"
+        android:text="@string/cancel" />
 </RelativeLayout>
