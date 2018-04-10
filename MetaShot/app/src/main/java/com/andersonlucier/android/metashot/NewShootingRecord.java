@@ -23,14 +23,12 @@ import com.andersonlucier.android.metashot.databaseservicelib.DatabaseService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 
 public class NewShootingRecord extends AppCompatActivity {
-
-<<<<<<< HEAD
+    
     private EditText recordName, autoGpsLocation, weather, otherDetails;
     private String item;
     AppLocationService appLocationService;
     private static final int GPS_LOCATION_PERMISSION = 0;
     private DatabaseService dbService;
->>>>>>> 17a4fc7b94de7c8b39cf4620fcb6eee2c7b77291
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
