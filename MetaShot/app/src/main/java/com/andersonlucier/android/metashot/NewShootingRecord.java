@@ -1,12 +1,13 @@
 package com.andersonlucier.android.metashot;
 
 import android.Manifest;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -20,25 +21,19 @@ import android.widget.Toast;
 
 public class NewShootingRecord extends AppCompatActivity {
 
-    private EditText recordName;
-    private EditText gpsLocation;
-    private EditText weather;
-    private EditText otherDetails;
-    private String item, coordLat, coordLong;
-    private LocationManager locationManager;
-    private LocationListener locationListener;
-    private Location location;
-    private double latitude;
-    private double longitude;
-    public static final int GPS_LOCATION_PERMISSIONS = 99;
+    private EditText recordName, autoGpsLocation, weather, otherDetails;
+    private String item;
+    AppLocationService appLocationService;
+    private static final int GPS_LOCATION_PERMISSION = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_shooting_record);
+        appLocationService = new AppLocationService(NewShootingRecord.this);
 
         recordName = findViewById(R.id.recordName);
-        gpsLocation = findViewById(R.id.gpsManual);
+        autoGpsLocation = findViewById(R.id.gpsManual);
         weather = findViewById(R.id.weatherManual);
         otherDetails = findViewById(R.id.otherDetails);
 
@@ -67,39 +62,22 @@ public class NewShootingRecord extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.autofillGpsLocation:
-                //TODO: MAKE THIS WORK!!!
-                /*if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                    locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-                    locationListener = new LocationListener() {
-                        public void onLocationChanged(Location location) {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-                            coordLat = Double.toString(latitude);
-                            coordLong = Double.toString(longitude);
-                            gpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));
-                        }
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-                        public void onStatusChanged(String provider, int status, Bundle
-                                extras) {
-                        }
-
-                        public void onProviderEnabled(String provider) {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-                            coordLat = Double.toString(latitude);
-                            coordLong = Double.toString(longitude);
-                            gpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));
-                        }
-
-                        public void onProviderDisabled(String provider) {
-                        }
-
-                    };
+                    Location gpsLocation = appLocationService.getLocation(LocationManager
+                            .GPS_PROVIDER);
+                    if (gpsLocation != null) {
+                        double latitude = gpsLocation.getLatitude();
+                        double longitude = gpsLocation.getLongitude();
+                        String coordLat = Double.toString(latitude);
+                        String coordLong = Double.toString(longitude);
+                        autoGpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));
+                    } else {
+                        showSettingsAlert("GPS");
+                    }
                 } else {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_LOCATION_PERMISSIONS);
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},GPS_LOCATION_PERMISSION);
                 }
-                locationManager.removeUpdates(locationListener);*/
                 break;
             case R.id.newShootingCreate:
                 if (recordName.getText().length() == 0) {
@@ -107,7 +85,7 @@ public class NewShootingRecord extends AppCompatActivity {
                 }
                 //TODO: Add code for sending data to database for storage
                 Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n" +
-                        "GPS Location: " + gpsLocation.getText().toString() + "\n Weather: " +
+                        "GPS Location: " + autoGpsLocation.getText().toString() + "\n Weather: " +
                         weather.getText().toString() + "\n Weapon: " + item + "\n Other Details: " + otherDetails.getText().toString(), Toast.LENGTH_LONG).show();
                 startActivity(new Intent(NewShootingRecord.this, NewShotRecord.class));
                 break;
@@ -120,44 +98,40 @@ public class NewShootingRecord extends AppCompatActivity {
         }
     }
 
+    public void showSettingsAlert(String provider){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewShootingRecord.this);
+        alertDialog.setTitle(provider + " SETTINGS");
+        alertDialog.setMessage(provider + " is not enabled! Do you want to enable through Settings?");
+        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which){
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                NewShootingRecord.this.startActivity(intent);
+            }
+        });
+        alertDialog.setNegativeButton("Cancel",new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which){
+                dialog.cancel();
+            }
+        });
+        alertDialog.show();
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
-            case 1:
+            case GPS_LOCATION_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-                        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-                        locationListener = new LocationListener() {
-                            public void onLocationChanged(Location location) {
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
-                                coordLat = Double.toString(latitude);
-                                coordLong = Double.toString(longitude);
-                                gpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));
-                            }
-
-                            public void onStatusChanged(String provider, int status, Bundle
-                                    extras) {
-                            }
-
-                            public void onProviderEnabled(String provider) {
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
-                                coordLat = Double.toString(latitude);
-                                coordLong = Double.toString(longitude);
-                                gpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));
-                            }
-
-                            public void onProviderDisabled(String provider) {
-                            }
-                        };
+                    Location gpsLocation = appLocationService.getLocation(LocationManager
+                            .GPS_PROVIDER);
+                    if (gpsLocation != null) {
+                        double latitude = gpsLocation.getLatitude();
+                        double longitude = gpsLocation.getLongitude();
+                        String coordLat = Double.toString(latitude);
+                        String coordLong = Double.toString(longitude);
+                        autoGpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));
                     } else {
-                        Toast.makeText(this, "Unable to populate GPS data due to denied permission", Toast.LENGTH_LONG).show();
-
+                        showSettingsAlert("GPS");
                     }
-                    locationManager.removeUpdates(locationListener);
-                    break;
                 }
         }
     }
