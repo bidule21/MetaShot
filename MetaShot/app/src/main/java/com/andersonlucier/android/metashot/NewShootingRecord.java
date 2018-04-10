@@ -19,16 +19,25 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.andersonlucier.android.metashot.databaseservicelib.DatabaseService;
+import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
+
 public class NewShootingRecord extends AppCompatActivity {
 
+<<<<<<< HEAD
     private EditText recordName, autoGpsLocation, weather, otherDetails;
     private String item;
     AppLocationService appLocationService;
     private static final int GPS_LOCATION_PERMISSION = 0;
+    private DatabaseService dbService;
+>>>>>>> 17a4fc7b94de7c8b39cf4620fcb6eee2c7b77291
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dbService = new DatabaseService(this);
+
         setContentView(R.layout.new_shooting_record);
         appLocationService = new AppLocationService(NewShootingRecord.this);
 
@@ -83,6 +92,14 @@ public class NewShootingRecord extends AppCompatActivity {
                 if (recordName.getText().length() == 0) {
                     recordName.setText(R.string.recordNameDefault);
                 }
+
+
+                ShootingRecord shooting = new ShootingRecord();
+                shooting.setTitle(recordName.getText().toString());
+                shooting.setTemp(Double.parseDouble(weather.getText().toString()));
+                shooting.setDescription(otherDetails.getText().toString());
+                dbService.saveShootingRecord(shooting);
+
                 //TODO: Add code for sending data to database for storage
                 Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n" +
                         "GPS Location: " + autoGpsLocation.getText().toString() + "\n Weather: " +

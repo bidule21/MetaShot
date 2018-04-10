@@ -1,4 +1,4 @@
 <resources>
-    <string name="createdatabase">CREATE TABLE shootingRecord( id integer primary key autoincrement not null, description TEXT);</string>
-    <string name="deletedatabase">CREATE TABLE shootingRecord( id integer primary key autoincrement TEXT not null, description TEXT);</string>
+    <string name="createdatabase">CREATE TABLE shootingRecord(id TEXT primary key not null, title TEXT, datetime TEXT, lat REAL, lon REAL, temp REAL, windSpeed REAL, description TEXT, gunTypeId TEXT);</string>
+    <string name="deletedatabase">DROP TABLE IF EXISTS shootingRecord;</string>
 </resources>
