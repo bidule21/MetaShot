@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IShooting {
 
-    int Id();
+    String Id();
 
     String title();
 

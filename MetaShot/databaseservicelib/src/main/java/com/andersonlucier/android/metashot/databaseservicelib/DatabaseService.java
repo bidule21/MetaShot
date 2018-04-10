@@ -9,7 +9,7 @@ import com.andersonlucier.android.metashot.databaseservicelib.impl.TargetRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
-import com.andersonlucier.android.metashot.datalib.ShootingRecordDataSource;
+import com.andersonlucier.android.metashot.databaselib.ShootingRecordDataSource;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,7 +41,7 @@ public class DatabaseService implements IService {
         record.setTemp(90);
         record.setTypeOfGun(gunType);
         record.setWindspeed(15);
-        record.setId(1);
+        record.setId("a");
         record.setTitle("This is Sparta");
 
         ShootingRecord recordTwo = new ShootingRecord();
@@ -52,7 +52,7 @@ public class DatabaseService implements IService {
         recordTwo.setTemp(90);
         recordTwo.setTypeOfGun(gunType);
         recordTwo.setWindspeed(15);
-        recordTwo.setId(2);
+        recordTwo.setId("b");
         recordTwo.setTitle("This is Sparta Two");
 
         ShootingRecord recordThree = new ShootingRecord();
@@ -63,7 +63,7 @@ public class DatabaseService implements IService {
         recordThree.setTemp(90);
         recordThree.setTypeOfGun(gunType);
         recordThree.setWindspeed(15);
-        recordThree.setId(3);
+        recordThree.setId("c");
         recordThree.setTitle("This is Sparta Three");
 
         records.add(record);
@@ -87,7 +87,7 @@ public class DatabaseService implements IService {
         record.setTemp(90);
         record.setTypeOfGun(gunType);
         record.setWindspeed(15);
-        record.setId(1);
+        record.setId("a");
         record.setTitle("This is Sparta");
         return record;
     }
@@ -141,8 +141,10 @@ public class DatabaseService implements IService {
     }
 
     @Override
-    public void saveShootingRecord(ShootingRecord record) {
-
+    public ShootingRecord saveShootingRecord(ShootingRecord record) {
+        ShootingRecord returnValue = null;
+        returnValue = srdatasource.createShootingRecord(record);
+        return returnValue;
     }
 
     @Override

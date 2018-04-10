@@ -17,7 +17,7 @@ public interface IService {
 
     public List<ShotRecord> getShotsRecordById(int id);
 
-    public void saveShootingRecord(ShootingRecord record);
+    public ShootingRecord saveShootingRecord(ShootingRecord record);
 
     public List<GunRecord> getGunRecords();
 

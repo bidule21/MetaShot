@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">databaseservicelib</string>
+    <string name="createdatabase">CREATE TABLE shootingRecord(id TEXT primary key not null, title TEXT, datetime TEXT, lat REAL, lon REAL, temp REAL, windSpeed REAL, description TEXT, gunTypeId TEXT);</string>
+    <string name="deletedatabase">DROP TABLE IF EXISTS shootingRecord;</string>
 </resources>

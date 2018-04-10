@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public class ShootingRecord implements IShooting {
-    private int _id;
+    private String _id;
 
     private String _title;
 
@@ -33,10 +33,10 @@ public class ShootingRecord implements IShooting {
 
 
     @Override
-    public int Id() {
+    public String Id() {
         return _id;
     }
-    public void setId(int id) {
+    public void setId(String id) {
         _id = id;
     }
 

@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.andersonlucier.android.metashot.databaseservicelib.DatabaseService;
+import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
+
 public class NewShootingRecord extends AppCompatActivity {
 
     private EditText recordName;
@@ -31,10 +34,14 @@ public class NewShootingRecord extends AppCompatActivity {
     private double latitude;
     private double longitude;
     public static final int GPS_LOCATION_PERMISSIONS = 99;
+    private DatabaseService dbService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dbService = new DatabaseService(this);
+
         setContentView(R.layout.new_shooting_record);
 
         recordName = findViewById(R.id.recordName);
@@ -105,6 +112,14 @@ public class NewShootingRecord extends AppCompatActivity {
                 if (recordName.getText().length() == 0) {
                     recordName.setText(R.string.recordNameDefault);
                 }
+
+
+                ShootingRecord shooting = new ShootingRecord();
+                shooting.setTitle(recordName.getText().toString());
+                shooting.setTemp(Double.parseDouble(weather.getText().toString()));
+                shooting.setDescription(otherDetails.getText().toString());
+                dbService.saveShootingRecord(shooting);
+
                 //TODO: Add code for sending data to database for storage
                 Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n" +
                         "GPS Location: " + gpsLocation.getText().toString() + "\n Weather: " +
