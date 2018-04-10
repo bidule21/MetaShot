@@ -22,8 +22,10 @@ import android.widget.Toast;
 import com.andersonlucier.android.metashot.databaseservicelib.DatabaseService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 
+import java.util.Locale;
+
 public class NewShootingRecord extends AppCompatActivity {
-    
+
     private EditText recordName, autoGpsLocation, weather, otherDetails;
     private String item;
     AppLocationService appLocationService;
@@ -76,8 +78,8 @@ public class NewShootingRecord extends AppCompatActivity {
                     if (gpsLocation != null) {
                         double latitude = gpsLocation.getLatitude();
                         double longitude = gpsLocation.getLongitude();
-                        String coordLat = Double.toString(latitude);
-                        String coordLong = Double.toString(longitude);
+                        String coordLat = String.format(Locale.getDefault(),"%.2f",latitude);
+                        String coordLong = String.format(Locale.getDefault(), "%.2f", longitude);
                         autoGpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));
                     } else {
                         showSettingsAlert("GPS");
