@@ -43,7 +43,8 @@ import java.util.Locale;
 public class NewShootingRecord extends AppCompatActivity {
 
     private EditText recordName, autoGpsLocation, weather, otherDetails;
-    private String item;
+    private String item, windFactors;
+    private Double autofillTemperature;
     AppLocationService appLocationService;
     private static final int GPS_LOCATION_PERMISSION = 0;
     private static final int INTERNET_PERMISSION = 34;
@@ -231,8 +232,8 @@ public class NewShootingRecord extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        double tempFahrenheit, tempCelcius;
-                        String temperature;
+                        double tempFahrenheit, tempCelcius, windSpeed;
+                        String temperature, roundedWindSpeed;
                         final String[] weatherDetails = new String[3];
 
                         try {
@@ -246,8 +247,15 @@ public class NewShootingRecord extends AppCompatActivity {
 
                             tempCelcius = Double.parseDouble(weatherDetails[0]);
                             tempFahrenheit = ((tempCelcius * 9) / 5) + 32;
-                            temperature = String.valueOf(tempFahrenheit);
-                            weather.setText(String.valueOf("Temp: " + temperature + (char) 0x00B0 + "F, Wind: " + weatherDetails[1] + "mph " + weatherDetails[2]));
+                            temperature = String.format(Locale.getDefault(), "%.2f", tempFahrenheit);
+
+                            windSpeed = Double.parseDouble(weatherDetails[1]);
+                            roundedWindSpeed = String.format(Locale.getDefault(), "%.2f", windSpeed);
+
+                            autofillTemperature = tempFahrenheit;
+                            windFactors = weatherDetails[1] + " " + weatherDetails[2];
+
+                            weather.setText(String.valueOf(temperature + (char) 0x00B0 + ", " + roundedWindSpeed + " mph " + weatherDetails[2]));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
