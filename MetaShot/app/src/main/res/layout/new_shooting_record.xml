@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <include layout="@layout/logo" />
 
@@ -30,12 +34,23 @@
         android:id="@+id/gpsManual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/autofillGpsLocation"
+        android:layout_alignBottom="@+id/gpsAuto"
         android:layout_centerHorizontal="true"
         android:ems="10"
-        android:inputType="text"
-        android:layout_marginTop="5dp"
-        android:hint="@string/gpsHint" />
+        android:hint="@string/gpsHint"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/gpsAuto"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/gpsManual"
+        android:layout_below="@+id/autofillGpsLocation"
+        android:layout_marginStart="30dp"
+        android:background="@android:drawable/ic_menu_mylocation"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:onClick="onClick" />
 
     <EditText
         android:id="@+id/weatherManual"
@@ -47,6 +62,17 @@
         android:inputType="text"
         android:layout_marginTop="5dp"
         android:hint="@string/weatherHint" />
+
+    <Button
+        android:id="@+id/weatherAuto"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gpsManual"
+        android:layout_alignStart="@id/weatherManual"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/weather"
+        android:onClick="onClick" />
 
     <TextView
         android:id="@+id/spinnerLabel"
@@ -96,4 +122,6 @@
         android:layout_alignParentEnd="true"
         android:onClick="onClick"
         android:text="@string/create" />
+
 </RelativeLayout>
+</ScrollView>
