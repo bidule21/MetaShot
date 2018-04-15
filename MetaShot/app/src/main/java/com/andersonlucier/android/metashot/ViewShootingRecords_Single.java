@@ -70,8 +70,8 @@ public class ViewShootingRecords_Single extends AppCompatActivity {
         lv.setTextFilterEnabled(true);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent intent = new Intent(new Intent(ViewShootingRecords_Single.this, MainActivity.class));
-                intent.putExtra("RECORD_ID", records.get(position).id());
+                Intent intent = new Intent(new Intent(ViewShootingRecords_Single.this, ViewPreviousShotRecord.class));
+                intent.putExtra("SHOT_RECORD_ID", records.get(position).id());
                 startActivity(intent);
 
             }

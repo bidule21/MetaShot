@@ -30,6 +30,7 @@
         <activity android:name=".NewShotRecord_ManualCreate"></activity>
         <activity android:name=".ViewShootingRecords"/>
         <activity android:name=".ViewShootingRecords_Single"/>
+        <activity android:name=".ViewPreviousShotRecord"/>
 
         <service android:name=".AppLocationService" />
     </application>
