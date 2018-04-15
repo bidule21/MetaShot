@@ -5,11 +5,15 @@ package com.andersonlucier.android.metashot.databaseservicelib.interfaces.shots;
  */
 
 public interface IShot {
-    int id();
+    String id();
 
-    IGraph graph();
+    String shootingRecordId();
+
+    int shotNumber();
 
     double barrelTemp();
 
-    ITarget target();
+    double targetX();
+
+    double targetY();
 }

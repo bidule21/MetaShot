@@ -10,11 +10,16 @@ import java.util.List;
  * Created by SyberDeskTop on 3/12/2018.
  */
 
-public interface IService {
+public interface IShotService {
 
+     List<ShotRecord> getAllShotsRecordsByShootingId(String id);
 
-    public List<ShotRecord> getShotsRecordById(int id);
+     ShotRecord getSingleShotsRecordsById(String id);
 
+     ShotRecord createShotRecord(ShotRecord record);
 
+     void deleteShotRecord(String id);
+
+    ShotRecord updateShotRecord(ShotRecord record);
 
 }

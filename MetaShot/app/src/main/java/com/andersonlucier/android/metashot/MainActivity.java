@@ -5,10 +5,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.util.Log;
-
-import com.andersonlucier.android.metashot.databaseservicelib.DatabaseService;
-import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 
 public class MainActivity extends AppCompatActivity {
 

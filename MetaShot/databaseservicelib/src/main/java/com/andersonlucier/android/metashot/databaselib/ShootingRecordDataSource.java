@@ -21,7 +21,7 @@ public class ShootingRecordDataSource {
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
     private String[] allColumns = { "id",
-            "title", "datetime", "lat", "lon", "temp", "windSpeed", "description", "gunTypeId" };
+            "title", "datetime", "location", "temp", "windSpeed", "description", "gunTypeId" };
 
     public ShootingRecordDataSource(Context context) {
         dbHelper = new MySQLiteHelper(context);

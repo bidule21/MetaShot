@@ -21,13 +21,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.andersonlucier.android.metashot.databaseservicelib.DatabaseService;
+import com.andersonlucier.android.metashot.databaseservicelib.DatabaseShotService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.GunRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -46,13 +47,13 @@ public class NewShootingRecord extends AppCompatActivity {
     AppLocationService appLocationService;
     private static final int GPS_LOCATION_PERMISSION = 0;
     private static final int INTERNET_PERMISSION = 34;
-    private DatabaseService dbService;
+    private DatabaseShotService dbService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        dbService = new DatabaseService(this);
+        dbService = new DatabaseShotService(this);
 
         setContentView(R.layout.new_shooting_record);
         appLocationService = new AppLocationService(NewShootingRecord.this);
@@ -63,7 +64,7 @@ public class NewShootingRecord extends AppCompatActivity {
         otherDetails = findViewById(R.id.otherDetails);
 
         Spinner spinner = findViewById(R.id.weaponSelect);
-        dbService = new DatabaseService(this);
+        dbService = new DatabaseShotService(this);
         List<GunRecord> records = dbService.getGunRecords();
         List<String> list = new ArrayList<>();
 
@@ -140,7 +141,7 @@ public class NewShootingRecord extends AppCompatActivity {
                 //TODO: Add code for sending data to database for storage
                 Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n" +
                         "GPS Location: " + autoGpsLocation.getText().toString() + "\n Weather: " +
-                        weather.getText().toString() + "\n Weapon: " + item + "\n Other Details: " + otherDetails.getText().toString(), Toast.LENGTH_LONG).show();
+                        weather.getText().toString() + "\n Other Details: " + otherDetails.getText().toString(), Toast.LENGTH_LONG).show();
                 startActivity(new Intent(NewShootingRecord.this, NewShotRecord.class));
                 break;
             case R.id.newShootingCancel:
@@ -193,13 +194,8 @@ public class NewShootingRecord extends AppCompatActivity {
     public void getWeatherDetails(Location location){
         String lat = Double.toString(location.getLatitude());
         String longi = Double.toString(location.getLongitude());
-        double tempFahrenheit, tempCelcius;
-        String temperature;
-        final String[] woeid = new String[1];
-        final String[] weatherDetails = new String[3];
-        String urlLatLong = "https://www.metaweather.com/api/location//search/?lattlong=" + lat + "," + longi;
-        String urlWOEID = "https://www.metaweather.com/api/location/" + woeid[0];
 
+        String urlLatLong = "https://www.metaweather.com/api/location/search/?lattlong=" + lat + "," + longi;
         RequestQueue queue = Volley.newRequestQueue(this);
 
         //get woeid
@@ -209,9 +205,10 @@ public class NewShootingRecord extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         try {
+                            System.out.println("Here");
                             JSONArray jsonArr = new JSONArray(response);
                             JSONObject jsonObj = jsonArr.getJSONObject(0);
-                            woeid[0] = jsonObj.getString("woeid");
+                            weatherRequest(jsonObj.getString("woeid"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -223,19 +220,35 @@ public class NewShootingRecord extends AppCompatActivity {
             }
         });
         queue.add(woeidStringRequest);
+    }
 
-        //get weather details for location using woeid
+    private void weatherRequest(String WOEID) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        String urlWOEID = "https://www.metaweather.com/api/location/" + WOEID;
+
         StringRequest weatherStringRequest = new StringRequest(Request.Method.GET, urlWOEID,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        double tempFahrenheit, tempCelcius;
+                        String temperature;
+                        final String[] weatherDetails = new String[3];
 
                         try {
-                            JSONArray jsonArr = new JSONArray(response);
-                            JSONObject jsonObj = jsonArr.getJSONObject(0);
-                            weatherDetails[0] = jsonObj.getString("the_temp");
-                            weatherDetails[1] = jsonObj.getString("wind_speed");
-                            weatherDetails[2] = jsonObj.getString("wind_direction_compass");
+                            JSONObject jsonObj = new JSONObject(response);
+                            JSONArray json1 = new JSONArray(jsonObj.getString("consolidated_weather"));
+                            JSONObject json2 = json1.getJSONObject(0);
+
+                            weatherDetails[0] = json2.getString("the_temp");
+                            weatherDetails[1] = json2.getString("wind_speed");
+                            weatherDetails[2] = json2.getString("wind_direction_compass");
+
+                            tempCelcius = Double.parseDouble(weatherDetails[0]);
+                            tempFahrenheit = ((tempCelcius * 9) / 5) + 32;
+                            temperature = String.valueOf(tempFahrenheit);
+                            weather.setText(String.valueOf("Temp: " + temperature + (char) 0x00B0 + "F, Wind: " + weatherDetails[1] + "mph " + weatherDetails[2]));
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -247,11 +260,6 @@ public class NewShootingRecord extends AppCompatActivity {
             }
         });
         queue.add(weatherStringRequest);
-
-        tempCelcius = Double.parseDouble(weatherDetails[0]);
-        tempFahrenheit = ((tempCelcius * 9) / 5) + 32;
-        temperature = String.valueOf(tempFahrenheit);
-        weather.setText(String.valueOf("Temp: " + temperature + (char) 0x00B0 + "F, Wind: " + weatherDetails[1] + "mph " + weatherDetails[2]));
     }
 
     @Override

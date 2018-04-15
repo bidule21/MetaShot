@@ -3,26 +3,22 @@ package com.andersonlucier.android.metashot.databaseservicelib;
 import android.content.Context;
 
 import com.andersonlucier.android.metashot.databaselib.GunRecordDataSource;
-import com.andersonlucier.android.metashot.databaseservicelib.impl.GraphRecord;
-import com.andersonlucier.android.metashot.databaseservicelib.impl.GraphRecords;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.GunRecord;
-import com.andersonlucier.android.metashot.databaseservicelib.impl.TargetRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IGunService;
-import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IService;
+import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IShotService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
 import com.andersonlucier.android.metashot.databaselib.ShootingRecordDataSource;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IShootingService;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseService implements IService, IShootingService, IGunService {
+public class DatabaseShotService implements IShotService, IShootingService, IGunService {
 
     private ShootingRecordDataSource srdatasource;
     private GunRecordDataSource grdatasource;
 
-    public DatabaseService(Context context) {
+    public DatabaseShotService(Context context) {
         srdatasource = new ShootingRecordDataSource(context);
         srdatasource.open();
 
@@ -30,6 +26,7 @@ public class DatabaseService implements IService, IShootingService, IGunService 
         grdatasource.open();
     }
 
+    //Shooting Record Service
     @Override
     public List<ShootingRecord> getAllShootingRecords() {
         List<ShootingRecord> returnValue = srdatasource.getAllShootingRecords();
@@ -55,56 +52,8 @@ public class DatabaseService implements IService, IShootingService, IGunService 
         return returnValue;
     }
 
-    @Override
-    public List<ShotRecord> getShotsRecordById(int id) {
-        GraphRecord graphSingle = new GraphRecord();
-        graphSingle.setId(1);
-        graphSingle.setX(10);
-        graphSingle.setY(20);
-        graphSingle.setZ(30);
-        GraphRecord graphSingleTwo = new GraphRecord();
-        graphSingle.setId(2);
-        graphSingle.setX(10);
-        graphSingle.setY(20);
-        graphSingle.setZ(30);
-        GraphRecords graphList = new GraphRecords();
-        graphList.addGraph(graphSingle);
-        graphList.addGraph(graphSingleTwo);
 
-        TargetRecord target = new TargetRecord();
-        target.setId(0);
-        target.setX(0);
-        target.setY(0);
-
-        ShotRecord shotOne = new ShotRecord();
-        shotOne.setBarrelTemp(80);
-        shotOne.setGraph(graphList);
-        shotOne.setId(0);
-        shotOne.setTarget(target);
-
-        ShotRecord shotTwo = new ShotRecord();
-        shotTwo.setBarrelTemp(80);
-        shotTwo.setGraph(graphList);
-        shotTwo.setId(1);
-        shotTwo.setTarget(target);
-
-        ShotRecord shotThree = new ShotRecord();
-        shotThree.setBarrelTemp(80);
-        shotThree.setGraph(graphList);
-        shotThree.setId(2);
-        shotThree.setTarget(target);
-
-        List<ShotRecord> shotList = new ArrayList<>();
-        shotList.add(shotOne);
-        shotList.add(shotTwo);
-        shotList.add(shotThree);
-
-        return shotList;
-
-    }
-
-
-
+    //Gun Record service
     @Override
     public List<GunRecord> getGunRecords() {
         List<GunRecord> gunList =grdatasource.getAllGunRecords();
@@ -126,5 +75,31 @@ public class DatabaseService implements IService, IShootingService, IGunService 
     public GunRecord getSingleGunRecord(String id) {
         GunRecord result = grdatasource.getSingleGunRecord(id);
         return result;
+    }
+
+    //Shot Records Service
+    @Override
+    public List<ShotRecord> getAllShotsRecordsByShootingId(String id) {
+        return null;
+    }
+
+    @Override
+    public ShotRecord getSingleShotsRecordsById(String id) {
+        return null;
+    }
+
+    @Override
+    public ShotRecord createShotRecord(ShotRecord record) {
+        return null;
+    }
+
+    @Override
+    public void deleteShotRecord(String id) {
+
+    }
+
+    @Override
+    public ShotRecord updateShotRecord(ShotRecord record) {
+        return null;
     }
 }

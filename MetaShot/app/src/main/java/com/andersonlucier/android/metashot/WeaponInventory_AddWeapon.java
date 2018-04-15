@@ -7,13 +7,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.andersonlucier.android.metashot.databaseservicelib.DatabaseService;
+import com.andersonlucier.android.metashot.databaseservicelib.DatabaseShotService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.GunRecord;
 
 public class WeaponInventory_AddWeapon extends AppCompatActivity {
 
     private EditText weaponNickname, weaponDetails;
-    private DatabaseService dbService;
+    private DatabaseShotService dbService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class WeaponInventory_AddWeapon extends AppCompatActivity {
         weaponNickname = findViewById(R.id.weaponNickname);
         weaponDetails = findViewById(R.id.weaponOtherDetails);
 
-        dbService = new DatabaseService(this);
+        dbService = new DatabaseShotService(this);
 
     }
     public void onClick(View view){

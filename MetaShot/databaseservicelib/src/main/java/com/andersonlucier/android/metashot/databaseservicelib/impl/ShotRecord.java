@@ -8,29 +8,40 @@ import com.andersonlucier.android.metashot.databaseservicelib.interfaces.shots.I
 
 public class ShotRecord implements IShot {
 
-    private int _id;
+    private String _id;
 
-    private GraphRecords _graph;
+    private String _shootingRecordId;
 
     private double _barrelTemp;
 
-    private TargetRecord _target;
+    private int _shotNumber;
+
+    private double _targetX;
+
+    private double _targetY;
 
     @Override
-    public int id() {
+    public String id() {
         return _id;
     }
-    public void setId(int id){
+    public void setId(String id){
         _id = id;
     }
 
     @Override
-    public GraphRecords graph() {
-        return _graph;
+    public String shootingRecordId() {
+        return _shootingRecordId;
+    }
+    public void setShootingRecordId(String _shootingRecordId) {
+        this._shootingRecordId = _shootingRecordId;
     }
 
-    public void setGraph(GraphRecords graph){
-        _graph = graph;
+    @Override
+    public int shotNumber() {
+        return _shotNumber;
+    }
+    public void setShotNumber(int _shotNumber) {
+        this._shotNumber = _shotNumber;
     }
 
     @Override
@@ -42,10 +53,18 @@ public class ShotRecord implements IShot {
     }
 
     @Override
-    public TargetRecord target() {
-        return _target;
+    public double targetX() {
+        return _targetX;
     }
-    public void setTarget(TargetRecord target) {
-        _target = target;
+    public void setTargetX(double _targetX) {
+        this._targetX = _targetX;
+    }
+
+    @Override
+    public double targetY() {
+        return _targetY;
+    }
+    public void setTargetY(double _targetY) {
+        this._targetY = _targetY;
     }
 }
