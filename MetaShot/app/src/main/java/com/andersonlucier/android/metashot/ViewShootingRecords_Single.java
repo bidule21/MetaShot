@@ -125,6 +125,11 @@ public class ViewShootingRecords_Single extends AppCompatActivity {
             case R.id.goToHome:
                 startActivity(new Intent(ViewShootingRecords_Single.this, MainActivity.class));
                 break;
+            case R.id.addShooting:
+                Intent intent = new Intent(new Intent(ViewShootingRecords_Single.this, NewShotRecord.class));
+                intent.putExtra("RECORD_ID", shootingRecordId);
+                startActivity(intent);
+                break;
         }
     }
 }

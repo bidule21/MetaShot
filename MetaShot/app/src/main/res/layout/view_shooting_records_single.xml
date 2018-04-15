@@ -42,11 +42,25 @@
         android:textColor="@color/black"
         android:text="@string/previousShotRecordsHeader"/>
 
-    <ListView
-        android:id="@+id/previousShotRecordsList"
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/previousShotRecordsHeader">
+
+        <ListView
+            android:id="@+id/previousShotRecordsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </ListView>
+    </LinearLayout>
+    <Button
+        android:id="@+id/addShooting"
+        style="@style/Widget.AppCompat.Button.Small"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/previousShotRecordsHeader" >
-    </ListView>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@android:drawable/btn_plus"
+        android:onClick="onClick" />
 
 </RelativeLayout>
