@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -13,23 +14,24 @@ import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecor
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShootingRecords extends AppCompatActivity {
+public class ViewShootingRecords extends AppCompatActivity {
     private DatabaseShotService dbService;
     private ListView lv;
+    private List<ShootingRecord> records;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shooting_records);
+        setContentView(R.layout.view_shooting_records);
 
         lv = (ListView) findViewById(R.id.shootingList);
 
         dbService = new DatabaseShotService(this);
-        List<ShootingRecord> records = dbService.getAllShootingRecords();
+        records = dbService.getAllShootingRecords();
 
         List<String> gunArrayList = new ArrayList<>();
-        for (ShootingRecord gun : records){
-            gunArrayList.add(gun.description());
+        for (ShootingRecord record : records){
+            gunArrayList.add(record.title() + " - " + record.datetime());
         }
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
@@ -39,13 +41,22 @@ public class ShootingRecords extends AppCompatActivity {
 
         lv.setAdapter(arrayAdapter);
 
+        lv.setTextFilterEnabled(true);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,int position, long id) {
+                Intent intent = new Intent(new Intent(ViewShootingRecords.this, ViewShootingRecords_Single.class));
+                intent.putExtra("RECORD_ID", records.get(position).Id());
+                startActivity(intent);
+
+            }
+        });
+
+
     }
     public void onClick(View view){
         switch (view.getId()) {
-            case R.id.addWeapon:
-                break;
             case R.id.goToHome:
-                startActivity(new Intent(ShootingRecords.this, MainActivity.class));
+                startActivity(new Intent(ViewShootingRecords.this, MainActivity.class));
                 break;
         }
     }
