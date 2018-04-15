@@ -2,17 +2,18 @@ package com.andersonlucier.android.metashot;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,8 +28,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -103,21 +102,21 @@ public class NewShootingRecord extends AppCompatActivity {
                             .GPS_PROVIDER);
                     if (gpsLocation != null) {
                         getGpsLocation(gpsLocation);
-
                     } else {
                         showSettingsAlert("GPS");
                     }
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED){
-                        getWeatherDetails(gpsLocation);
-                    /*TODO:
-                    query MetaWeather with lat, long
-                    get woeid from response
-                    query MetaWeather with woeid
-                    get temperature from response (in centigrade)
-                    convert temperature to fahrenheit
-                    get wind speed (mph) and wind direction (compass direction) from response
-                    set weather to temperature and wind speed/direction
-                     */
+                        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                        if (connectivityManager != null) {
+                            if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting()){
+                                getWeatherDetails(gpsLocation);
+                            } else {
+                                showSettingsAlert("INTERNET");
+                            }
+                        } else {
+                            Toast.makeText(this, "No network connection detected.", Toast.LENGTH_LONG).show();
+                        }
                     } else {
                         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, INTERNET_PERMISSION);
                     }
@@ -125,6 +124,7 @@ public class NewShootingRecord extends AppCompatActivity {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},GPS_LOCATION_PERMISSION);
                 }
                 break;
+
             case R.id.newShootingCreate:
                 if (recordName.getText().length() == 0) {
                     recordName.setText(R.string.recordNameDefault);
@@ -156,12 +156,24 @@ public class NewShootingRecord extends AppCompatActivity {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewShootingRecord.this);
         alertDialog.setTitle(provider + " SETTINGS");
         alertDialog.setMessage(provider + " is not enabled! Do you want to enable through Settings?");
-        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int which){
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                NewShootingRecord.this.startActivity(intent);
-            }
-        });
+        switch (provider) {
+            case "GPS":
+                alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    NewShootingRecord.this.startActivity(intent);
+                }
+            });
+                break;
+            case "INTERNET":
+                alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
+                        NewShootingRecord.this.startActivity(intent);
+                    }
+                });
+                break;
+        }
         alertDialog.setNegativeButton("Cancel",new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int which){
                 dialog.cancel();
@@ -181,25 +193,25 @@ public class NewShootingRecord extends AppCompatActivity {
     public void getWeatherDetails(Location location){
         String lat = Double.toString(location.getLatitude());
         String longi = Double.toString(location.getLongitude());
-        final String woeid;
-        String baseURL = "https://www.metaweather.com/api/location/search/?lattlong=";
-        String urlLatLong;
-        String urlWOEID;
+        double tempFahrenheit, tempCelcius;
+        String temperature;
+        final String[] woeid = new String[1];
+        final String[] weatherDetails = new String[3];
+        String urlLatLong = "https://www.metaweather.com/api/location//search/?lattlong=" + lat + "," + longi;
+        String urlWOEID = "https://www.metaweather.com/api/location/" + woeid[0];
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        urlLatLong = baseURL + lat + "," + longi;
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlLatLong,
+        //get woeid
+        StringRequest woeidStringRequest = new StringRequest(Request.Method.GET, urlLatLong,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        System.out.println("Response is: "+ response.substring(0,500));
+
                         try {
                             JSONArray jsonArr = new JSONArray(response);
                             JSONObject jsonObj = jsonArr.getJSONObject(0);
-                            System.out.println(jsonObj.getString("woeid"));
+                            woeid[0] = jsonObj.getString("woeid");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -207,13 +219,39 @@ public class NewShootingRecord extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println("That didn't work!");
+                System.out.println("Lat/Long url request error");
             }
         });
+        queue.add(woeidStringRequest);
 
-        queue.add(stringRequest);
+        //get weather details for location using woeid
+        StringRequest weatherStringRequest = new StringRequest(Request.Method.GET, urlWOEID,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
 
+                        try {
+                            JSONArray jsonArr = new JSONArray(response);
+                            JSONObject jsonObj = jsonArr.getJSONObject(0);
+                            weatherDetails[0] = jsonObj.getString("the_temp");
+                            weatherDetails[1] = jsonObj.getString("wind_speed");
+                            weatherDetails[2] = jsonObj.getString("wind_direction_compass");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("woeid url request error");
+            }
+        });
+        queue.add(weatherStringRequest);
 
+        tempCelcius = Double.parseDouble(weatherDetails[0]);
+        tempFahrenheit = ((tempCelcius * 9) / 5) + 32;
+        temperature = String.valueOf(tempFahrenheit);
+        weather.setText(String.valueOf("Temp: " + temperature + (char) 0x00B0 + "F, Wind: " + weatherDetails[1] + "mph " + weatherDetails[2]));
     }
 
     @Override
@@ -225,11 +263,6 @@ public class NewShootingRecord extends AppCompatActivity {
                             .GPS_PROVIDER);
                     if (gpsLocation != null) {
                         getGpsLocation(gpsLocation);
-                        /*double latitude = gpsLocation.getLatitude();
-                        double longitude = gpsLocation.getLongitude();
-                        String coordLat = Double.toString(latitude);
-                        String coordLong = Double.toString(longitude);
-                        autoGpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));*/
                     } else {
                         showSettingsAlert("GPS");
                     }
@@ -239,7 +272,16 @@ public class NewShootingRecord extends AppCompatActivity {
                 break;
             case INTERNET_PERMISSION:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    //TODO:process request requiring internet capability
+                    Location gpsLocation = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
+                    ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                    if (connectivityManager != null) {
+                        if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting()){
+                            getWeatherDetails(gpsLocation);
+                        } else {
+                            showSettingsAlert("INTERNET");
+                        }
+                    }
                 } else {
                     Toast.makeText(this, "Internet permission denied. Unable to complete request.", Toast.LENGTH_LONG).show();
                 }
