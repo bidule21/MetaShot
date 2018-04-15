@@ -10,12 +10,13 @@ import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
 import com.andersonlucier.android.metashot.databaselib.ShootingRecordDataSource;
+import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IShootingService;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DatabaseService implements IService {
+public class DatabaseService implements IService, IShootingService {
 
     private ShootingRecordDataSource srdatasource;
 
@@ -25,7 +26,7 @@ public class DatabaseService implements IService {
     }
 
     @Override
-    public List<ShootingRecord> getShootingRecords() {
+    public List<ShootingRecord> getAllShootingRecords() {
 
         GunRecord gunType = new GunRecord();
         gunType.setGunName("winchester");
@@ -36,8 +37,7 @@ public class DatabaseService implements IService {
         Date date = new Date();
         record.setDateTime(date);
         record.setDescription("Test");
-        record.setLat(10);
-        record.setLon(25);
+        record.setLocation("Omaha");
         record.setTemp(90);
         record.setTypeOfGun(gunType);
         record.setWindspeed(15);
@@ -47,8 +47,7 @@ public class DatabaseService implements IService {
         ShootingRecord recordTwo = new ShootingRecord();
         recordTwo.setDateTime(date);
         recordTwo.setDescription("TestTwo");
-        recordTwo.setLat(10);
-        recordTwo.setLon(25);
+        recordTwo.setLocation("Bellevue");
         recordTwo.setTemp(90);
         recordTwo.setTypeOfGun(gunType);
         recordTwo.setWindspeed(15);
@@ -58,8 +57,7 @@ public class DatabaseService implements IService {
         ShootingRecord recordThree = new ShootingRecord();
         recordThree.setDateTime(date);
         recordThree.setDescription("TestThree");
-        recordThree.setLat(10);
-        recordThree.setLon(25);
+        recordThree.setLocation("Papillion");
         recordThree.setTemp(90);
         recordThree.setTypeOfGun(gunType);
         recordThree.setWindspeed(15);
@@ -74,7 +72,7 @@ public class DatabaseService implements IService {
     }
 
     @Override
-    public ShootingRecord getShootingRecordById(int id) {
+    public ShootingRecord getSingleShootingRecord(String id) {
         ShootingRecord record = new ShootingRecord();
         Date date = new Date();
         GunRecord gunType = new GunRecord();
@@ -82,14 +80,18 @@ public class DatabaseService implements IService {
         gunType.setId(1);
         record.setDateTime(date);
         record.setDescription("Test");
-        record.setLat(10);
-        record.setLon(25);
+        record.setLocation("Omaha");
         record.setTemp(90);
         record.setTypeOfGun(gunType);
         record.setWindspeed(15);
         record.setId("a");
         record.setTitle("This is Sparta");
         return record;
+    }
+
+    @Override
+    public void deleteShootingRecord(String id) {
+
     }
 
     @Override
@@ -141,7 +143,7 @@ public class DatabaseService implements IService {
     }
 
     @Override
-    public ShootingRecord saveShootingRecord(ShootingRecord record) {
+    public ShootingRecord createShootingRecord(ShootingRecord record) {
         ShootingRecord returnValue = null;
         returnValue = srdatasource.createShootingRecord(record);
         return returnValue;

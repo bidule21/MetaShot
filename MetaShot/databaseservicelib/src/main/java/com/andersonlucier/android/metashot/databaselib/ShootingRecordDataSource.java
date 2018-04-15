@@ -1,8 +1,5 @@
 package com.andersonlucier.android.metashot.databaselib;
 
-/**
- * Created by SyberDeskTop on 3/27/2018.
- */
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -13,10 +10,11 @@ import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
-import com.andersonlucier.android.metashot.databaseservicelib.interfaces.shooting.IShooting;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class ShootingRecordDataSource {
@@ -45,8 +43,7 @@ public class ShootingRecordDataSource {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date date = new Date();
         values.put("datetime", dateFormat.format(date));
-        values.put("lat", record.lat());
-        values.put("lon", record.lon());
+        values.put("location", record.location());
         values.put("temp", record.temp());
         values.put("windSpeed", record.windspeed());
         values.put("description", record.description());
@@ -65,11 +62,43 @@ public class ShootingRecordDataSource {
         return newRecord;
     }
 
+    public List<ShootingRecord> getAllShootingRecords () {
+        List<ShootingRecord> records = new ArrayList<ShootingRecord> ();
+
+        Cursor cursor = database.query("shootingRecord",
+                allColumns, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()) {
+            ShootingRecord record = cursorToRecord(cursor);
+            records.add(record);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return records;
+    }
+
+    public ShootingRecord getSingleShootingRecord (String id) {
+
+        Cursor cursor = database.query("shootingRecord",
+                allColumns, "id" + " = '" + id + "'", null, null, null, null);
+
+        cursor.moveToFirst();
+        ShootingRecord singleRecord = cursorToRecord(cursor);
+        cursor.close();
+        return singleRecord;
+    }
+
+    public void deleteShootingRecord(String id) {
+        System.out.println("Shooting Record deleted with id: " + id);
+        database.delete("shootingRecord", "id" + " = '" + id + "'", null);
+    }
+
     private ShootingRecord cursorToRecord(Cursor cursor) {
         ShootingRecord comment = new ShootingRecord();
         comment.setId(cursor.getString(0));
         comment.setTitle(cursor.getString(1));
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         try {
             Date date = dateFormat.parse(cursor.getString(2));
             comment.setDateTime(date);
@@ -77,12 +106,11 @@ public class ShootingRecordDataSource {
             comment.setDateTime(null);
         }
 
-        comment.setLat(cursor.getDouble(3));
-        comment.setLon(cursor.getDouble(4));
-        comment.setTemp(cursor.getDouble(5));
-        comment.setWindspeed(cursor.getDouble(6));
-        comment.setDescription(cursor.getString(7));
-        //comment.setTypeOfGun(cursor.getString(8));
+        comment.setLocation(cursor.getString(3));
+        comment.setTemp(cursor.getDouble(4));
+        comment.setWindspeed(cursor.getDouble(5));
+        comment.setDescription(cursor.getString(6));
+        //comment.setTypeOfGun(cursor.getString(7));
         return comment;
     }
 

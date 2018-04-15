@@ -16,9 +16,7 @@ public class ShootingRecord implements IShooting {
 
     private Date _datetime;
 
-    private double _lat;
-
-    private double _lon;
+    private String _location;
 
     private double _temp;
 
@@ -57,20 +55,13 @@ public class ShootingRecord implements IShooting {
     }
 
     @Override
-    public double lat() {
-        return _lat;
+    public String location() {
+        return _location;
     }
-    public void setLat(double lat) {
-        _lat = lat;
+    public void setLocation(String location) {
+        _location = location;
     }
 
-    @Override
-    public double lon() {
-        return _lon;
-    }
-    public void setLon(double lon) {
-        _lon = lon;
-    }
 
     @Override
     public double temp() {

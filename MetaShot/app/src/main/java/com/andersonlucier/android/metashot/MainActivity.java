@@ -17,10 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_page);
-
-        DatabaseService service = new DatabaseService(this);
-        ShootingRecord shooting = service.getShootingRecordById(1);
-        Log.d("attempt", shooting.description());
     }
     public void onClick(View view){
         switch (view.getId()) {

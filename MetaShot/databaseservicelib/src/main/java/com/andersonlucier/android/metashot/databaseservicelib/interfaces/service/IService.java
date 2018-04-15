@@ -11,13 +11,9 @@ import java.util.List;
  */
 
 public interface IService {
-    public List<ShootingRecord> getShootingRecords();
 
-    public ShootingRecord getShootingRecordById(int id);
 
     public List<ShotRecord> getShotsRecordById(int id);
-
-    public ShootingRecord saveShootingRecord(ShootingRecord record);
 
     public List<GunRecord> getGunRecords();
 

@@ -15,9 +15,7 @@ public interface IShooting {
 
     Date datetime();
 
-    double lat();
-
-    double lon();
+    String location();
 
     double temp();
 

@@ -32,6 +32,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Locale;
@@ -90,15 +91,12 @@ public class NewShootingRecord extends AppCompatActivity {
                             .GPS_PROVIDER);
                     if (gpsLocation != null) {
                         getGpsLocation(gpsLocation);
-                        /*double latitude = gpsLocation.getLatitude();
-                        double longitude = gpsLocation.getLongitude();
-                        String coordLat = String.format(Locale.getDefault(),"%.2f",latitude);
-                        String coordLong = String.format(Locale.getDefault(), "%.2f", longitude);
-                        autoGpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));*/
+
                     } else {
                         showSettingsAlert("GPS");
                     }
                     if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED){
+                        getWeatherDetails(gpsLocation);
                     /*TODO:
                     query MetaWeather with lat, long
                     get woeid from response
@@ -125,7 +123,7 @@ public class NewShootingRecord extends AppCompatActivity {
                 shooting.setTitle(recordName.getText().toString());
                 shooting.setTemp(Double.parseDouble(weather.getText().toString()));
                 shooting.setDescription(otherDetails.getText().toString());
-                dbService.saveShootingRecord(shooting);
+                dbService.createShootingRecord(shooting);
 
                 //TODO: Add code for sending data to database for storage
                 Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n" +
@@ -180,19 +178,30 @@ public class NewShootingRecord extends AppCompatActivity {
 
         urlLatLong = baseURL + lat + "," + longi;
 
-       JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlLatLong, new Response.Listener<JSONObject>(){
-                @Override
-                    public void onResponse(JSONObject response){
-                        response.toString;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlLatLong,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        System.out.println("Response is: "+ response.substring(0,500));
+                        try {
+                            JSONArray jsonArr = new JSONArray(response);
+                            JSONObject jsonObj = jsonArr.getJSONObject(0);
+                            System.out.println(jsonObj.getString("woeid"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                },
-                new Response.ErrorListener(){
-                @Override
-                public void onErrorResponse(VolleyError error) {
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("That didn't work!");
+            }
+        });
 
-                 }
-                });
-        queue.add(jsonObjectRequest);
+        queue.add(stringRequest);
+
+
     }
 
     @Override
