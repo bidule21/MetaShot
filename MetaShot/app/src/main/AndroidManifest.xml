@@ -28,6 +28,7 @@
         <activity android:name=".NewShotRecord" />
         <activity android:name=".NewShotRecord_AutoRecord" />
         <activity android:name=".NewShotRecord_ManualCreate"></activity>
+        <activity android:name=".ShootingRecords"/>
 
         <service android:name=".AppLocationService" />
     </application>
