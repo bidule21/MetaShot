@@ -10,6 +10,7 @@ import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
+import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IShootingService;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -17,9 +18,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class ShootingRecordDataSource {
+public class ShootingRecordDataSource implements IShootingService {
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
+    private String dbTableName = "shootingRecord";
     private String[] allColumns = { "id",
             "title", "datetime", "location", "temp", "wind", "description", "gunTypeId", "weather" };
 
@@ -52,9 +54,9 @@ public class ShootingRecordDataSource {
         }
         values.put("weather", record.weather());
 
-        database.insert("shootingRecord", null,
+        database.insert(dbTableName, null,
                 values);
-        Cursor cursor = database.query("shootingRecord",
+        Cursor cursor = database.query(dbTableName,
                 allColumns, "id" + " = '" + idToCreate + "'", null,
                 null, null, null);
         cursor.moveToFirst();
@@ -66,7 +68,7 @@ public class ShootingRecordDataSource {
     public List<ShootingRecord> getAllShootingRecords () {
         List<ShootingRecord> records = new ArrayList<ShootingRecord> ();
 
-        Cursor cursor = database.query("shootingRecord",
+        Cursor cursor = database.query(dbTableName,
                 allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
@@ -81,7 +83,7 @@ public class ShootingRecordDataSource {
 
     public ShootingRecord getSingleShootingRecord (String id) {
 
-        Cursor cursor = database.query("shootingRecord",
+        Cursor cursor = database.query(dbTableName,
                 allColumns, "id" + " = '" + id + "'", null, null, null, null);
 
         cursor.moveToFirst();
@@ -92,7 +94,7 @@ public class ShootingRecordDataSource {
 
     public void deleteShootingRecord(String id) {
         System.out.println("Shooting Record deleted with id: " + id);
-        database.delete("shootingRecord", "id" + " = '" + id + "'", null);
+        database.delete(dbTableName, "id" + " = '" + id + "'", null);
     }
 
     private ShootingRecord cursorToRecord(Cursor cursor) {

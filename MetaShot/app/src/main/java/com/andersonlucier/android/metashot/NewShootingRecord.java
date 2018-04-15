@@ -66,7 +66,7 @@ public class NewShootingRecord extends AppCompatActivity {
 
         Spinner spinner = findViewById(R.id.weaponSelect);
         dbService = new DatabaseShotService(this);
-        List<GunRecord> records = dbService.getGunRecords();
+        List<GunRecord> records = dbService.getAllGunRecords();
         List<String> list = new ArrayList<>();
 
         list.add("No weapon selected.");

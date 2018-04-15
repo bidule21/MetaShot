@@ -3,6 +3,7 @@ package com.andersonlucier.android.metashot.databaseservicelib;
 import android.content.Context;
 
 import com.andersonlucier.android.metashot.databaselib.GunRecordDataSource;
+import com.andersonlucier.android.metashot.databaselib.ShotRecordDataSource;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.GunRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IGunService;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IShotService;
@@ -17,6 +18,7 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
 
     private ShootingRecordDataSource srdatasource;
     private GunRecordDataSource grdatasource;
+    private ShotRecordDataSource strdatasource;
 
     public DatabaseShotService(Context context) {
         srdatasource = new ShootingRecordDataSource(context);
@@ -24,6 +26,9 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
 
         grdatasource = new GunRecordDataSource(context);
         grdatasource.open();
+
+        strdatasource = new ShotRecordDataSource(context);
+        strdatasource.open();
     }
 
     //Shooting Record Service
@@ -55,7 +60,7 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
 
     //Gun Record service
     @Override
-    public List<GunRecord> getGunRecords() {
+    public List<GunRecord> getAllGunRecords() {
         List<GunRecord> gunList =grdatasource.getAllGunRecords();
         return gunList;
     }
@@ -80,22 +85,25 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
     //Shot Records Service
     @Override
     public List<ShotRecord> getAllShotsRecordsByShootingId(String id) {
-        return null;
+        List<ShotRecord> returnValue = strdatasource.getAllShotsRecordsByShootingId(id);
+        return returnValue;
     }
 
     @Override
     public ShotRecord getSingleShotsRecordsById(String id) {
-        return null;
+        ShotRecord result = strdatasource.getSingleShotsRecordsById(id);
+        return result;
     }
 
     @Override
     public ShotRecord createShotRecord(ShotRecord record) {
-        return null;
+        ShotRecord result = strdatasource.createShotRecord(record);
+        return result;
     }
 
     @Override
     public void deleteShotRecord(String id) {
-
+        strdatasource.deleteShotRecord(id);
     }
 
     @Override

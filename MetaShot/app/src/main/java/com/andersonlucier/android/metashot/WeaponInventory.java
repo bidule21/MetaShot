@@ -20,7 +20,7 @@ public class WeaponInventory extends AppCompatActivity {
         setContentView(R.layout.weapon_inventory);
 
         dbService = new DatabaseShotService(this);
-        List<GunRecord> records = dbService.getGunRecords();
+        List<GunRecord> records = dbService.getAllGunRecords();
 
         for (GunRecord gun : records){
             //heres where you add the records to the list

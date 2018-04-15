@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.andersonlucier.android.metashot.databaseservicelib.impl.GunRecord;
+import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IGunService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,10 @@ import java.util.UUID;
  * Created by SyberDeskTop on 4/15/2018.
  */
 
-public class GunRecordDataSource {
+public class GunRecordDataSource implements IGunService {
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
+    private String dbTableName = "gunRecord";
     private String[] allColumns = { "id", "name", "description"};
 
     public GunRecordDataSource(Context context) {dbHelper = new MySQLiteHelper(context);}
@@ -38,10 +40,10 @@ public class GunRecordDataSource {
         values.put("name", record.gunName());
         values.put("description", record.details());
 
-        database.insert("gunRecord", null,
+        database.insert(dbTableName, null,
                 values);
 
-        Cursor cursor = database.query("gunRecord",
+        Cursor cursor = database.query(dbTableName,
                 allColumns, "id" + " = '" + idToCreate + "'", null,
                 null, null, null);
         cursor.moveToFirst();
@@ -53,7 +55,7 @@ public class GunRecordDataSource {
     public List<GunRecord> getAllGunRecords() {
         List<GunRecord> records = new ArrayList<>();
 
-        Cursor cursor = database.query("gunRecord",
+        Cursor cursor = database.query(dbTableName,
                 allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
@@ -68,7 +70,7 @@ public class GunRecordDataSource {
 
     public GunRecord getSingleGunRecord (String id) {
 
-        Cursor cursor = database.query("gunRecord",
+        Cursor cursor = database.query(dbTableName,
                 allColumns, "id" + " = '" + id + "'", null, null, null, null);
 
         cursor.moveToFirst();
@@ -79,7 +81,7 @@ public class GunRecordDataSource {
 
     public void deleteGunRecord(String id) {
         System.out.println("Gun Record deleted with id: " + id);
-        database.delete("gunRecord", "id" + " = '" + id + "'", null);
+        database.delete(dbTableName, "id" + " = '" + id + "'", null);
     }
 
     private GunRecord cursorToRecord(Cursor cursor) {

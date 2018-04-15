@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface IGunService {
 
-    List<GunRecord> getGunRecords();
+    List<GunRecord> getAllGunRecords();
 
     GunRecord createGunRecord(GunRecord record);
 
