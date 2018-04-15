@@ -12,6 +12,7 @@ import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
 import com.andersonlucier.android.metashot.databaselib.ShootingRecordDataSource;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IShootingService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseShotService implements IShotService, IShootingService, IGunService {
@@ -85,14 +86,40 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
     //Shot Records Service
     @Override
     public List<ShotRecord> getAllShotsRecordsByShootingId(String id) {
-        List<ShotRecord> returnValue = strdatasource.getAllShotsRecordsByShootingId(id);
+        //TODO: Uncomment for actual database results
+/*        List<ShotRecord> returnValue = strdatasource.getAllShotsRecordsByShootingId(id);
+        return returnValue;*/
+
+        List<ShotRecord> returnValue = new ArrayList<>();
+        for (int x = 1; x <= 8; x++) {
+            ShotRecord record = new ShotRecord();
+            record.setId("abc");
+            record.setShotNumber(x);
+            record.setBarrelTemp(90);
+            record.setTargetX(-3);
+            record.setTargetY(2);
+            record.setShootingRecordId("CDF");
+            returnValue.add(record);
+        }
         return returnValue;
+
     }
 
     @Override
     public ShotRecord getSingleShotsRecordsById(String id) {
-        ShotRecord result = strdatasource.getSingleShotsRecordsById(id);
-        return result;
+        //TODO: Uncomment for actual database results
+        /*ShotRecord result = strdatasource.getSingleShotsRecordsById(id);
+        return result;*/
+        ShotRecord record = new ShotRecord();
+        record.setId("abc");
+        record.setShotNumber(1);
+        record.setBarrelTemp(90);
+        record.setTargetX(-3);
+        record.setTargetY(2);
+        record.setShootingRecordId("CDF");
+
+        return record;
+
     }
 
     @Override
