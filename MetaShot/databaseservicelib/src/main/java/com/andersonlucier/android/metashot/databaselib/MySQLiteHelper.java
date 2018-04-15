@@ -14,12 +14,14 @@ import com.andersonlucier.android.metashot.databaseservicelib.R;
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "metashot.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
 
     private static String DATABASE_SHOOTING_TABLE;
     private static String DATABASE_GUN_TABLE;
     private static String DATABASE_GUN_DELETE;
     private static String DATABASE_SHOOTING_DELETE;
+    private static String DATABASE_SHOT_TABLE;
+    private static String DATABASE_SHOT_DELETE;
 
     public MySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -27,6 +29,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         DATABASE_GUN_TABLE= context.getResources().getString(R.string.createdgunrecord);
         DATABASE_GUN_DELETE = context.getResources().getString(R.string.deletegunrecord);
         DATABASE_SHOOTING_DELETE = context.getResources().getString(R.string.deleteshootingrecord);
+
+        DATABASE_SHOT_TABLE= context.getResources().getString(R.string.createdshotrecord);
+        DATABASE_SHOT_DELETE = context.getResources().getString(R.string.deleteshotrecord);
     }
 
     @Override
@@ -34,6 +39,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         Log.v("Database Created", "the database has been started");
         database.execSQL(DATABASE_SHOOTING_TABLE);
         database.execSQL(DATABASE_GUN_TABLE);
+        database.execSQL(DATABASE_SHOT_TABLE);
         Log.v("Database Created", "the database has been created");
     }
 
@@ -41,6 +47,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DATABASE_GUN_DELETE);
         db.execSQL(DATABASE_SHOOTING_DELETE);
+        db.execSQL(DATABASE_SHOT_DELETE);
         onCreate(db);
     }
 

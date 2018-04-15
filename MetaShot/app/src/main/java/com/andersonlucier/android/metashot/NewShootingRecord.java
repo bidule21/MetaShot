@@ -132,14 +132,15 @@ public class NewShootingRecord extends AppCompatActivity {
                     recordName.setText(R.string.recordNameDefault);
                 }
 
-
                 ShootingRecord shooting = new ShootingRecord();
                 shooting.setTitle(recordName.getText().toString());
-                shooting.setTemp(Double.parseDouble(weather.getText().toString()));
+                shooting.setLocation(autoGpsLocation.getText().toString());
+                shooting.setTemp(autofillTemperature);
+                shooting.setWind(windFactors);
                 shooting.setDescription(otherDetails.getText().toString());
+                shooting.setWeather(weather.getText().toString());
                 dbService.createShootingRecord(shooting);
 
-                //TODO: Add code for sending data to database for storage
                 Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n" +
                         "GPS Location: " + autoGpsLocation.getText().toString() + "\n Weather: " +
                         weather.getText().toString() + "\n Other Details: " + otherDetails.getText().toString(), Toast.LENGTH_LONG).show();

@@ -21,7 +21,7 @@ public class ShootingRecordDataSource {
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
     private String[] allColumns = { "id",
-            "title", "datetime", "location", "temp", "windSpeed", "description", "gunTypeId" };
+            "title", "datetime", "location", "temp", "wind", "description", "gunTypeId", "weather" };
 
     public ShootingRecordDataSource(Context context) {
         dbHelper = new MySQLiteHelper(context);
@@ -45,11 +45,12 @@ public class ShootingRecordDataSource {
         values.put("datetime", dateFormat.format(date));
         values.put("location", record.location());
         values.put("temp", record.temp());
-        values.put("windSpeed", record.windspeed());
+        values.put("wind", record.wind());
         values.put("description", record.description());
         if(record.typeOfGun() != null) {
             values.put("gunTypeId", record.typeOfGun().id());
         }
+        values.put("weather", record.weather());
 
         database.insert("shootingRecord", null,
                 values);
@@ -108,9 +109,10 @@ public class ShootingRecordDataSource {
 
         comment.setLocation(cursor.getString(3));
         comment.setTemp(cursor.getDouble(4));
-        comment.setWindspeed(cursor.getDouble(5));
+        comment.setWind(cursor.getString(5));
         comment.setDescription(cursor.getString(6));
         //comment.setTypeOfGun(cursor.getString(7));
+        comment.setWeather(cursor.getString(8));
         return comment;
     }
 

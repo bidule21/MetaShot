@@ -20,13 +20,15 @@ public class ShootingRecord implements IShooting {
 
     private double _temp;
 
-    private double _windspeed;
+    private String _wind;
 
     private String _description;
 
     private GunRecord _typeOfGun;
 
     private List<Integer> _listOfShotsId;
+
+    private String _weather;
 
 
 
@@ -72,11 +74,11 @@ public class ShootingRecord implements IShooting {
     }
 
     @Override
-    public double windspeed() {
-        return _windspeed;
+    public String wind() {
+        return _wind;
     }
-    public void setWindspeed(double windspeed) {
-        _windspeed = windspeed;
+    public void setWind(String windspeed) {
+        _wind = windspeed;
     }
 
     @Override
@@ -101,5 +103,14 @@ public class ShootingRecord implements IShooting {
     }
     public void setListOfShotsId( List<Integer> ids){
         _listOfShotsId = ids;
+    }
+
+
+    @Override
+    public String weather() {
+        return _weather;
+    }
+    public void setWeather(String weather) {
+        _weather = weather;
     }
 }

@@ -19,11 +19,13 @@ public interface IShooting {
 
     double temp();
 
-    double windspeed();
+    String wind();
 
     String description();
 
     IGun typeOfGun();
+
+    String weather();
 
     List<Integer> listOfShotsId();
 }
