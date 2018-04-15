@@ -7,9 +7,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.andersonlucier.android.metashot.databaseservicelib.DatabaseService;
+import com.andersonlucier.android.metashot.databaseservicelib.impl.GunRecord;
+
 public class WeaponInventory_AddWeapon extends AppCompatActivity {
 
     private EditText weaponNickname, weaponDetails;
+    private DatabaseService dbService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,12 +23,18 @@ public class WeaponInventory_AddWeapon extends AppCompatActivity {
         weaponNickname = findViewById(R.id.weaponNickname);
         weaponDetails = findViewById(R.id.weaponOtherDetails);
 
+        dbService = new DatabaseService(this);
 
     }
     public void onClick(View view){
         switch(view.getId()){
             case R.id.addNewWeapon:
-                //TODO: Add code for sending data to database
+
+                GunRecord gun = new GunRecord();
+                gun.setGunName(weaponNickname.getText().toString());
+                gun.setDetails(weaponDetails.getText().toString());
+                dbService.createGunRecord(gun);
+
                 Toast.makeText(this, "Nickname: " + weaponNickname.getText().toString() + "\n" + "Details: " + weaponDetails.getText().toString(), Toast.LENGTH_LONG).show();
                 startActivity(new Intent(WeaponInventory_AddWeapon.this, WeaponInventory.class));
                 break;

@@ -5,12 +5,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.andersonlucier.android.metashot.databaseservicelib.DatabaseService;
+import com.andersonlucier.android.metashot.databaseservicelib.impl.GunRecord;
+
+import java.util.List;
+
 public class WeaponInventory extends AppCompatActivity {
+
+    private DatabaseService dbService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weapon_inventory);
+
+        dbService = new DatabaseService(this);
+        List<GunRecord> records = dbService.getGunRecords();
+
+        for (GunRecord gun : records){
+            //heres where you add the records to the list
+            System.out.println(gun.id());
+            System.out.println(gun.gunName());
+            System.out.println(gun.details());
+        }
+
     }
     public void onClick(View view){
         switch (view.getId()) {

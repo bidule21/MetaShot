@@ -8,17 +8,17 @@ import com.andersonlucier.android.metashot.databaseservicelib.interfaces.shootin
 
 public class GunRecord implements IGun {
 
-    private int _id;
+    private String _id;
 
     private String _gunName;
 
     private String _details;
 
     @Override
-    public int id() {
+    public String id() {
         return _id;
     }
-    public void setId(int id) {
+    public void setId(String id) {
         _id = id;
     }
 

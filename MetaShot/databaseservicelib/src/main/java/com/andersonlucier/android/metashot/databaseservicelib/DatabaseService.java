@@ -2,10 +2,12 @@ package com.andersonlucier.android.metashot.databaseservicelib;
 
 import android.content.Context;
 
+import com.andersonlucier.android.metashot.databaselib.GunRecordDataSource;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.GraphRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.GraphRecords;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.GunRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.TargetRecord;
+import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IGunService;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
@@ -13,85 +15,44 @@ import com.andersonlucier.android.metashot.databaselib.ShootingRecordDataSource;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IShootingService;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class DatabaseService implements IService, IShootingService {
+public class DatabaseService implements IService, IShootingService, IGunService {
 
     private ShootingRecordDataSource srdatasource;
+    private GunRecordDataSource grdatasource;
 
     public DatabaseService(Context context) {
         srdatasource = new ShootingRecordDataSource(context);
         srdatasource.open();
+
+        grdatasource = new GunRecordDataSource(context);
+        grdatasource.open();
     }
 
     @Override
     public List<ShootingRecord> getAllShootingRecords() {
+        List<ShootingRecord> returnValue = srdatasource.getAllShootingRecords();
+        return returnValue;
 
-        GunRecord gunType = new GunRecord();
-        gunType.setGunName("winchester");
-        gunType.setId(1);
-
-        List<ShootingRecord> records = new ArrayList<>();
-        ShootingRecord record = new ShootingRecord();
-        Date date = new Date();
-        record.setDateTime(date);
-        record.setDescription("Test");
-        record.setLocation("Omaha");
-        record.setTemp(90);
-        record.setTypeOfGun(gunType);
-        record.setWindspeed(15);
-        record.setId("a");
-        record.setTitle("This is Sparta");
-
-        ShootingRecord recordTwo = new ShootingRecord();
-        recordTwo.setDateTime(date);
-        recordTwo.setDescription("TestTwo");
-        recordTwo.setLocation("Bellevue");
-        recordTwo.setTemp(90);
-        recordTwo.setTypeOfGun(gunType);
-        recordTwo.setWindspeed(15);
-        recordTwo.setId("b");
-        recordTwo.setTitle("This is Sparta Two");
-
-        ShootingRecord recordThree = new ShootingRecord();
-        recordThree.setDateTime(date);
-        recordThree.setDescription("TestThree");
-        recordThree.setLocation("Papillion");
-        recordThree.setTemp(90);
-        recordThree.setTypeOfGun(gunType);
-        recordThree.setWindspeed(15);
-        recordThree.setId("c");
-        recordThree.setTitle("This is Sparta Three");
-
-        records.add(record);
-        records.add(recordTwo);
-        records.add(recordThree);
-
-        return records;
     }
 
     @Override
     public ShootingRecord getSingleShootingRecord(String id) {
-        ShootingRecord record = new ShootingRecord();
-        Date date = new Date();
-        GunRecord gunType = new GunRecord();
-        gunType.setGunName("winchester");
-        gunType.setId(1);
-        record.setDateTime(date);
-        record.setDescription("Test");
-        record.setLocation("Omaha");
-        record.setTemp(90);
-        record.setTypeOfGun(gunType);
-        record.setWindspeed(15);
-        record.setId("a");
-        record.setTitle("This is Sparta");
-        return record;
+        ShootingRecord returnValue = srdatasource.getSingleShootingRecord(id);
+        return returnValue;
     }
 
     @Override
     public void deleteShootingRecord(String id) {
+        srdatasource.deleteShootingRecord(id);
+    }
 
+    @Override
+    public ShootingRecord createShootingRecord(ShootingRecord record) {
+        ShootingRecord returnValue = null;
+        returnValue = srdatasource.createShootingRecord(record);
+        return returnValue;
     }
 
     @Override
@@ -142,40 +103,28 @@ public class DatabaseService implements IService, IShootingService {
 
     }
 
-    @Override
-    public ShootingRecord createShootingRecord(ShootingRecord record) {
-        ShootingRecord returnValue = null;
-        returnValue = srdatasource.createShootingRecord(record);
-        return returnValue;
-    }
+
 
     @Override
     public List<GunRecord> getGunRecords() {
-        GunRecord gunType = new GunRecord();
-        gunType.setGunName("Des");
-        gunType.setId(1);
-        gunType.setDetails("awesome Gun");
-
-        GunRecord gunTypeTwo = new GunRecord();
-        gunTypeTwo.setGunName("Troy");
-        gunTypeTwo.setId(1);
-        gunTypeTwo.setDetails("awesome Gun");
-
-        GunRecord gunTypeThree = new GunRecord();
-        gunTypeThree.setGunName("Winchester");
-        gunTypeThree.setId(1);
-        gunTypeThree.setDetails("awesome Gun");
-
-        List<GunRecord> gunList = new ArrayList<>();
-        gunList.add(gunType);
-        gunList.add(gunTypeTwo);
-        gunList.add(gunTypeThree);
-
+        List<GunRecord> gunList =grdatasource.getAllGunRecords();
         return gunList;
     }
 
     @Override
-    public void saveGunRecord(GunRecord record) {
+    public GunRecord createGunRecord(GunRecord record) {
+        GunRecord result = grdatasource.createGunRecord(record);
+        return result;
+    }
 
+    @Override
+    public void deleteGunRecord(String id) {
+        grdatasource.deleteGunRecord(id);
+    }
+
+    @Override
+    public GunRecord getSingleGunRecord(String id) {
+        GunRecord result = grdatasource.getSingleGunRecord(id);
+        return result;
     }
 }

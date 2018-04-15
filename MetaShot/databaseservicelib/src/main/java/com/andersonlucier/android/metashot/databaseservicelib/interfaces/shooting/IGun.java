@@ -5,7 +5,7 @@ package com.andersonlucier.android.metashot.databaseservicelib.interfaces.shooti
  */
 
 public interface IGun {
-    int id();
+    String id();
 
     String gunName();
 

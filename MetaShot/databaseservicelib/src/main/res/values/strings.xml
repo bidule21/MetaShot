@@ -1,4 +1,6 @@
 <resources>
-    <string name="createdatabase">CREATE TABLE shootingRecord(id TEXT primary key not null, title TEXT, datetime TEXT, location TEXT, temp REAL, windSpeed REAL, description TEXT, gunTypeId TEXT);</string>
-    <string name="deletedatabase">DROP TABLE IF EXISTS shootingRecord;</string>
+    <string name="createdshootingrecord">CREATE TABLE shootingRecord(id TEXT primary key not null, title TEXT, datetime TEXT, location TEXT, temp REAL, windSpeed REAL, description TEXT, gunTypeId TEXT);</string>
+    <string name="createdgunrecord">CREATE TABLE gunRecord(id TEXT primary key not null, name TEXT, description TEXT);</string>
+    <string name="deleteshootingrecord">DROP TABLE IF EXISTS shootingRecord; </string>
+    <string name="deletegunrecord">DROP TABLE IF EXISTS gunRecord; </string>
 </resources>

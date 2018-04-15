@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.andersonlucier.android.metashot.databaseservicelib.DatabaseService;
+import com.andersonlucier.android.metashot.databaseservicelib.impl.GunRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -35,6 +36,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class NewShootingRecord extends AppCompatActivity {
@@ -61,11 +64,20 @@ public class NewShootingRecord extends AppCompatActivity {
         otherDetails = findViewById(R.id.otherDetails);
 
         Spinner spinner = findViewById(R.id.weaponSelect);
-        //TODO: Add code for populating selections from database list
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.weaponSelect, android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        dbService = new DatabaseService(this);
+        List<GunRecord> records = dbService.getGunRecords();
+        List<String> list = new ArrayList<>();
 
+        list.add("No weapon selected.");
+        for (GunRecord gun : records){
+            list.add(gun.gunName());
+        }
+
+        ArrayAdapter<String> adp1 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, list);
+        adp1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adp1);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
