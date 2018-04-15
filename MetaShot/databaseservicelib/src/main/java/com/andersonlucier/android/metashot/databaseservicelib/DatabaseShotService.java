@@ -130,7 +130,8 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
 
     @Override
     public void deleteShotRecord(String id) {
-        strdatasource.deleteShotRecord(id);
+        //TODO: Uncomment
+        //strdatasource.deleteShotRecord(id);
     }
 
     @Override

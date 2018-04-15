@@ -1,5 +1,7 @@
 package com.andersonlucier.android.metashot;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,15 +18,12 @@ import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by SyberDeskTop on 4/15/2018.
- */
-
 public class ViewShootingRecords_Single extends AppCompatActivity {
 
     private DatabaseShotService dbService;
     private List<ShotRecord> records;
     private String shootingRecordId;
+    AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +31,8 @@ public class ViewShootingRecords_Single extends AppCompatActivity {
         setContentView(R.layout.view_shooting_records_single);
         dbService = new DatabaseShotService(this);
         shootingRecordId = getIntent().getStringExtra("RECORD_ID");
+
+        builder = new AlertDialog.Builder(this);
 
         populateShootingInformation();
         populateShotRecords();
@@ -60,7 +61,7 @@ public class ViewShootingRecords_Single extends AppCompatActivity {
             gunArrayList.add("Shot - " + record.shotNumber());
         }
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
                 gunArrayList );
@@ -74,6 +75,47 @@ public class ViewShootingRecords_Single extends AppCompatActivity {
                 intent.putExtra("SHOT_RECORD_ID", records.get(position).id());
                 startActivity(intent);
 
+            }
+        });
+
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           final int position, long id) {
+
+                builder.setTitle("Delete");
+                builder.setMessage("Would you like to delete this shot?");
+
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        String item = arrayAdapter.getItem(position);
+                        String[] parts = item.split(" ");
+
+                        for(ShotRecord r: records) {
+                            if(r.shotNumber() == Integer.parseInt(parts[2])) {
+                                dbService.deleteGunRecord(r.id());
+                                break;
+                            }
+                        }
+                        arrayAdapter.remove(item);
+                        arrayAdapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+                return false;
             }
         });
     }
