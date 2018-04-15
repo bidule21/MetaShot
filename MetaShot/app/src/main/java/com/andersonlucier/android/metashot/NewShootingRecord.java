@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,6 +22,17 @@ import android.widget.Toast;
 
 import com.andersonlucier.android.metashot.databaseservicelib.DatabaseService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.Locale;
 
@@ -30,6 +42,7 @@ public class NewShootingRecord extends AppCompatActivity {
     private String item;
     AppLocationService appLocationService;
     private static final int GPS_LOCATION_PERMISSION = 0;
+    private static final int INTERNET_PERMISSION = 34;
     private DatabaseService dbService;
 
     @Override
@@ -76,13 +89,27 @@ public class NewShootingRecord extends AppCompatActivity {
                     Location gpsLocation = appLocationService.getLocation(LocationManager
                             .GPS_PROVIDER);
                     if (gpsLocation != null) {
-                        double latitude = gpsLocation.getLatitude();
+                        getGpsLocation(gpsLocation);
+                        /*double latitude = gpsLocation.getLatitude();
                         double longitude = gpsLocation.getLongitude();
                         String coordLat = String.format(Locale.getDefault(),"%.2f",latitude);
                         String coordLong = String.format(Locale.getDefault(), "%.2f", longitude);
-                        autoGpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));
+                        autoGpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));*/
                     } else {
                         showSettingsAlert("GPS");
+                    }
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED){
+                    /*TODO:
+                    query MetaWeather with lat, long
+                    get woeid from response
+                    query MetaWeather with woeid
+                    get temperature from response (in centigrade)
+                    convert temperature to fahrenheit
+                    get wind speed (mph) and wind direction (compass direction) from response
+                    set weather to temperature and wind speed/direction
+                     */
+                    } else {
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, INTERNET_PERMISSION);
                     }
                 } else {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},GPS_LOCATION_PERMISSION);
@@ -133,6 +160,41 @@ public class NewShootingRecord extends AppCompatActivity {
         alertDialog.show();
     }
 
+    public void getGpsLocation (Location location){
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+        String coordLat = String.format(Locale.getDefault(),"%.2f",latitude);
+        String coordLong = String.format(Locale.getDefault(), "%.2f", longitude);
+        autoGpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));
+    }
+
+    public void getWeatherDetails(Location location){
+        String lat = Double.toString(location.getLatitude());
+        String longi = Double.toString(location.getLongitude());
+        final String woeid;
+        String baseURL = "https://www.metaweather.com/api/location/search/?lattlong=";
+        String urlLatLong;
+        String urlWOEID;
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        urlLatLong = baseURL + lat + "," + longi;
+
+       JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlLatLong, new Response.Listener<JSONObject>(){
+                @Override
+                    public void onResponse(JSONObject response){
+                        response.toString;
+                    }
+                },
+                new Response.ErrorListener(){
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                 }
+                });
+        queue.add(jsonObjectRequest);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -141,14 +203,24 @@ public class NewShootingRecord extends AppCompatActivity {
                     Location gpsLocation = appLocationService.getLocation(LocationManager
                             .GPS_PROVIDER);
                     if (gpsLocation != null) {
-                        double latitude = gpsLocation.getLatitude();
+                        getGpsLocation(gpsLocation);
+                        /*double latitude = gpsLocation.getLatitude();
                         double longitude = gpsLocation.getLongitude();
                         String coordLat = Double.toString(latitude);
                         String coordLong = Double.toString(longitude);
-                        autoGpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));
+                        autoGpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));*/
                     } else {
                         showSettingsAlert("GPS");
                     }
+                } else {
+                    Toast.makeText(this, "GPS Permission denied. Unable to complete request.", Toast.LENGTH_LONG).show();
+                }
+                break;
+            case INTERNET_PERMISSION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    //TODO:process request requiring internet capability
+                } else {
+                    Toast.makeText(this, "Internet permission denied. Unable to complete request.", Toast.LENGTH_LONG).show();
                 }
         }
     }
