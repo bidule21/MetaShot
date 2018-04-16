@@ -16,26 +16,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/logoHeader"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:inputType="text"
         android:hint="@string/recordNameHint" />
-
-    <Button
-        android:id="@+id/autofillGpsLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/recordName"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:onClick="onClick"
-        android:text="@string/autofill_GPS_location" />
 
     <EditText
         android:id="@+id/gpsManual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/gpsAuto"
+        android:layout_below="@id/recordName"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="@string/gpsHint"
         android:inputType="text" />
@@ -46,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/gpsManual"
-        android:layout_below="@+id/autofillGpsLocation"
+        android:layout_below="@id/recordName"
         android:layout_marginStart="30dp"
         android:background="@android:drawable/ic_menu_mylocation"
         android:backgroundTint="@android:color/holo_red_dark"
@@ -58,6 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/gpsManual"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
         android:ems="10"
         android:inputType="text"
         android:layout_marginTop="5dp"

@@ -28,7 +28,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -70,7 +69,7 @@ public class NewShootingRecord extends AppCompatActivity {
         List<String> list = new ArrayList<>();
 
         list.add("No weapon selected.");
-        for (GunRecord gun : records){
+        for (GunRecord gun : records) {
             list.add(gun.gunName());
         }
 
@@ -97,33 +96,52 @@ public class NewShootingRecord extends AppCompatActivity {
 
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.autofillGpsLocation:
+
+            case R.id.gpsAuto:
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-                    Location gpsLocation = appLocationService.getLocation(LocationManager
-                            .GPS_PROVIDER);
+                    Location gpsLocation = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
+
                     if (gpsLocation != null) {
                         getGpsLocation(gpsLocation);
                     } else {
                         showSettingsAlert("GPS");
                     }
-                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED){
-                        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-                        if (connectivityManager != null) {
-                            if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting()){
-                                getWeatherDetails(gpsLocation);
+                } else {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_LOCATION_PERMISSION);
+                }
+                break;
+
+            case R.id.weatherAuto:
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+                    Location gpsLocation = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
+
+                    if (gpsLocation == null) {
+                        showSettingsAlert("GPS");
+                    } else {
+                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
+
+
+                            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                            if (connectivityManager != null) {
+                                if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting()) {
+                                    getWeatherDetails(gpsLocation);
+                                } else {
+                                    showSettingsAlert("INTERNET");
+                                }
                             } else {
-                                showSettingsAlert("INTERNET");
+                                Toast.makeText(this, "No network connection detected.", Toast
+                                        .LENGTH_LONG).show();
                             }
                         } else {
-                            Toast.makeText(this, "No network connection detected.", Toast.LENGTH_LONG).show();
+                            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, INTERNET_PERMISSION);
                         }
-                    } else {
-                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, INTERNET_PERMISSION);
                     }
                 } else {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},GPS_LOCATION_PERMISSION);
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_LOCATION_PERMISSION);
                 }
                 break;
 
@@ -146,27 +164,29 @@ public class NewShootingRecord extends AppCompatActivity {
                         weather.getText().toString() + "\n Other Details: " + otherDetails.getText().toString(), Toast.LENGTH_LONG).show();
                 startActivity(new Intent(NewShootingRecord.this, NewShotRecord.class));
                 break;
+
             case R.id.newShootingCancel:
                 startActivity(new Intent(NewShootingRecord.this, MainActivity.class));
                 break;
+
             case R.id.goToHome:
                 startActivity(new Intent(NewShootingRecord.this, MainActivity.class));
                 break;
         }
     }
 
-    public void showSettingsAlert(String provider){
+    public void showSettingsAlert(String provider) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(NewShootingRecord.this);
         alertDialog.setTitle(provider + " SETTINGS");
         alertDialog.setMessage(provider + " is not enabled! Do you want to enable through Settings?");
         switch (provider) {
             case "GPS":
                 alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    NewShootingRecord.this.startActivity(intent);
-                }
-            });
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        NewShootingRecord.this.startActivity(intent);
+                    }
+                });
                 break;
             case "INTERNET":
                 alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
@@ -177,23 +197,23 @@ public class NewShootingRecord extends AppCompatActivity {
                 });
                 break;
         }
-        alertDialog.setNegativeButton("Cancel",new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int which){
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
         alertDialog.show();
     }
 
-    public void getGpsLocation (Location location){
+    public void getGpsLocation(Location location) {
         double latitude = location.getLatitude();
         double longitude = location.getLongitude();
-        String coordLat = String.format(Locale.getDefault(),"%.2f",latitude);
+        String coordLat = String.format(Locale.getDefault(), "%.2f", latitude);
         String coordLong = String.format(Locale.getDefault(), "%.2f", longitude);
         autoGpsLocation.setText(String.valueOf(coordLat + ", " + coordLong));
     }
 
-    public void getWeatherDetails(Location location){
+    public void getWeatherDetails(Location location) {
         String lat = Double.toString(location.getLatitude());
         String longi = Double.toString(location.getLongitude());
 
@@ -288,20 +308,26 @@ public class NewShootingRecord extends AppCompatActivity {
                 }
                 break;
             case INTERNET_PERMISSION:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Location gpsLocation = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
                     ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-                    if (connectivityManager != null) {
-                        if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting()){
-                            getWeatherDetails(gpsLocation);
+                    if (gpsLocation == null){
+                        showSettingsAlert("GPS");
+                    } else {
+                        if (connectivityManager != null) {
+                            if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting()) {
+
+                                getWeatherDetails(gpsLocation);
+                            } else {
+                                showSettingsAlert("INTERNET");
+                            }
                         } else {
-                            showSettingsAlert("INTERNET");
+                            Toast.makeText(this, "Internet permission denied. Unable to complete request.", Toast.LENGTH_LONG).show();
                         }
                     }
-                } else {
-                    Toast.makeText(this, "Internet permission denied. Unable to complete request.", Toast.LENGTH_LONG).show();
                 }
+                break;
         }
     }
 }
