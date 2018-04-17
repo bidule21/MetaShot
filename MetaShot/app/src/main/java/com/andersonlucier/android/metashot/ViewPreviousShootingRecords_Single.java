@@ -77,6 +77,10 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
         TextView description = findViewById(R.id.description);
         description.setText(String.format("Description: %s", record.description()));
 
+        //sets the gun
+        TextView guntype = findViewById(R.id.guntype);
+        guntype.setText(String.format("Gun Used: %s", record.typeOfGun().gunName()));
+
     }
 
     private void populateShotRecords() {

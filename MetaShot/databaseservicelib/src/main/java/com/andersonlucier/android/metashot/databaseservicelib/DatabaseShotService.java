@@ -43,6 +43,12 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
     @Override
     public List<ShootingRecord> getAllShootingRecords() {
         List<ShootingRecord> returnValue = shootingDataSource.getAllShootingRecords();
+        for(ShootingRecord record : returnValue) {
+            if(record.typeOfGun() != null) {
+                GunRecord gunType = gunDataSource.getSingleGunRecord(record.typeOfGun().id());
+                record.setTypeOfGun(gunType);
+            }
+        }
         return returnValue;
 
     }
@@ -55,6 +61,8 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
     @Override
     public ShootingRecord getSingleShootingRecord(String id) {
         ShootingRecord returnValue = shootingDataSource.getSingleShootingRecord(id);
+        GunRecord gunType = gunDataSource.getSingleGunRecord(returnValue.gunId());
+        returnValue.setTypeOfGun(gunType);
         return returnValue;
     }
 

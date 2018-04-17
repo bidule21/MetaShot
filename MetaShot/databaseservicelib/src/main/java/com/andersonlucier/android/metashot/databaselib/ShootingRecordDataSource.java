@@ -55,7 +55,7 @@ public class ShootingRecordDataSource implements IShootingService {
         values.put("wind", record.wind());
         values.put("description", record.description());
         if(record.typeOfGun() != null) {
-            values.put("gunTypeId", record.typeOfGun().id());
+            values.put("gunTypeId", record.gunId());
         }
         values.put("weather", record.weather());
 
@@ -136,7 +136,9 @@ public class ShootingRecordDataSource implements IShootingService {
         comment.setTemp(cursor.getDouble(4));
         comment.setWind(cursor.getString(5));
         comment.setDescription(cursor.getString(6));
-        //comment.setTypeOfGun(cursor.getString(7));
+        if(cursor.getString(7) != null) {
+            comment.setGunId(cursor.getString(7));
+        }
         comment.setWeather(cursor.getString(8));
         return comment;
     }

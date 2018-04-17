@@ -21,10 +21,17 @@
         android:textColor="@color/black"/>
 
     <TextView
-        android:id="@+id/location"
+        android:id="@+id/guntype"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/datetime"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/guntype"
         android:textColor="@color/black"/>
 
     <TextView

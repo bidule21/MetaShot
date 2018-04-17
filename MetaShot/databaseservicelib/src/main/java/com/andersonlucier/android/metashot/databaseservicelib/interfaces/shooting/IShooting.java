@@ -27,4 +27,6 @@ public interface IShooting {
 
     String weather();
 
+    String gunId();
+
 }

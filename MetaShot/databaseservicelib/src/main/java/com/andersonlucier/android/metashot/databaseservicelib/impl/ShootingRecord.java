@@ -26,8 +26,6 @@ public class ShootingRecord implements IShooting {
 
     private GunRecord _typeOfGun;
 
-    private List<Integer> _listOfShotsId;
-
     private String _weather;
 
 
@@ -102,5 +100,14 @@ public class ShootingRecord implements IShooting {
     }
     public void setWeather(String weather) {
         _weather = weather;
+    }
+
+    @Override
+    public String gunId() {
+        return _typeOfGun.id();
+    }
+    public void setGunId(String id) {
+        _typeOfGun = new GunRecord();
+        _typeOfGun.setId(id);
     }
 }

@@ -42,12 +42,14 @@ import java.util.Locale;
 public class NewShootingRecord extends AppCompatActivity {
 
     private EditText recordName, autoGpsLocation, weather, otherDetails;
-    private String item, windFactors;
+    private int itemPosition;
+    private String windFactors;
     private Double autofillTemperature;
     AppLocationService appLocationService;
     private static final int GPS_LOCATION_PERMISSION = 0;
     private static final int INTERNET_PERMISSION = 34;
     private DatabaseShotService dbService;
+    private List<GunRecord> gunRecordsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +67,11 @@ public class NewShootingRecord extends AppCompatActivity {
 
         Spinner spinner = findViewById(R.id.weaponSelect);
         dbService = new DatabaseShotService(this);
-        List<GunRecord> records = dbService.getAllGunRecords();
+        gunRecordsList = dbService.getAllGunRecords();
         List<String> list = new ArrayList<>();
 
         list.add("No weapon selected.");
-        for (GunRecord gun : records) {
+        for (GunRecord gun : gunRecordsList) {
             list.add(gun.gunName());
         }
 
@@ -80,16 +82,12 @@ public class NewShootingRecord extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    item = "No weapon selected.";
-                } else {
-                    item = parent.getItemAtPosition(position).toString();
-                }
+                    itemPosition = position;
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                item = "No weapon selected.";
+                itemPosition = 0;
             }
         });
     }
@@ -157,6 +155,11 @@ public class NewShootingRecord extends AppCompatActivity {
                 shooting.setWind(windFactors);
                 shooting.setDescription(otherDetails.getText().toString());
                 shooting.setWeather(weather.getText().toString());
+
+                if (itemPosition > 0) {
+                    shooting.setTypeOfGun(gunRecordsList.get(itemPosition -1));
+                }
+
                 dbService.createShootingRecord(shooting);
 
                 Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n" +
