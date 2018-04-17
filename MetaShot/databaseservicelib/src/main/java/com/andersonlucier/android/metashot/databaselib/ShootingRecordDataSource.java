@@ -37,6 +37,11 @@ public class ShootingRecordDataSource implements IShootingService {
         dbHelper.close();
     }
 
+    /**
+     * Creates a new shooting record based on the shooting record passed in
+     * @param record to be created
+     * @return Shooting Record
+     */
     public ShootingRecord createShootingRecord(ShootingRecord record) {
         ContentValues values = new ContentValues();
         String idToCreate = UUID.randomUUID().toString();
@@ -65,6 +70,10 @@ public class ShootingRecordDataSource implements IShootingService {
         return newRecord;
     }
 
+    /**
+     * Gets all the shooting records in the database
+     * @return List of Shooting Records
+     */
     public List<ShootingRecord> getAllShootingRecords () {
         List<ShootingRecord> records = new ArrayList<ShootingRecord> ();
 
@@ -81,6 +90,11 @@ public class ShootingRecordDataSource implements IShootingService {
         return records;
     }
 
+    /**
+     * Gets a single shooting record based on the id
+     * @param id of the shooting record to return
+     * @return Shooting Record
+     */
     public ShootingRecord getSingleShootingRecord (String id) {
 
         Cursor cursor = database.query(dbTableName,
@@ -92,11 +106,20 @@ public class ShootingRecordDataSource implements IShootingService {
         return singleRecord;
     }
 
+    /**
+     * Deletes the shooting record based on the id
+     * @param id of record to be deleted
+     */
     public void deleteShootingRecord(String id) {
         System.out.println("Shooting Record deleted with id: " + id);
         database.delete(dbTableName, "id" + " = '" + id + "'", null);
     }
 
+    /**
+     * Populates a Shooting Record from the database cursor
+     * @param cursor current database row
+     * @return Shooting Record
+     */
     private ShootingRecord cursorToRecord(Cursor cursor) {
         ShootingRecord comment = new ShootingRecord();
         comment.setId(cursor.getString(0));

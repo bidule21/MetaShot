@@ -5,16 +5,17 @@ import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecor
 import java.util.List;
 
 /**
- * Created by SyberDeskTop on 4/15/2018.
+ * Service interface for the functions that will be used in the shooting record database table
+ * interaction and the service being called from the application
  */
 
 public interface IShootingService {
 
-    public List<ShootingRecord> getAllShootingRecords();
+    List<ShootingRecord> getAllShootingRecords();
 
-    public ShootingRecord getSingleShootingRecord(String id);
+    ShootingRecord getSingleShootingRecord(String id);
 
-    public void deleteShootingRecord(String id);
+    void deleteShootingRecord(String id);
 
-    public ShootingRecord createShootingRecord(ShootingRecord record);
+    ShootingRecord createShootingRecord(ShootingRecord record);
 }

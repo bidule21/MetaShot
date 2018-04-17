@@ -5,17 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.andersonlucier.android.metashot.databaseservicelib.impl.GunRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IGunService;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-/**
- * Created by SyberDeskTop on 4/15/2018.
- */
 
 public class GunRecordDataSource implements IGunService {
     private SQLiteDatabase database;
@@ -33,6 +27,11 @@ public class GunRecordDataSource implements IGunService {
         dbHelper.close();
     }
 
+    /**
+     * Creates a gun record based on the gun record passed in
+     * @param record to be created
+     * @return Gun Record
+     */
     public GunRecord createGunRecord(GunRecord record) {
         ContentValues values = new ContentValues();
         String idToCreate = UUID.randomUUID().toString();
@@ -52,6 +51,10 @@ public class GunRecordDataSource implements IGunService {
         return newRecord;
     }
 
+    /**
+     * Gets all the gun records in the database
+     * @return List of Gun Records
+     */
     public List<GunRecord> getAllGunRecords() {
         List<GunRecord> records = new ArrayList<>();
 
@@ -68,6 +71,11 @@ public class GunRecordDataSource implements IGunService {
         return records;
     }
 
+    /**
+     * Gets a single gun record based on the id passed in
+     * @param id of the gun record
+     * @return Gun Record
+     */
     public GunRecord getSingleGunRecord (String id) {
 
         Cursor cursor = database.query(dbTableName,
@@ -79,11 +87,20 @@ public class GunRecordDataSource implements IGunService {
         return singleRecord;
     }
 
+    /**
+     * Delete a gun record based on the id
+     * @param id of the record to delete
+     */
     public void deleteGunRecord(String id) {
         System.out.println("Gun Record deleted with id: " + id);
         database.delete(dbTableName, "id" + " = '" + id + "'", null);
     }
 
+    /**
+     * Populates a Gun Record from the database cursor
+     * @param cursor current database row
+     * @return Gun Record
+     */
     private GunRecord cursorToRecord(Cursor cursor) {
         GunRecord record = new GunRecord();
         record.setId(cursor.getString(0));

@@ -1,7 +1,7 @@
 package com.andersonlucier.android.metashot.databaseservicelib.interfaces.shooting;
 
 /**
- * Created by SyberDeskTop on 3/12/2018.
+ * Interface object for the gun record
  */
 
 public interface IGun {

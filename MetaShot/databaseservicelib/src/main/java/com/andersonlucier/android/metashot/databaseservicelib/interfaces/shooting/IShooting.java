@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by SyberDeskTop on 3/12/2018.
+ * Interface object for the shooting record
  */
 
 public interface IShooting {
@@ -27,5 +27,4 @@ public interface IShooting {
 
     String weather();
 
-    List<Integer> listOfShotsId();
 }

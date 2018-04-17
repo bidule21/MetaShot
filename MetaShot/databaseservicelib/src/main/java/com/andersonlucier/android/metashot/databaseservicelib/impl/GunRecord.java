@@ -3,7 +3,7 @@ package com.andersonlucier.android.metashot.databaseservicelib.impl;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.shooting.IGun;
 
 /**
- * Created by SyberDeskTop on 3/12/2018.
+ * Implementation object for the gun record that will be passed between all three modules
  */
 
 public class GunRecord implements IGun {
@@ -34,7 +34,6 @@ public class GunRecord implements IGun {
     public String gunName() {
         return _gunName;
     }
-
     public void setGunName(String gunName) {
         _gunName = gunName;
     }

@@ -5,7 +5,8 @@ import com.andersonlucier.android.metashot.databaseservicelib.impl.GunRecord;
 import java.util.List;
 
 /**
- * Created by SyberDeskTop on 4/15/2018.
+ * Service interface for the functions that will be used in the gun record database table
+ * interaction and the service being called from the application
  */
 
 public interface IGunService {

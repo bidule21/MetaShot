@@ -3,7 +3,7 @@ package com.andersonlucier.android.metashot.databaseservicelib.impl;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.shots.IShot;
 
 /**
- * Created by SyberDeskTop on 3/12/2018.
+ * Implementation object for the shot record that will be passed between all three modules
  */
 
 public class ShotRecord implements IShot {

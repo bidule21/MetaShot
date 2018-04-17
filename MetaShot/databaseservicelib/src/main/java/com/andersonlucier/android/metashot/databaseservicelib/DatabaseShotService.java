@@ -17,77 +17,122 @@ import java.util.List;
 
 public class DatabaseShotService implements IShotService, IShootingService, IGunService {
 
-    private ShootingRecordDataSource srdatasource;
-    private GunRecordDataSource grdatasource;
-    private ShotRecordDataSource strdatasource;
+    //Database Source Objects
+    private ShootingRecordDataSource shootingDataSource;
+    private GunRecordDataSource gunDataSource;
+    private ShotRecordDataSource ShotDataSource;
 
     public DatabaseShotService(Context context) {
-        srdatasource = new ShootingRecordDataSource(context);
-        srdatasource.open();
 
-        grdatasource = new GunRecordDataSource(context);
-        grdatasource.open();
+        //Configure the database objects and open the connection to the database
+        shootingDataSource = new ShootingRecordDataSource(context);
+        shootingDataSource.open();
 
-        strdatasource = new ShotRecordDataSource(context);
-        strdatasource.open();
+        gunDataSource = new GunRecordDataSource(context);
+        gunDataSource.open();
+
+        ShotDataSource = new ShotRecordDataSource(context);
+        ShotDataSource.open();
     }
 
-    //Shooting Record Service
+    //Shooting Records
+    /**
+     * Gets all the shooting records in the database
+     * @return List of Shooting Records
+     */
     @Override
     public List<ShootingRecord> getAllShootingRecords() {
-        List<ShootingRecord> returnValue = srdatasource.getAllShootingRecords();
+        List<ShootingRecord> returnValue = shootingDataSource.getAllShootingRecords();
         return returnValue;
 
     }
 
+    /**
+     * Gets a single shooting record based on the id
+     * @param id of the shooting record to return
+     * @return Shooting Record
+     */
     @Override
     public ShootingRecord getSingleShootingRecord(String id) {
-        ShootingRecord returnValue = srdatasource.getSingleShootingRecord(id);
+        ShootingRecord returnValue = shootingDataSource.getSingleShootingRecord(id);
         return returnValue;
     }
 
+    /**
+     * Deletes the shooting record based on the id
+     * @param id of record to be deleted
+     */
     @Override
     public void deleteShootingRecord(String id) {
-        srdatasource.deleteShootingRecord(id);
+        shootingDataSource.deleteShootingRecord(id);
     }
 
+    /**
+     * Creates a new shooting record based on the shooting record passed in
+     * @param record to be created
+     * @return Shooting Record
+     */
     @Override
     public ShootingRecord createShootingRecord(ShootingRecord record) {
-        ShootingRecord returnValue = null;
-        returnValue = srdatasource.createShootingRecord(record);
+        ShootingRecord returnValue = shootingDataSource.createShootingRecord(record);
         return returnValue;
     }
 
 
     //Gun Record service
+
+    /**
+     * Gets all the gun records in the database
+     * @return List of Gun Records
+     */
     @Override
     public List<GunRecord> getAllGunRecords() {
-        List<GunRecord> gunList =grdatasource.getAllGunRecords();
+        List<GunRecord> gunList = gunDataSource.getAllGunRecords();
         return gunList;
     }
 
+    /**
+     * Creates a gun record based on the gun record passed in
+     * @param record to be created
+     * @return Gun Record
+     */
     @Override
     public GunRecord createGunRecord(GunRecord record) {
-        GunRecord result = grdatasource.createGunRecord(record);
+        GunRecord result = gunDataSource.createGunRecord(record);
         return result;
     }
 
+    /**
+     * Delete a gun record based on the id
+     * @param id of the record to delete
+     */
     @Override
     public void deleteGunRecord(String id) {
-        grdatasource.deleteGunRecord(id);
+        gunDataSource.deleteGunRecord(id);
     }
 
+    /**
+     * Gets a single gun record based on the id passed in
+     * @param id of the gun record
+     * @return Gun Record
+     */
     @Override
     public GunRecord getSingleGunRecord(String id) {
-        GunRecord result = grdatasource.getSingleGunRecord(id);
+        GunRecord result = gunDataSource.getSingleGunRecord(id);
         return result;
     }
 
     //Shot Records Service
+
+    /**
+     * Gets all the shot records for a given shooting record
+     * @param id of the shooting record
+     * @return List of Shot Records
+     */
     @Override
     public List<ShotRecord> getAllShotsRecordsByShootingId(String id) {
         //TODO: Uncomment for actual database results
-/*        List<ShotRecord> returnValue = strdatasource.getAllShotsRecordsByShootingId(id);
+/*        List<ShotRecord> returnValue = ShotDataSource.getAllShotsRecordsByShootingId(id);
         return returnValue;*/
 
         List<ShotRecord> returnValue = new ArrayList<>();
@@ -105,10 +150,15 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
 
     }
 
+    /**
+     * Gets a single shot record by a given id
+     * @param id of the shot record
+     * @return Shot Record
+     */
     @Override
     public ShotRecord getSingleShotsRecordsById(String id) {
         //TODO: Uncomment for actual database results
-        /*ShotRecord result = strdatasource.getSingleShotsRecordsById(id);
+        /*ShotRecord result = ShotDataSource.getSingleShotsRecordsById(id);
         return result;*/
         ShotRecord record = new ShotRecord();
         record.setId("abc");
@@ -122,18 +172,32 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
 
     }
 
+    /**
+     * Creates a shot record based on the record passed in
+     * @param record to be created
+     * @return Shot Record
+     */
     @Override
     public ShotRecord createShotRecord(ShotRecord record) {
-        ShotRecord result = strdatasource.createShotRecord(record);
+        ShotRecord result = ShotDataSource.createShotRecord(record);
         return result;
     }
 
+    /**
+     * Delete a shot record by a given id
+     * @param id of the record to delete
+     */
     @Override
     public void deleteShotRecord(String id) {
         //TODO: Uncomment
-        //strdatasource.deleteShotRecord(id);
+        //ShotDataSource.deleteShotRecord(id);
     }
 
+    /**
+     * Updates a shot record based on the record being passed in
+     * @param record of the updated record to be saved
+     * @return Shot Record
+     */
     @Override
     public ShotRecord updateShotRecord(ShotRecord record) {
         return null;

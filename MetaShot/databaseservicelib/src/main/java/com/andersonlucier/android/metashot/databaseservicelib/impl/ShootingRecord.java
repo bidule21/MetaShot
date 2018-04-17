@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by SyberDeskTop on 3/12/2018.
+ * Implementation object for the shooting record that will be passed between all three modules
  */
 
 public class ShootingRecord implements IShooting {
@@ -29,7 +29,6 @@ public class ShootingRecord implements IShooting {
     private List<Integer> _listOfShotsId;
 
     private String _weather;
-
 
 
     @Override
@@ -64,7 +63,6 @@ public class ShootingRecord implements IShooting {
         _location = location;
     }
 
-
     @Override
     public double temp() {
         return _temp;
@@ -95,14 +93,6 @@ public class ShootingRecord implements IShooting {
     }
     public void setTypeOfGun(GunRecord gun){
         _typeOfGun = gun;
-    }
-
-    @Override
-    public List<Integer> listOfShotsId() {
-        return _listOfShotsId;
-    }
-    public void setListOfShotsId( List<Integer> ids){
-        _listOfShotsId = ids;
     }
 
 

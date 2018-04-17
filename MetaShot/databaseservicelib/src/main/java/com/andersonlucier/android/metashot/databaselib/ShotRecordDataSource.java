@@ -30,6 +30,11 @@ public class ShotRecordDataSource implements IShotService {
         dbHelper.close();
     }
 
+    /**
+     * Gets all the shot records for a given shooting record
+     * @param id of the shooting record
+     * @return List of Shot Records
+     */
     @Override
     public List<ShotRecord> getAllShotsRecordsByShootingId(String id) {
         List<ShotRecord> records = new ArrayList<>();
@@ -47,6 +52,11 @@ public class ShotRecordDataSource implements IShotService {
         return records;
     }
 
+    /**
+     * Gets a single shot record by a given id
+     * @param id of the shot record
+     * @return Shot Record
+     */
     @Override
     public ShotRecord getSingleShotsRecordsById(String id) {
         Cursor cursor = database.query(dbName,
@@ -58,6 +68,11 @@ public class ShotRecordDataSource implements IShotService {
         return singleRecord;
     }
 
+    /**
+     * Creates a shot record based on the record passed in
+     * @param record to be created
+     * @return Shot Record
+     */
     @Override
     public ShotRecord createShotRecord(ShotRecord record) {
         ContentValues values = new ContentValues();
@@ -80,17 +95,31 @@ public class ShotRecordDataSource implements IShotService {
         return newRecord;
     }
 
+    /**
+     * Delete a shot record by a given id
+     * @param id of the record to delete
+     */
     @Override
     public void deleteShotRecord(String id) {
         System.out.println("Shot Record deleted with id: " + id);
         database.delete(dbName, "id" + " = '" + id + "'", null);
     }
 
+    /**
+     * Updates a shot record based on the record being passed in
+     * @param record of the updated record to be saved
+     * @return Shot Record
+     */
     @Override
     public ShotRecord updateShotRecord(ShotRecord record) {
         return null;
     }
 
+    /**
+     * Populates a shot Record from the database cursor
+     * @param cursor current database row
+     * @return Shot Record
+     */
     private ShotRecord cursorToRecord(Cursor cursor) {
         ShotRecord comment = new ShotRecord();
         comment.setId(cursor.getString(0));

@@ -13,15 +13,18 @@ import com.andersonlucier.android.metashot.databaseservicelib.R;
 
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
+    //Database Name and Version
     private static final String DATABASE_NAME = "metashot.db";
     private static final int DATABASE_VERSION = 7;
 
+    //static string of creating and dropping the tables
     private static String DATABASE_SHOOTING_TABLE;
     private static String DATABASE_GUN_TABLE;
     private static String DATABASE_GUN_DELETE;
     private static String DATABASE_SHOOTING_DELETE;
     private static String DATABASE_SHOT_TABLE;
     private static String DATABASE_SHOT_DELETE;
+
 
     public MySQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -34,15 +37,25 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         DATABASE_SHOT_DELETE = context.getResources().getString(R.string.deleteshotrecord);
     }
 
+    /**
+     * Creates the database tables
+     * @param database to create the tables in
+     */
     @Override
     public void onCreate(SQLiteDatabase database) {
-        Log.v("Database Created", "the database has been started");
+        Log.v("Database Creation", "the database creating has been started");
         database.execSQL(DATABASE_SHOOTING_TABLE);
         database.execSQL(DATABASE_GUN_TABLE);
         database.execSQL(DATABASE_SHOT_TABLE);
-        Log.v("Database Created", "the database has been created");
+        Log.v("Database Creation", "the database has been created");
     }
 
+    /**
+     * Deletes the database tables so that the tables can be created
+     * @param db database to delete and create
+     * @param oldVersion current version
+     * @param newVersion new version
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DATABASE_GUN_DELETE);

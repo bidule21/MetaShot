@@ -84,7 +84,6 @@
         android:layout_below="@id/weatherManual"
         android:layout_centerHorizontal="true"
         android:background="@android:drawable/btn_dropdown"
-        android:entries="@array/weaponSelect"
         android:spinnerMode="dropdown" />
 
     <EditText
