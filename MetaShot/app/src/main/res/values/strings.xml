@@ -34,5 +34,14 @@
     <string name="verticalDist">Vertical Distance From Target Center:</string>
     <string name="horizontalDist">Horizontal Distance From Target Center:</string>
     <string name="shotNumber">Shot Number:</string>
+    <string name="shootingTitle">Title:</string>
+    <string name="date">Date:</string>
+    <string name="weaponType">Weapon Used:</string>
+    <string name="location">Location:</string>
+    <string name="weather">Weather:</string>
+    <string name="description">Description:</string>
+
+    <!-- Other -->
+    <string name="noWeapon">No Weapon Selected</string>
 
 </resources>

@@ -7,52 +7,107 @@
     <include layout="@layout/logo" />
 
     <TextView
+        android:id="@+id/titleHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logoHeader"
+        android:layout_marginEnd="10dp"
+        android:text="@string/shootingTitle" />
+
+    <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/logoHeader"
+        android:layout_toEndOf="@id/titleHeader"
         android:textColor="@color/black"/>
 
     <TextView
-        android:id="@+id/datetime"
+        android:id="@+id/dateHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:textColor="@color/black"/>
+        android:layout_below="@id/titleHeader"
+        android:layout_marginEnd="10dp"
+        android:text="@string/date" />
 
     <TextView
-        android:id="@+id/guntype"
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/datetime"
-        android:textColor="@color/black"/>
+        android:layout_below="@id/titleHeader"
+        android:layout_toEndOf="@id/dateHeader"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/weaponTypeHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dateHeader"
+        android:layout_marginEnd="10dp"
+        android:text="@string/weaponType"/>
+
+    <TextView
+        android:id="@+id/weaponType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dateHeader"
+        android:layout_toEndOf="@id/weaponTypeHeader"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/locationHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/weaponTypeHeader"
+        android:layout_marginEnd="10dp"
+        android:text="@string/location"/>
 
     <TextView
         android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/guntype"
+        android:layout_below="@id/weaponTypeHeader"
+        android:layout_toEndOf="@id/locationHeader"
         android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/weatherHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/locationHeader"
+        android:layout_marginEnd="10dp"
+        android:text="@string/weather"/>
 
     <TextView
         android:id="@+id/weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/location"
+        android:layout_below="@id/locationHeader"
+        android:layout_toEndOf="@id/weatherHeader"
         android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/descriptionHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/weatherHeader"
+        android:layout_marginEnd="10dp"
+        android:text="@string/description"/>
 
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/weather"
+        android:layout_below="@id/weatherHeader"
+        android:layout_toEndOf="@id/descriptionHeader"
         android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/previousShotRecordsHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/description"
+        android:layout_below="@id/descriptionHeader"
+        android:layout_marginTop="30dp"
         android:textColor="@color/black"
         android:text="@string/previousShotRecordsHeader"/>
 
@@ -72,7 +127,7 @@
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:background="@android:drawable/btn_plus"
         android:onClick="onClick" />

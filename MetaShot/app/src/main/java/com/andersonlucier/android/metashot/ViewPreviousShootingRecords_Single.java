@@ -24,13 +24,20 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
     private ShootingRecord shootingRecord;
     private String shootingRecordId;
     private AlertDialog.Builder builder;
-
+    private TextView title, date, weaponType, location, weather, description;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_previous_shooting_records_single);
         dbService = new DatabaseShotService(this);
         shootingRecordId = getIntent().getStringExtra("RECORD_ID");
+
+        title = findViewById(R.id.title);
+        date = findViewById(R.id.date);
+        weaponType = findViewById(R.id.weaponType);
+        location = findViewById(R.id.location);
+        weather = findViewById(R.id.weather);
+        description = findViewById(R.id.description);
 
         //populate the shooting information and shot records
         populateShootingInformation();
@@ -57,34 +64,28 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
         shootingRecord = dbService.getSingleShootingRecord(shootingRecordId);
 
         //sets the title
-        TextView title = findViewById(R.id.title);
-        title.setText(String.format("Title: %s", shootingRecord.title()));
+        title.setText(String.format("%s", shootingRecord.title()));
 
         //formats and sets the date
         String pattern = "MMM dd, yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String dateformat = simpleDateFormat.format(shootingRecord.datetime());
-        TextView date = findViewById(R.id.datetime);
-        date.setText(String.format("Date: %s", dateformat));
+        date.setText(String.format("%s", dateformat));
 
         //sets the location
-        TextView location = findViewById(R.id.location);
-        location.setText(String.format("Location: %s", shootingRecord.location()));
+        location.setText(String.format("%s", shootingRecord.location()));
 
         //sets the weather
-        TextView weather = findViewById(R.id.weather);
-        weather.setText(String.format("Weather: %s", shootingRecord.weather()));
+        weather.setText(String.format("%s", shootingRecord.weather()));
 
         //sets the description
-        TextView description = findViewById(R.id.description);
-        description.setText(String.format("Description: %s", shootingRecord.description()));
+        description.setText(String.format("%s", shootingRecord.description()));
 
         //sets the gun
-        TextView guntype = findViewById(R.id.guntype);
         if(shootingRecord.typeOfGun() != null) {
-            guntype.setText(String.format("Gun Used: %s", shootingRecord.typeOfGun().gunName()));
+            weaponType.setText(String.format("%s", shootingRecord.typeOfGun().gunName()));
         } else {
-            guntype.setText(String.format("Gun Used: No Weapon Selected."));
+            weaponType.setText(R.string.noWeapon);
         }
 
 
