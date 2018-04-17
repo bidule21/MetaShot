@@ -29,6 +29,7 @@ public class AppLocationService extends Service implements LocationListener {
                 //Permissions checked and/or requested in NewShootingRecord activity
                 locationManager.requestLocationUpdates(provider, MIN_TIME_FOR_UPDATE, MIN_DISTANCE_FOR_UPDATE, this);
                 if (locationManager != null) {
+                    //Permissions checked and/or requested in NewShootingRecord activity
                     location = locationManager.getLastKnownLocation(provider);
                     return location;
                 }

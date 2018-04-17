@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_page);
     }
+    //When clicked, user is redirected to desired activity
     public void onClick(View view){
         switch (view.getId()) {
             case R.id.newRecord:
