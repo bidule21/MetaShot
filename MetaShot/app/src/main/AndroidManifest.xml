@@ -27,9 +27,9 @@
         <activity android:name=".WeaponInventory_AddWeapon" />
         <activity android:name=".NewShotRecord" />
         <activity android:name=".NewShotRecord_AutoRecord" />
-        <activity android:name=".NewShotRecord_ManualCreate"></activity>
-        <activity android:name=".ViewShootingRecords"/>
-        <activity android:name=".ViewShootingRecords_Single"/>
+        <activity android:name=".NewShotRecord_ManualCreate"/>
+        <activity android:name=".ViewPreviousShootingRecords"/>
+        <activity android:name=".ViewPreviousShootingRecords_Single"/>
         <activity android:name=".ViewPreviousShotRecord"/>
 
         <service android:name=".AppLocationService" />

@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, NewShootingRecord.class));
                 break;
             case R.id.viewRecord:
-                startActivity(new Intent(MainActivity.this, ViewShootingRecords.class));
+                startActivity(new Intent(MainActivity.this, ViewPreviousShootingRecords.class));
                 break;
             case R.id.weaponInventory:
                 startActivity(new Intent(MainActivity.this, WeaponInventory.class));

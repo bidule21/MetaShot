@@ -3,6 +3,7 @@ package com.andersonlucier.android.metashot;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,43 +11,69 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.andersonlucier.android.metashot.databaseservicelib.DatabaseShotService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewShootingRecords_Single extends AppCompatActivity {
+public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
 
     private DatabaseShotService dbService;
     private List<ShotRecord> records;
     private String shootingRecordId;
-    AlertDialog.Builder builder;
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_shooting_records_single);
+        setContentView(R.layout.view_previous_shooting_records_single);
         dbService = new DatabaseShotService(this);
         shootingRecordId = getIntent().getStringExtra("RECORD_ID");
 
-        builder = new AlertDialog.Builder(this);
-
+        //populate the shooting information and shot records
         populateShootingInformation();
         populateShotRecords();
+    }
 
+    public void onClick(View view){
+        switch (view.getId()) {
+            case R.id.goToHome:
+                startActivity(new Intent(ViewPreviousShootingRecords_Single.this, MainActivity.class));
+                break;
+            case R.id.addShooting:
+                //redirect the user to the new shot record layout to add more shots.
+                Intent intent = new Intent(new Intent(ViewPreviousShootingRecords_Single.this, NewShotRecord.class));
+                intent.putExtra("RECORD_ID", shootingRecordId);
+                startActivity(intent);
+                break;
+        }
     }
 
     private void populateShootingInformation() {
+        //gets the record from the db
         ShootingRecord record = dbService.getSingleShootingRecord(shootingRecordId);
-        TextView title = findViewById(R.id.titledatetime);
-        title.setText(String.format("Title: %s %s", record.title(), record.datetime()));
+
+        //sets the title
+        TextView title = findViewById(R.id.title);
+        title.setText(String.format("Title: %s", record.title()));
+
+        //formats and sets the date
+        String pattern = "MMM dd, yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String dateformat = simpleDateFormat.format(record.datetime());
+        TextView date = findViewById(R.id.datetime);
+        date.setText(String.format("Date: %s", dateformat));
+
+        //sets the location
         TextView location = findViewById(R.id.location);
         location.setText(String.format("Location: %s", record.location()));
+
+        //sets the weather
         TextView weather = findViewById(R.id.weather);
         weather.setText(String.format("Weather: %s", record.weather()));
+
+        //sets the description
         TextView description = findViewById(R.id.description);
         description.setText(String.format("Description: %s", record.description()));
 
@@ -54,56 +81,70 @@ public class ViewShootingRecords_Single extends AppCompatActivity {
 
     private void populateShotRecords() {
         ListView lv = findViewById(R.id.previousShotRecordsList);
+
+        //gets all the shots for the shooting record
         records = dbService.getAllShotsRecordsByShootingId(shootingRecordId);
 
+        //if records are empty, no need to setup the list
+        if (records.isEmpty()) {
+            return;
+        }
+
+        builder = new AlertDialog.Builder(this);
+
+        //populates a list of strings for the list
         List<String> gunArrayList = new ArrayList<>();
         for (ShotRecord record : records){
             gunArrayList.add("Shot - " + record.shotNumber());
         }
 
+        //creates the adapter and sets the adapter
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
                 gunArrayList );
-
         lv.setAdapter(arrayAdapter);
 
-        lv.setTextFilterEnabled(true);
+        //sets the on item click to redirect to the view previous shot record view
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent intent = new Intent(new Intent(ViewShootingRecords_Single.this, ViewPreviousShotRecord.class));
+                Intent intent = new Intent(new Intent(ViewPreviousShootingRecords_Single.this, ViewPreviousShotRecord.class));
                 intent.putExtra("SHOT_RECORD_ID", records.get(position).id());
                 startActivity(intent);
 
             }
         });
 
+        //sets the long click to allow a user to delete a shot record
         lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            final int position, long id) {
 
+                //sets the builder popup
                 builder.setTitle("Delete");
                 builder.setMessage("Would you like to delete this shot?");
-
                 builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
+                        //finds the object title
                         String item = arrayAdapter.getItem(position);
                         String[] parts = item.split(" ");
 
+                        //finds the id of the object based on shot number
                         for(ShotRecord r: records) {
                             if(r.shotNumber() == Integer.parseInt(parts[2])) {
+                                //remove the object from the db
                                 dbService.deleteGunRecord(r.id());
                                 break;
                             }
                         }
+                        //remove the object from the Adapter
                         arrayAdapter.remove(item);
                         arrayAdapter.notifyDataSetChanged();
                         dialog.dismiss();
                     }
                 });
-
                 builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
                     @Override
@@ -113,23 +154,11 @@ public class ViewShootingRecords_Single extends AppCompatActivity {
                     }
                 });
 
+                //show the alert dialog
                 AlertDialog alert = builder.create();
                 alert.show();
                 return false;
             }
         });
-    }
-
-    public void onClick(View view){
-        switch (view.getId()) {
-            case R.id.goToHome:
-                startActivity(new Intent(ViewShootingRecords_Single.this, MainActivity.class));
-                break;
-            case R.id.addShooting:
-                Intent intent = new Intent(new Intent(ViewShootingRecords_Single.this, NewShotRecord.class));
-                intent.putExtra("RECORD_ID", shootingRecordId);
-                startActivity(intent);
-                break;
-        }
     }
 }

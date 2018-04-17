@@ -5,13 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
-
 import com.andersonlucier.android.metashot.databaseservicelib.DatabaseShotService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
-
-/**
- * Created by SyberDeskTop on 4/15/2018.
- */
 
 public class ViewPreviousShotRecord extends AppCompatActivity {
 
@@ -24,19 +19,8 @@ public class ViewPreviousShotRecord extends AppCompatActivity {
         dbService = new DatabaseShotService(this);
         shotRecordId = getIntent().getStringExtra("SHOT_RECORD_ID");
 
+        //populate the shot record
         populateShotRecord();
-    }
-
-    private void populateShotRecord() {
-        ShotRecord record = dbService.getSingleShotsRecordsById(shotRecordId);
-        TextView shotNumber = findViewById(R.id.shotNumber);
-        shotNumber.setText(String.format("Shot Number: %s", record.shotNumber()));
-        TextView barrelTemp = findViewById(R.id.barrelTemp);
-        barrelTemp.setText(String.format("barrel Temp: %s", record.barrelTemp()));
-        TextView targetX = findViewById(R.id.targetX);
-        targetX.setText(String.format("Target-X: %s", record.targetX()));
-        TextView targetY = findViewById(R.id.targetY);
-        targetY.setText(String.format("target-Y: %s", record.targetY()));
     }
 
     public void onClick(View view){
@@ -45,6 +29,27 @@ public class ViewPreviousShotRecord extends AppCompatActivity {
                 startActivity(new Intent(ViewPreviousShotRecord.this, MainActivity.class));
                 break;
         }
+    }
+
+    private void populateShotRecord() {
+        //get the shot record
+        ShotRecord record = dbService.getSingleShotsRecordsById(shotRecordId);
+
+        //populate the shot number
+        TextView shotNumber = findViewById(R.id.shotNumber);
+        shotNumber.setText(String.format("Shot Number: %s", record.shotNumber()));
+
+        //populate the barrel temp
+        TextView barrelTemp = findViewById(R.id.barrelTemp);
+        barrelTemp.setText(String.format("barrel Temp: %s", record.barrelTemp()));
+
+        //populate the x target
+        TextView targetX = findViewById(R.id.targetX);
+        targetX.setText(String.format("Target-X: %s", record.targetX()));
+
+        //populate the y target
+        TextView targetY = findViewById(R.id.targetY);
+        targetY.setText(String.format("target-Y: %s", record.targetY()));
     }
 
 }

@@ -7,17 +7,24 @@
     <include layout="@layout/logo" />
 
     <TextView
-        android:id="@+id/titledatetime"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/logoHeader"
         android:textColor="@color/black"/>
 
     <TextView
+        android:id="@+id/datetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:textColor="@color/black"/>
+
+    <TextView
         android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/titledatetime"
+        android:layout_below="@id/datetime"
         android:textColor="@color/black"/>
 
     <TextView
