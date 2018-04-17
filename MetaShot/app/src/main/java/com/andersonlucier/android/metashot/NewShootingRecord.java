@@ -199,7 +199,7 @@ public class NewShootingRecord extends AppCompatActivity {
             case "INTERNET":
                 alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
+                        Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
                         NewShootingRecord.this.startActivity(intent);
                     }
                 });
