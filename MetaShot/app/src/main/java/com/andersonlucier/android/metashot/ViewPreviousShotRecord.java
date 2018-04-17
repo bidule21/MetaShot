@@ -12,12 +12,19 @@ public class ViewPreviousShotRecord extends AppCompatActivity {
 
     private DatabaseShotService dbService;
     private String shotRecordId;
+    private TextView shotNumber, barrelTemp, targetX, targetY;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_previous_shot_record);
         dbService = new DatabaseShotService(this);
         shotRecordId = getIntent().getStringExtra("SHOT_RECORD_ID");
+
+        shotNumber = findViewById(R.id.shotNumber);
+        barrelTemp = findViewById(R.id.barrelTemp);
+        targetX = findViewById(R.id.targetX);
+        targetY = findViewById(R.id.targetY);
+
 
         //populate the shot record
         populateShotRecord();
@@ -36,20 +43,16 @@ public class ViewPreviousShotRecord extends AppCompatActivity {
         ShotRecord record = dbService.getSingleShotsRecordsById(shotRecordId);
 
         //populate the shot number
-        TextView shotNumber = findViewById(R.id.shotNumber);
-        shotNumber.setText(String.format("Shot Number: %s", record.shotNumber()));
+        shotNumber.setText(String.format("%s", record.shotNumber()));
 
         //populate the barrel temp
-        TextView barrelTemp = findViewById(R.id.barrelTemp);
-        barrelTemp.setText(String.format("barrel Temp: %s", record.barrelTemp()));
+        barrelTemp.setText(String.format("%s", record.barrelTemp()));
 
         //populate the x target
-        TextView targetX = findViewById(R.id.targetX);
-        targetX.setText(String.format("Target-X: %s", record.targetX()));
+        targetX.setText(String.format("%s", record.targetX()));
 
         //populate the y target
-        TextView targetY = findViewById(R.id.targetY);
-        targetY.setText(String.format("target-Y: %s", record.targetY()));
+        targetY.setText(String.format("%s", record.targetY()));
     }
 
 }

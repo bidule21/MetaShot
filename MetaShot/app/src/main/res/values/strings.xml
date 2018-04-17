@@ -30,7 +30,9 @@
     <string name="inventoryHeader">Weapon Inventory:</string>
     <string name="shootingHeader">Past Shooting Records</string>
     <string name="previousShotRecordsHeader">Shot Records:</string>
-    <string name="barrelTemp">Barrel Temperature</string>
-    <string name="verticalDist">Vertical Distance From Target Center</string>
-    <string name="horizontalDist">Horizontal Distance From Target Center</string>
+    <string name="barrelTemp">Barrel Temperature:</string>
+    <string name="verticalDist">Vertical Distance From Target Center:</string>
+    <string name="horizontalDist">Horizontal Distance From Target Center:</string>
+    <string name="shotNumber">Shot Number:</string>
+
 </resources>
