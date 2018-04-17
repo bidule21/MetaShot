@@ -88,6 +88,24 @@ public class GunRecordDataSource implements IGunService {
     }
 
     /**
+     * updates a gun record based on the record passed in
+     * @param record gun record to update
+     * @return Gun Record
+     */
+    @Override
+    public GunRecord updateGunRecord(GunRecord record) {
+        ContentValues values = new ContentValues();
+        String id = record.id();
+        values.put("id", id);
+        values.put("name", record.gunName());
+        values.put("description", record.details());
+
+        database.update(dbTableName, values,"id" + " = '" + id + "'", null);
+
+        return record;
+    }
+
+    /**
      * Delete a gun record based on the id
      * @param id of the record to delete
      */

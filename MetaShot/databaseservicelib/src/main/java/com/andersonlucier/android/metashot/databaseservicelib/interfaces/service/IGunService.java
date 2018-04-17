@@ -18,4 +18,6 @@ public interface IGunService {
     void deleteGunRecord(String id);
 
     GunRecord getSingleGunRecord(String id);
+
+    GunRecord updateGunRecord(GunRecord record);
 }

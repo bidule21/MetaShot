@@ -98,8 +98,7 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
      */
     @Override
     public GunRecord createGunRecord(GunRecord record) {
-        GunRecord result = gunDataSource.createGunRecord(record);
-        return result;
+        return gunDataSource.createGunRecord(record);
     }
 
     /**
@@ -118,8 +117,17 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
      */
     @Override
     public GunRecord getSingleGunRecord(String id) {
-        GunRecord result = gunDataSource.getSingleGunRecord(id);
-        return result;
+        return gunDataSource.getSingleGunRecord(id);
+    }
+
+    /**
+     * updates a gun record based on the record passed in
+     * @param record gun record to update
+     * @return Gun Record
+     */
+    @Override
+    public GunRecord updateGunRecord(GunRecord record) {
+        return gunDataSource.updateGunRecord(record);
     }
 
     //Shot Records Service
