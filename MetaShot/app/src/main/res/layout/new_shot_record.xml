@@ -32,11 +32,18 @@
         android:onClick="onClick"
         android:text="@string/manualCreate" />
 
+    <TextView
+        android:id="@+id/shotRecordsHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/manualCreate"
+        android:text="@string/previousShotRecordsHeader" />
+
     <ListView
         android:id="@+id/shotRecords"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/manualCreate"
+        android:layout_below="@+id/shotRecordsHeading"
         android:layout_centerHorizontal="true" >
     </ListView>
 

@@ -61,8 +61,10 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
     @Override
     public ShootingRecord getSingleShootingRecord(String id) {
         ShootingRecord returnValue = shootingDataSource.getSingleShootingRecord(id);
-        GunRecord gunType = gunDataSource.getSingleGunRecord(returnValue.gunId());
-        returnValue.setTypeOfGun(gunType);
+        if(returnValue.typeOfGun() != null) {
+            GunRecord gunType = gunDataSource.getSingleGunRecord(returnValue.gunId());
+            returnValue.setTypeOfGun(gunType);
+        }
         return returnValue;
     }
 
@@ -148,22 +150,7 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
     @Override
     public List<ShotRecord> getAllShotsRecordsByShootingId(String id) {
         //TODO: Uncomment for actual database results
-/*        List<ShotRecord> returnValue = ShotDataSource.getAllShotsRecordsByShootingId(id);
-        return returnValue;*/
-
-        List<ShotRecord> returnValue = new ArrayList<>();
-        for (int x = 1; x <= 8; x++) {
-            ShotRecord record = new ShotRecord();
-            record.setId("abc");
-            record.setShotNumber(x);
-            record.setBarrelTemp(90);
-            record.setTargetX(-3);
-            record.setTargetY(2);
-            record.setShootingRecordId("CDF");
-            returnValue.add(record);
-        }
-        return returnValue;
-
+        return ShotDataSource.getAllShotsRecordsByShootingId(id);
     }
 
     /**
@@ -173,19 +160,7 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
      */
     @Override
     public ShotRecord getSingleShotsRecordsById(String id) {
-        //TODO: Uncomment for actual database results
-        /*ShotRecord result = ShotDataSource.getSingleShotsRecordsById(id);
-        return result;*/
-        ShotRecord record = new ShotRecord();
-        record.setId("abc");
-        record.setShotNumber(1);
-        record.setBarrelTemp(90);
-        record.setTargetX(-3);
-        record.setTargetY(2);
-        record.setShootingRecordId("CDF");
-
-        return record;
-
+        return ShotDataSource.getSingleShotsRecordsById(id);
     }
 
     /**
@@ -195,6 +170,16 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
      */
     @Override
     public ShotRecord createShotRecord(ShotRecord record) {
+        List<ShotRecord> records = ShotDataSource.getAllShotsRecordsByShootingId(record.shootingRecordId());
+        int shotNumber = 0;
+        for(ShotRecord shot : records) {
+            if(shot.shotNumber() > shotNumber){
+                shotNumber = shot.shotNumber();
+            }
+        }
+        shotNumber = shotNumber + 1;
+        record.setShotNumber(shotNumber);
+
         ShotRecord result = ShotDataSource.createShotRecord(record);
         return result;
     }
@@ -205,8 +190,7 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
      */
     @Override
     public void deleteShotRecord(String id) {
-        //TODO: Uncomment
-        //ShotDataSource.deleteShotRecord(id);
+        ShotDataSource.deleteShotRecord(id);
     }
 
     /**

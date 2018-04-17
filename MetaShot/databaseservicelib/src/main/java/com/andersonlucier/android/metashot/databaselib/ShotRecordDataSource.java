@@ -40,7 +40,7 @@ public class ShotRecordDataSource implements IShotService {
         List<ShotRecord> records = new ArrayList<>();
 
         Cursor cursor = database.query(dbName,
-                allColumns, "id" + " = '" + id + "'", null, null, null, null);
+                allColumns, "shootingRecordId" + " = '" + id + "'", null, null, null, null);
 
         cursor.moveToFirst();
         while(!cursor.isAfterLast()) {
@@ -124,8 +124,8 @@ public class ShotRecordDataSource implements IShotService {
         ShotRecord comment = new ShotRecord();
         comment.setId(cursor.getString(0));
         comment.setShootingRecordId(cursor.getString(1));
-        comment.setBarrelTemp(cursor.getDouble(2));
-        comment.setShotNumber(cursor.getInt(3));
+        comment.setShotNumber(cursor.getInt(2));
+        comment.setBarrelTemp(cursor.getDouble(3));
         comment.setTargetX(cursor.getDouble(4));
         comment.setTargetY(cursor.getDouble(5));
         return comment;

@@ -7,29 +7,10 @@
     <include layout="@layout/logo" />
 
     <TextView
-        android:id="@+id/barrelTemp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/logoHeader"
-        android:layout_toStartOf="@id/barrelTempInput"
-        android:textColor="@color/black"
-        android:text="@string/barrelTemp" />
-
-    <EditText
-        android:id="@+id/barrelTempInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/logoHeader"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="@string/barrelTempHint" />
-
-    <TextView
         android:id="@+id/verticalDist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/barrelTemp"
+        android:layout_below="@id/logoHeader"
         android:layout_toStartOf="@id/verticalDistInput"
         android:layout_marginTop="60dp"
         android:textColor="@color/black"
@@ -39,7 +20,7 @@
         android:id="@+id/verticalDistInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/barrelTempInput"
+        android:layout_below="@id/logoHeader"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         android:ems="10"

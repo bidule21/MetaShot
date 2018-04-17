@@ -160,12 +160,17 @@ public class NewShootingRecord extends AppCompatActivity {
                     shooting.setTypeOfGun(gunRecordsList.get(itemPosition -1));
                 }
 
-                dbService.createShootingRecord(shooting);
+                shooting.setId(dbService.createShootingRecord(shooting).Id());
 
                 Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n" +
                         "GPS Location: " + autoGpsLocation.getText().toString() + "\n Weather: " +
                         weather.getText().toString() + "\n Other Details: " + otherDetails.getText().toString(), Toast.LENGTH_LONG).show();
-                startActivity(new Intent(NewShootingRecord.this, NewShotRecord.class));
+
+                Intent intent = new Intent(new Intent(NewShootingRecord.this, NewShotRecord.class));
+                intent.putExtra("SHOOTING_RECORD_ID", shooting.Id());
+                intent.putExtra("SHOOTING_TITLE", shooting.title());
+                startActivity(intent);
+
                 break;
 
             case R.id.newShootingCancel:
