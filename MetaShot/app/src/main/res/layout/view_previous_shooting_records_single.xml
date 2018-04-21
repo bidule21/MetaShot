@@ -122,14 +122,14 @@
             android:layout_height="wrap_content" >
         </ListView>
     </LinearLayout>
+
     <Button
         android:id="@+id/addShooting"
-        style="@style/Widget.AppCompat.Button.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:background="@android:drawable/btn_plus"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/add"
         android:onClick="onClick" />
 
 </RelativeLayout>
