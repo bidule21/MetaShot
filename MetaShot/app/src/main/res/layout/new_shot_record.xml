@@ -10,40 +10,45 @@
         android:id="@+id/shootingRecordName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logoHeader"
-        android:layout_centerHorizontal="true"
-        android:text="@string/recordNameDefault" />
+        android:layout_below="@id/logoHeader"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/autoRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/shootingRecordName"
+        android:layout_below="@id/shootingRecordName"
         android:layout_centerHorizontal="true"
         android:onClick="onClick"
+        android:backgroundTint="@color/orange"
         android:text="@string/autoRecord" />
 
     <Button
         android:id="@+id/manualCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/autoRecord"
+        android:layout_below="@id/autoRecord"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:onClick="onClick"
+        android:backgroundTint="@color/orange"
         android:text="@string/manualCreate" />
 
     <TextView
         android:id="@+id/shotRecordsHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/manualCreate"
+        android:layout_below="@id/manualCreate"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:text="@string/previousShotRecordsHeader" />
 
     <ListView
         android:id="@+id/shotRecords"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/shotRecordsHeading"
+        android:layout_below="@id/shotRecordsHeading"
         android:layout_centerHorizontal="true" >
     </ListView>
 

@@ -19,6 +19,7 @@
         android:layout_marginBottom="20dp"
         android:ems="10"
         android:inputType="text"
+        android:backgroundTint="@color/black"
         android:hint="@string/recordNameHint" />
 
     <EditText
@@ -30,6 +31,7 @@
         android:layout_marginBottom="20dp"
         android:ems="10"
         android:hint="@string/gpsHint"
+        android:backgroundTint="@color/black"
         android:inputType="text" />
 
     <Button
@@ -39,9 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/gpsManual"
         android:layout_below="@id/recordName"
-        android:layout_marginStart="30dp"
-        android:background="@android:drawable/ic_menu_mylocation"
-        android:backgroundTint="@android:color/holo_red_dark"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/location_icon"
         android:onClick="onClick" />
 
     <EditText
@@ -54,6 +55,7 @@
         android:ems="10"
         android:inputType="text"
         android:layout_marginTop="5dp"
+        android:backgroundTint="@color/black"
         android:hint="@string/weatherHint" />
 
     <Button
@@ -63,19 +65,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/gpsManual"
         android:layout_alignStart="@id/weatherManual"
-        android:layout_marginStart="30dp"
-        android:background="@drawable/weather"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/weather2"
         android:onClick="onClick" />
 
     <TextView
         android:id="@+id/spinnerLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/weatherManual"
-        android:layout_toStartOf="@id/weaponSelect"
-        android:textColor="@color/black"
-        android:layout_marginTop="10dp"
-        android:text="@string/weaponSpinnerLabel" />
+        android:layout_alignStart="@+id/weatherAuto"
+        android:layout_below="@+id/weatherManual"
+        android:text="@string/weaponSpinnerLabel"
+        android:textStyle="bold"
+        android:textColor="@color/black" />
 
     <Spinner
         android:id="@+id/weaponSelect"
@@ -92,9 +94,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/weaponSelect"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:ems="10"
         android:inputType="textMultiLine"
+        android:textColorHint="@color/darkGray"
+        android:backgroundTint="@color/black"
         android:hint="@string/detailsHint"/>
 
     <Button
@@ -104,6 +109,8 @@
         android:layout_below="@id/otherDetails"
         android:layout_toStartOf="@+id/newShootingCreate"
         android:onClick="onClick"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/orange"
         android:text="@string/cancel" />
 
     <Button
@@ -113,6 +120,7 @@
         android:layout_below="@id/otherDetails"
         android:layout_alignParentEnd="true"
         android:onClick="onClick"
+        android:backgroundTint="@color/orange"
         android:text="@string/create" />
 
 </RelativeLayout>

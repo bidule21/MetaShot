@@ -32,9 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/weaponOtherDetails"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="30dp"
         android:onClick="onClick"
+        android:backgroundTint="@color/orange"
         android:text="@string/addWeapon" />
 
     <Button
@@ -42,9 +43,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/weaponOtherDetails"
-        android:layout_centerHorizontal="true"
-        android:layout_toEndOf="@id/addNewWeapon"
+        android:layout_toStartOf="@id/addNewWeapon"
         android:layout_marginTop="30dp"
+        android:layout_marginEnd="10dp"
         android:onClick="onClick"
+        android:backgroundTint="@color/orange"
         android:text="@string/cancel" />
 </RelativeLayout>

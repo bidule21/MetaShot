@@ -12,6 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/logoHeader"
         android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
         android:text="@string/shotNumber" />
 
     <TextView
@@ -26,8 +29,11 @@
         android:id="@+id/barrelTempHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/shotNumber"
+        android:layout_below="@id/shotNumberHeader"
         android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
         android:text="@string/barrelTemp" />
 
     <TextView
@@ -44,6 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/barrelTempHeader"
         android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
         android:text="@string/horizontalDist" />
 
     <TextView
@@ -60,6 +69,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/targetXHeader"
         android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
         android:text="@string/verticalDist" />
 
     <TextView

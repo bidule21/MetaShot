@@ -13,6 +13,7 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@id/logoHeader"
         android:onClick="onClick"
+        android:backgroundTint="@color/orange"
         android:text="@string/save" />
 
     <Button
@@ -21,7 +22,9 @@
         android:layout_height="wrap_content"
         android:layout_toStartOf="@id/saveRecord"
         android:layout_below="@id/logoHeader"
+        android:layout_marginEnd="10dp"
         android:onClick="onClick"
+        android:backgroundTint="@color/orange"
         android:text="@string/cancel" />
 
     <ListView

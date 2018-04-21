@@ -12,6 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/logoHeader"
         android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
         android:text="@string/shootingTitle" />
 
     <TextView
@@ -28,6 +31,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/titleHeader"
         android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
         android:text="@string/date" />
 
     <TextView
@@ -44,6 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/dateHeader"
         android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
         android:text="@string/weaponType"/>
 
     <TextView
@@ -60,6 +69,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/weaponTypeHeader"
         android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
         android:text="@string/location"/>
 
     <TextView
@@ -76,6 +88,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/locationHeader"
         android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
         android:text="@string/weather"/>
 
     <TextView
@@ -92,6 +107,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/weatherHeader"
         android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
         android:text="@string/description"/>
 
     <TextView
@@ -106,9 +124,10 @@
         android:id="@+id/previousShotRecordsHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/descriptionHeader"
-        android:layout_marginTop="30dp"
+        android:layout_below="@id/description"
+        android:layout_marginTop="15dp"
         android:textColor="@color/black"
+        android:textStyle="bold"
         android:text="@string/previousShotRecordsHeader"/>
 
     <LinearLayout
@@ -129,7 +148,9 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/add"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/add_icon"
+        android:backgroundTint="@color/darkOrange"
         android:onClick="onClick" />
 
 </RelativeLayout>

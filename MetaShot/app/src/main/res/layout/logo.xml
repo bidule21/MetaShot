@@ -7,18 +7,20 @@
     <Button
         android:id="@+id/goToHome"
         android:layout_width="70dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/homeIcon"
-        android:backgroundTint="@color/red"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/home_icon"
+        android:backgroundTint="@color/orange"
         android:onClick="onClick" />
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="30dp"
         android:contentDescription="@null"
         android:src="@drawable/logo" />
 

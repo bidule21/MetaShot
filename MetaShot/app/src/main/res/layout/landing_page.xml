@@ -15,6 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@id/logoHeader"
         android:onClick="onClick"
+        android:backgroundTint="@color/orange"
         android:text="@string/shooting_new" />
 
     <Button
@@ -25,6 +26,7 @@
         android:layout_below="@id/newRecord"
         android:layout_centerHorizontal="true"
         android:onClick="onClick"
+        android:backgroundTint="@color/orange"
         android:text="@string/shooting_view" />
 
     <Button
@@ -35,6 +37,7 @@
         android:layout_below="@id/viewRecord"
         android:layout_centerHorizontal="true"
         android:onClick="onClick"
+        android:backgroundTint="@color/orange"
         android:text="@string/inventory" />
 
     <Button
@@ -44,5 +47,6 @@
         android:layout_marginTop="30dp"
         android:layout_below="@id/weaponInventory"
         android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/orange"
         android:text="@string/hunting_mode" />
 </RelativeLayout>

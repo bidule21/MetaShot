@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/logoHeader"
         android:textColor="@color/black"
+        android:textStyle="bold"
         android:text="@string/shootingHeader"/>
 
     <ListView

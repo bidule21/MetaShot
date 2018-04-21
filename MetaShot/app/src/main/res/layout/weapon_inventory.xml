@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/logoHeader"
         android:textColor="@color/black"
+        android:textStyle="bold"
         android:text="@string/inventoryHeader"/>
 
     <Button
@@ -21,6 +22,7 @@
         android:layout_below="@id/logoHeader"
         android:layout_alignParentEnd="true"
         android:onClick="onClick"
+        android:backgroundTint="@color/orange"
         android:text="@string/addWeapon"/>
 
     <ListView
