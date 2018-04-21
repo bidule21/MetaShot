@@ -11,8 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/logoHeader"
-        android:layout_toStartOf="@id/verticalDistInput"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
         android:textColor="@color/black"
         android:text="@string/verticalDist" />
 
@@ -21,19 +22,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/logoHeader"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:ems="10"
+        android:ems="4"
+        android:layout_toEndOf="@id/verticalDist"
         android:inputType="text"
-        android:hint="@string/verticalDistHint" />
+        android:textAlignment="textEnd"
+        android:hint="@string/distInputHint" />
+
+    <RadioGroup
+        android:id="@+id/verticalRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/verticalDist">
+
+        <RadioButton
+            android:id="@+id/verticalAbove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/verticalAbove"/>
+
+        <RadioButton
+            android:id="@+id/verticalBelow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/verticalBelow"/>
+    </RadioGroup>
 
     <TextView
         android:id="@+id/horizontalDist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/verticalDist"
-        android:layout_toStartOf="@id/horizontalDistInput"
-        android:layout_marginTop="40dp"
+        android:layout_below="@id/verticalRadioGroup"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
         android:textColor="@color/black"
         android:text="@string/horizontalDist" />
 
@@ -41,19 +62,51 @@
         android:id="@+id/horizontalDistInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/verticalDistInput"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:ems="10"
+        android:layout_below="@id/verticalRadioGroup"
+        android:layout_toEndOf="@id/horizontalDist"
+        android:layout_marginTop="10dp"
+        android:ems="4"
         android:inputType="text"
-        android:hint="@string/horizontalDistHint" />
+        android:textAlignment="textEnd"
+        android:hint="@string/distInputHint" />
+
+    <RadioGroup
+        android:id="@+id/horizontalRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/horizontalDist">
+
+        <RadioButton
+            android:id="@+id/horizontalLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/horizontalLeft"/>
+
+        <RadioButton
+            android:id="@+id/horizontalRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/horizontalRight"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/bullseye"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/horizontalRadioGroup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/red"
+        android:onClick="onClick"
+        android:text="@string/bullseye" />
 
     <Button
         android:id="@+id/createShot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/horizontalDist"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:onClick="onClick"
         android:text="@string/create" />
 
@@ -61,7 +114,7 @@
         android:id="@+id/cancelShot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/horizontalDist"
+        android:layout_alignParentBottom="true"
         android:layout_toStartOf="@id/createShot"
         android:onClick="onClick"
         android:text="@string/cancel" />

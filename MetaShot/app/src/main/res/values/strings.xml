@@ -13,6 +13,7 @@
     <string name="autoRecord">Automatically Record Shots</string>
     <string name="manualCreate">Manually Create Shots</string>
     <string name="save">Save</string>
+    <string name="bullseye">BULLSEYE</string>
 
     <!-- Input field hints -->
     <string name="recordNameHint">Name of Record</string>
@@ -22,8 +23,7 @@
     <string name="recordNameDefault">Default</string>
     <string name="nicknameHint">Weapon Nickname</string>
     <string name="barrelTempHint">Temperature</string>
-    <string name="verticalDistHint">Vertical Distance</string>
-    <string name="horizontalDistHint">Horizontal Distance</string>
+    <string name="distInputHint">inches</string>
 
     <!-- Text Labels -->
     <string name="weaponSpinnerLabel">Select a\nweapon:</string>
@@ -40,6 +40,21 @@
     <string name="location">Location:</string>
     <string name="weather">Weather:</string>
     <string name="description">Description:</string>
+
+    <!-- Radio Buttons -->
+    <string name="horizontalLeft">Left of Center</string>
+    <string name="horizontalRight">Right of Center</string>
+    <string name="verticalAbove">Above Center</string>
+    <string name="verticalBelow">Below Center</string>
+
+    <!-- Alert Text -->
+    <string name="alertOK">OK</string>
+    <string name="distTitle">ERROR!</string>
+    <string name="distMessage">Distance cannot be less than 0. \nPlease, try again.</string>
+    <string name="bullseyeTitle">Wow!</string>
+    <string name="bullseyeMessage">Great Shot!</string>
+    <string name="noRadioTitle">Oops!</string>
+    <string name="noRadioMessage">%1$s orientation is missing. To ensure accurate scope adjustment analysis, please select either \"%2$s\" or \"%3$s\". \nThank you!</string>
 
     <!-- Other -->
     <string name="noWeapon">No Weapon Selected</string>
