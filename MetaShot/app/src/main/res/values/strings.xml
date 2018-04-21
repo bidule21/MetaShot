@@ -2,7 +2,6 @@
     <string name="app_name">MetaShot</string>
 
     <!-- ALL BUTTONS -->
-    <string name="homeScreen">Home</string>
     <string name="shooting_new">Create New \nShooting Record</string>
     <string name="shooting_view">View Previous \nShooting Record</string>
     <string name="inventory">View/Edit Weapon \nInventory</string>

@@ -6,10 +6,11 @@
 
     <Button
         android:id="@+id/goToHome"
-        android:layout_width="wrap_content"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:onClick="onClick"
-        android:text="@string/homeScreen" />
+        android:background="@drawable/homeIcon"
+        android:backgroundTint="@color/red"
+        android:onClick="onClick" />
 
     <ImageView
         android:id="@+id/logo"
