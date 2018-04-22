@@ -45,41 +45,21 @@
         android:textColor="@color/black"/>
 
     <TextView
-        android:id="@+id/targetXHeader"
+        android:id="@+id/targetXYHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/barrelTempHeader"
         android:layout_marginEnd="10dp"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:layout_marginBottom="5dp"
-        android:text="@string/horizontalDist" />
+        android:text="@string/xyDist" />
 
     <TextView
-        android:id="@+id/targetX"
+        android:id="@+id/targetXY"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/barrelTempHeader"
-        android:layout_toEndOf="@id/targetXHeader"
-        android:textColor="@color/black"/>
-
-    <TextView
-        android:id="@+id/targetYHeader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/targetXHeader"
-        android:layout_marginEnd="10dp"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginBottom="5dp"
-        android:text="@string/verticalDist" />
-
-    <TextView
-        android:id="@+id/targetY"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/targetXHeader"
-        android:layout_toEndOf="@id/targetYHeader"
+        android:layout_below="@id/targetXYHeader"
+        android:layout_marginStart="10dp"
         android:textColor="@color/black"/>
 
 </RelativeLayout>

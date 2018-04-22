@@ -69,16 +69,6 @@
         android:background="@drawable/weather2"
         android:onClick="onClick" />
 
-    <TextView
-        android:id="@+id/spinnerLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/weatherAuto"
-        android:layout_below="@+id/weatherManual"
-        android:text="@string/weaponSpinnerLabel"
-        android:textStyle="bold"
-        android:textColor="@color/black" />
-
     <Spinner
         android:id="@+id/weaponSelect"
         android:layout_width="wrap_content"
