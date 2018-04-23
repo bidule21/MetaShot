@@ -4,9 +4,16 @@
 ## Getting Started
 
 ## Hardware Requirements
+MetaShot is written for Android 8.0 (API level 26) with the minimum support of Android 7.0 (API level 24).
+Although not required, a Metawear device is recommended. (more information)
+
+In order to use MetaShot to its full potentaial, The following permissions are needed:
+Wifi,
+GPS,
+Bluetooth
 
 ## Installation
-To download the most recent release of MetaShot, <Click here>. This will download and install the most recent version of the MetaShot APK. In order for android to install unknown apps, be sure to opt-in for installing unknown sources. 
+To download the most recent release of MetaShot, (Click here). This will download and install the most recent version of the MetaShot APK. In order for android to install unknown apps, be sure to opt-in for installing unknown sources. 
 
 Android protects users from inadvertent download and install of unknown apps, or apps from sources other than Google Play, which is trusted. Android blocks such installs until the user opts into allowing the installation of apps from other sources. The opt-in process depends on the version of Android running on the device:
 
