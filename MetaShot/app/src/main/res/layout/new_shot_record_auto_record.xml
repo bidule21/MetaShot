@@ -11,7 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/logoHeader"
-        android:layout_centerHorizontal="true"
+        android:layout_toStartOf="@id/connect"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
         android:ems="10"
         android:inputType="text"
@@ -23,7 +24,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/metawearMac"
+        android:layout_below="@id/logoHeader"
+        android:layout_marginBottom="5dp"
         android:backgroundTint="@color/orange"
         android:onClick="onClickConnect"
         android:text="Connect" />
@@ -32,7 +34,7 @@
         android:id="@+id/start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@id/connect"
         android:backgroundTint="@color/orange"
         android:text="Start" />
@@ -41,17 +43,28 @@
         android:id="@+id/stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/start"
+        android:layout_below="@id/connect"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@id/start"
         android:backgroundTint="@color/orange"
         android:text="Stop" />
+
+    <TextView
+        android:id="@+id/shotRecordsHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/stop"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="@string/previousShotRecordsHeader" />
 
     <Button
         android:id="@+id/saveRecord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/stop"
+        android:layout_alignParentBottom="true"
         android:onClick="onClick"
         android:backgroundTint="@color/orange"
         android:text="@string/save" />
@@ -61,8 +74,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toStartOf="@id/saveRecord"
-        android:layout_below="@id/saveRecord"
-        android:layout_marginEnd="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
         android:onClick="onClick"
         android:backgroundTint="@color/orange"
         android:text="@string/cancel" />
@@ -71,7 +84,7 @@
         android:id="@+id/shotRecordsList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cancelRecord" >
+        android:layout_below="@id/shotRecordsHeading" >
 
     </ListView>
 
