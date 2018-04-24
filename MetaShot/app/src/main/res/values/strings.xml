@@ -13,6 +13,7 @@
     <string name="manualCreate">Manually Create Shots</string>
     <string name="save">Save</string>
     <string name="bullseye">BULLSEYE</string>
+    <string name="analyze">Analyze</string>
 
     <!-- Input field hints -->
     <string name="recordNameHint">Name of Record</string>

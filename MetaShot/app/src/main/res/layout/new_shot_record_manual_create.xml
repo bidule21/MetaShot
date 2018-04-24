@@ -31,13 +31,16 @@
         android:layout_toEndOf="@id/verticalDist"
         android:inputType="text"
         android:textAlignment="textEnd"
+        android:textColorHint="@color/darkGray"
         android:hint="@string/distInputHint" />
 
     <RadioGroup
         android:id="@+id/verticalRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/verticalDist">
+        android:layout_below="@id/verticalDist"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="40dp">
 
         <RadioButton
             android:id="@+id/verticalAbove"
@@ -57,9 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/verticalRadioGroup"
-        android:layout_marginTop="30dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="5dp"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:text="@string/horizontalDist" />
@@ -68,20 +69,22 @@
         android:id="@+id/horizontalDistInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/verticalRadioGroup"
+        android:layout_below="@id/verticalDistInput"
+        android:layout_marginTop="50dp"
         android:layout_toEndOf="@id/horizontalDist"
-        android:layout_marginTop="10dp"
         android:ems="4"
+        android:hint="@string/distInputHint"
         android:inputType="text"
         android:textAlignment="textEnd"
-        android:hint="@string/distInputHint" />
+        android:textColorHint="@color/darkGray" />
 
     <RadioGroup
         android:id="@+id/horizontalRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/horizontalDist"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="40dp">
 
         <RadioButton
             android:id="@+id/horizontalLeft"
@@ -103,7 +106,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/logoHeader"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
         android:textColor="@color/red"
         android:onClick="onClick"
         android:backgroundTint="@color/orange"
