@@ -88,9 +88,7 @@ public class NewShotRecord extends AppCompatActivity {
         //sets the on item click to redirect to the view previous shot record view
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent intent = new Intent(new Intent(NewShotRecord.this, ViewPreviousShotRecord.class));
-                intent.putExtra("SHOT_RECORD_ID", records.get(position).id());
-                startActivity(intent);
+                showShotRecord(position);
 
             }
         });
@@ -140,5 +138,111 @@ public class NewShotRecord extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    public void showShotRecord(int position){
+        String shotNumber, barrelTemp, targetXY, messageX = null, messageY = null;
+        dbService = new DatabaseShotService(this);
+        String shotRecordId = records.get(position).id();
+        String unitsX, distanceX, orientationX, unitsY, distanceY, orientationY;
+        String shotNoLabel = getString(R.string.shotNumber);
+        String barrelTempLabel = getString(R.string.barrelTemp);
+        String targetXYLabel = getString(R.string.xyDist);
+
+        //get the shot record
+        ShotRecord shotRecord = dbService.getSingleShotsRecordsById(shotRecordId);
+
+        //populate the shot number
+        shotNumber = String.format("%s", shotRecord.shotNumber());
+
+        //populate the barrel temp
+        barrelTemp = String.format("%s", shotRecord.barrelTemp());
+
+        /*Populate the X and Y distance from center of target.
+        A negative X value indicates a shot that was to the left of the target center.
+        A positive X value indicates a shot that was to the right of the target center.
+        A negative Y value indicates a shot that was below target center.
+        A positive Y value indicates a shot that was above target center.
+        If both X and Y equal 0, then a bullseye was hit.
+        If either X or Y are equal to 0, that indicates horizontal/vertical alignment.
+        */
+        //shot resulted in a bullseye
+        if (shotRecord.targetX() == 0 && shotRecord.targetY() == 0){
+            targetXY = getString(R.string.bullseye);
+            AlertDialog.Builder showShotRecordDialog = new AlertDialog.Builder(NewShotRecord.this);
+            showShotRecordDialog.setTitle(getString(R.string.showShotRecordTitle, shotNoLabel, shotNumber));
+            showShotRecordDialog.setMessage(targetXY);
+            showShotRecordDialog.setPositiveButton(R.string.alertOK, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            showShotRecordDialog.show();
+            return;
+        }
+
+        //set display text for units
+        if(shotRecord.targetX() > 0) {
+            if (shotRecord.targetX() == 1) {
+                unitsX = " inch";
+            } else {
+                unitsX = " inches";
+            }
+            distanceX = (String.format("%s", shotRecord.targetX())) + unitsX; //set X distance
+            orientationX = " to the right."; //set X orientation
+            messageX = distanceX + orientationX; //set X message
+        } else if (shotRecord.targetX() < 0 ){
+            //set display text for units
+            if (shotRecord.targetX() == -1) {
+                unitsX = " inch";
+            } else {
+                unitsX = " inches";
+            }
+            distanceX = (String.format("%s", -(shotRecord.targetX()))) + unitsX; //set X distance
+            orientationX = " to the left."; //set X orientation
+            messageX = distanceX + orientationX; //set X message
+        } else if (shotRecord.targetX() == 0) {
+            messageX = "Centered horizontally."; //set X message
+        }
+
+        if(shotRecord.targetY() > 0) {
+            //set display text for units
+            if (shotRecord.targetY() == 1) {
+                unitsY = " inch";
+            } else {
+                unitsY = " inches";
+            }
+            distanceY = (String.format("%s", shotRecord.targetY())) + unitsY; //set Y distance
+            orientationY = " above."; //set Y orientation
+            messageY = distanceY + orientationY; //set Y message
+        } else if (shotRecord.targetY() < 0 ){
+            if (shotRecord.targetY() == -1) {
+                //set display text for units
+                unitsY = " inch";
+            } else {
+                unitsY = " inches";
+            }
+            distanceY = (String.format("%s", -(shotRecord.targetY()))) + unitsY; //set Y distance
+            orientationY = " below."; //set Y orientation
+            messageY = distanceY + orientationY; //set Y message
+        } else if (shotRecord.targetY() == 0) {
+            messageY = "Centered vertically."; //set Y message
+        }
+        //set targetXY text to include messageX and messageY
+        //formatting of string done in strings.xml resource file
+        targetXY = getString(R.string.showXYDist, messageX, messageY);
+
+        AlertDialog.Builder showShotRecordDialog = new AlertDialog.Builder(NewShotRecord.this);
+        showShotRecordDialog.setTitle(getString(R.string.showShotRecordTitle, shotNoLabel, shotNumber));
+        showShotRecordDialog.setMessage(getString(R.string.showShotRecordMessage, barrelTempLabel, barrelTemp, targetXYLabel, targetXY));
+        showShotRecordDialog.setPositiveButton(R.string.alertOK, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        showShotRecordDialog.show();
+
     }
 }
