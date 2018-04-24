@@ -28,6 +28,8 @@ public class ShootingRecord implements IShooting {
 
     private String _weather;
 
+    private String _range;
+
 
     @Override
     public String Id() {
@@ -109,5 +111,11 @@ public class ShootingRecord implements IShooting {
     public void setGunId(String id) {
         _typeOfGun = new GunRecord();
         _typeOfGun.setId(id);
+    }
+
+    @Override
+    public String range() {return _range;}
+    public void setRange(String range) {
+        _range = range;
     }
 }

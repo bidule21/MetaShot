@@ -29,4 +29,6 @@ public interface IShooting {
 
     String gunId();
 
+    String range();
+
 }

@@ -23,7 +23,7 @@ public class ShootingRecordDataSource implements IShootingService {
     private MySQLiteHelper dbHelper;
     private String dbTableName = "shootingRecord";
     private String[] allColumns = { "id",
-            "title", "datetime", "location", "temp", "wind", "description", "gunTypeId", "weather" };
+            "title", "datetime", "location", "temp", "wind", "description", "gunTypeId", "weather", "range" };
 
     public ShootingRecordDataSource(Context context) {
         dbHelper = new MySQLiteHelper(context);
@@ -58,6 +58,7 @@ public class ShootingRecordDataSource implements IShootingService {
             values.put("gunTypeId", record.gunId());
         }
         values.put("weather", record.weather());
+        values.put("range", record.range());
 
         database.insert(dbTableName, null,
                 values);
@@ -140,6 +141,7 @@ public class ShootingRecordDataSource implements IShootingService {
             comment.setGunId(cursor.getString(7));
         }
         comment.setWeather(cursor.getString(8));
+        comment.setRange(cursor.getString(9));
         return comment;
     }
 
