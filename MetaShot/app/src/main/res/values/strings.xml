@@ -36,6 +36,7 @@
     <string name="shotNumber">Shot Number:</string>
     <string name="shootingTitle">Title:</string>
     <string name="date">Date:</string>
+    <string name="rangeDist">Range:</string>
     <string name="weaponType">Weapon Used:</string>
     <string name="location">Location:</string>
     <string name="weather">Weather:</string>

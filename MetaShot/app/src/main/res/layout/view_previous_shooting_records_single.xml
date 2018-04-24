@@ -45,10 +45,29 @@
         android:textColor="@color/black" />
 
     <TextView
-        android:id="@+id/weaponTypeHeader"
+        android:id="@+id/rangeHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/dateHeader"
+        android:layout_marginEnd="10dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:text="@string/rangeDist"/>
+
+    <TextView
+        android:id="@+id/range"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dateHeader"
+        android:layout_toEndOf="@id/rangeHeader"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/weaponTypeHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rangeHeader"
         android:layout_marginEnd="10dp"
         android:textColor="@color/black"
         android:textStyle="bold"
@@ -59,7 +78,7 @@
         android:id="@+id/weaponType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dateHeader"
+        android:layout_below="@id/rangeHeader"
         android:layout_toEndOf="@id/weaponTypeHeader"
         android:textColor="@color/black" />
 

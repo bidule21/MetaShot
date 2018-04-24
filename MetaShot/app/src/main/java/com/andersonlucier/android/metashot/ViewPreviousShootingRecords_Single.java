@@ -24,7 +24,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
     private ShootingRecord shootingRecord;
     private String shootingRecordId;
     private AlertDialog.Builder builder;
-    private TextView title, date, weaponType, location, weather, description;
+    private TextView title, date, range, weaponType, location, weather, description;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +34,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
 
         title = findViewById(R.id.title);
         date = findViewById(R.id.date);
+        range = findViewById(R.id.range);
         weaponType = findViewById(R.id.weaponType);
         location = findViewById(R.id.location);
         weather = findViewById(R.id.weather);
@@ -71,6 +72,9 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String dateformat = simpleDateFormat.format(shootingRecord.datetime());
         date.setText(String.format("%s", dateformat));
+
+        //sets the range
+        range.setText(String.format("%s", shootingRecord.range()));
 
         //sets the location
         location.setText(String.format("%s", shootingRecord.location()));
