@@ -23,10 +23,22 @@
         android:hint="@string/recordNameHint" />
 
     <EditText
-        android:id="@+id/gpsManual"
+        android:id="@+id/rangeDist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/recordName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:inputType="text"
+        android:backgroundTint="@color/black"
+        android:hint="@string/rangeDistHint"/>
+
+    <EditText
+        android:id="@+id/gpsManual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rangeDist"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:ems="10"
@@ -40,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/gpsManual"
-        android:layout_below="@id/recordName"
+        android:layout_below="@id/rangeDist"
         android:layout_marginStart="20dp"
         android:background="@drawable/location_icon"
         android:onClick="onClick" />

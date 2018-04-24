@@ -16,6 +16,7 @@
 
     <!-- Input field hints -->
     <string name="recordNameHint">Name of Record</string>
+    <string name="rangeDistHint">Range (ex: 100 yards)</string>
     <string name="gpsHint">GPS Location</string>
     <string name="weatherHint">Weather</string>
     <string name="detailsHint">Other Details</string>

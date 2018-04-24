@@ -41,7 +41,7 @@ import java.util.Locale;
 
 public class NewShootingRecord extends AppCompatActivity {
 
-    private EditText recordName, autoGpsLocation, weather, otherDetails;
+    private EditText recordName, rangeDist, autoGpsLocation, weather, otherDetails;
     private int itemPosition;
     private String windFactors;
     private Double autofillTemperature;
@@ -61,6 +61,7 @@ public class NewShootingRecord extends AppCompatActivity {
         appLocationService = new AppLocationService(NewShootingRecord.this);
 
         recordName = findViewById(R.id.recordName);
+        rangeDist = findViewById(R.id.rangeDist);
         autoGpsLocation = findViewById(R.id.gpsManual);
         weather = findViewById(R.id.weatherManual);
         otherDetails = findViewById(R.id.otherDetails);
@@ -169,6 +170,7 @@ public class NewShootingRecord extends AppCompatActivity {
                 //TODO: Handle instances of empty input fields
                 ShootingRecord shooting = new ShootingRecord();
                 shooting.setTitle(recordName.getText().toString());
+                shooting.setRange(rangeDist.getText().toString());
                 shooting.setLocation(autoGpsLocation.getText().toString());
                 shooting.setTemp(autofillTemperature);
                 shooting.setWind(windFactors);
@@ -181,7 +183,7 @@ public class NewShootingRecord extends AppCompatActivity {
 
                 shooting.setId(dbService.createShootingRecord(shooting).Id());
 
-                Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n GPS Location: " + autoGpsLocation.getText().toString() + "\n Weather: " +
+                Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n Range: " + rangeDist.getText().toString() + "\n GPS Location: " + autoGpsLocation.getText().toString() + "\n Weather: " +
                         weather.getText().toString() + "\n Other Details: " + otherDetails.getText().toString(), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(new Intent(NewShootingRecord.this, NewShotRecord.class));
