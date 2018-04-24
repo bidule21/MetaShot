@@ -139,11 +139,21 @@
         android:layout_toEndOf="@id/descriptionHeader"
         android:textColor="@color/black"/>
 
+    <Button
+        android:id="@+id/analyze"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/orange"
+        android:onClick="onClick"
+        android:text="@string/analyze"/>
+
     <TextView
         android:id="@+id/previousShotRecordsHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/description"
+        android:layout_below="@id/analyze"
         android:layout_marginTop="15dp"
         android:textColor="@color/black"
         android:textStyle="bold"
