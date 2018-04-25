@@ -59,9 +59,17 @@
     <string name="noRadioMessage">%1$s orientation is missing. To ensure accurate scope adjustment analysis, please select either \"%2$s\" or \"%3$s\". \nThank you!</string>
     <string name="showShotRecordTitle">%1$s %2$s</string>
     <string name="showShotRecordMessage">%1$s %2$s \n%3$s\n   %4$s</string>
+    <string name="insufShotCountTitle">Sorry!</string>
+    <string name="insufShotCountMessage">We recommend recording at least 5 shots before adjusting the scope.\nPlease, fire more shots and try again.</string>
+    <string name="adjustScopeTitle">Recommended Scope Adjustments</string>
+    <string name="adjustScopeMessage">%1$s\n%2$s</string>
 
     <!-- Other -->
     <string name="noWeapon">No Weapon Selected</string>
     <string name="showXYDist">%1$s\n %2$s</string>
+    <string name="adjustScopeUp">Adjust scope up %1$s clicks.</string>
+    <string name="adjustScopeDown">Adjust scope down %1$s clicks.</string>
+    <string name="adjustScopeLeft">Adjust scope left %1$s clicks.</string>
+    <string name="adjustScopeRight">Adjust scope right %1$s clicks.</string>
 
 </resources>

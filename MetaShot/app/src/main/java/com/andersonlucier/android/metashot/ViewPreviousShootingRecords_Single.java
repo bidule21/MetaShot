@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.andersonlucier.android.metashot.databaseservicelib.DatabaseShotService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
@@ -26,6 +28,8 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
     private String shootingRecordId;
     private AlertDialog.Builder builder;
     private TextView title, date, range, weaponType, location, weather, description;
+    private int shotCounter = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +62,24 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
                 intent.putExtra("SHOOTING_TITLE", shootingRecord.title());
                 startActivity(intent);
                 break;
+            case R.id.analyze:
+                Toast.makeText(this, String.valueOf(shotCounter), Toast.LENGTH_LONG).show();
+                if (shotCounter < 5){
+                    AlertDialog.Builder insufficientShotCount = new AlertDialog.Builder(ViewPreviousShootingRecords_Single.this);
+                    insufficientShotCount.setTitle(R.string.insufShotCountTitle);
+                    insufficientShotCount.setMessage(R.string.insufShotCountMessage);
+                    insufficientShotCount.setPositiveButton(R.string.alertOK, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    insufficientShotCount.show();
+                    break;
+                } else {
+                    adjustScope();
+                    break;
+                }
         }
     }
 
@@ -113,6 +135,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
         List<String> gunArrayList = new ArrayList<>();
         for (ShotRecord record : records){
             gunArrayList.add("Shot - " + record.shotNumber());
+            shotCounter++;
         }
 
         //creates the adapter and sets the adapter
@@ -281,5 +304,46 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
         });
         showShotRecordDialog.show();
 
+    }
+
+    public void adjustScope(){
+        double verticalAlignment, horizontalAlignment;
+        double sumVertical = 0, averageVertical, sumHorizontal = 0, averageHorizontal, averageCounter = 0;
+        String verticalAdjustment, horizontalAdjustment;
+        dbService = new DatabaseShotService(this);
+
+        for (ShotRecord record : records){
+            sumVertical = sumVertical + record.targetY();
+            sumHorizontal = sumHorizontal + record.targetX();
+            averageCounter++;
+        }
+        averageVertical = sumVertical/averageCounter;
+        verticalAlignment = Math.round(averageVertical);
+        if (verticalAlignment < 0){
+            verticalAlignment = verticalAlignment * -1;
+            verticalAdjustment = getString(R.string.adjustScopeUp, String.valueOf(verticalAlignment));
+        } else {
+            verticalAdjustment = getString(R.string.adjustScopeDown, String.valueOf(verticalAlignment));
+        }
+
+        averageHorizontal = sumHorizontal/averageCounter;
+        horizontalAlignment = Math.round(averageHorizontal);
+        if (horizontalAlignment < 0){
+            horizontalAlignment = horizontalAlignment * -1;
+            horizontalAdjustment = getString(R.string.adjustScopeRight, String.valueOf(horizontalAlignment));
+        } else {
+            horizontalAdjustment = getString(R.string.adjustScopeLeft, String.valueOf(horizontalAlignment));
+        }
+
+        AlertDialog.Builder scopeAdjustDialog = new AlertDialog.Builder(ViewPreviousShootingRecords_Single.this);
+        scopeAdjustDialog.setTitle(R.string.adjustScopeTitle);
+        scopeAdjustDialog.setMessage(getString(R.string.adjustScopeMessage, verticalAdjustment, horizontalAdjustment));
+        scopeAdjustDialog.setPositiveButton(R.string.alertOK, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        scopeAdjustDialog.show();
     }
 }
