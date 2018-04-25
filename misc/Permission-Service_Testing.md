@@ -30,6 +30,9 @@
 | NewShootingRecord | getGPSLocation | ACCESS_FINE_LOCATION | Granted | Location | Disabled | |
 | NewShootingRecord | getGPSLocation | ACCESS_FINE_LOCATION | Not Granted | Location | Enabled | |
 | NewShootingRecord | getGPSLocation | ACCESS_FINE_LOCATION | Not Granted | Location | Disabled | |
+
+| Activity | Method | Permission Needed? | Permission Granted/Not Granted? | Service Needed? | Service Enabled/Disabled? | Testing Result |
+| -------- | ------- | ------------------ | ------------------------------- | --------------- | ------------------------ | -------------- |
 | NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Granted<br /><br />Granted (default) | Location<br /><br />Internt | Enabled<br /><br />Enabled | |
 | NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Granted<br /><br />Granted (default) | Location<br /><br />Internt | Disabled<br /><br />Enabled | |
 | NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Granted<br /><br />Granted (default) | Location<br /><br />Internt | Enabled<br /><br />Disabled | |
@@ -38,5 +41,8 @@
 | NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Not Granted<br /><br />Granted (default) | Location<br /><br />Internt | Disabled<br /><br />Enabled | |
 | NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Not Granted<br /><br />Granted (default) | Location<br /><br />Internt | Enabled<br /><br />Disabled | |
 | NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Not Granted<br /><br />Granted (default) | Location<br /><br />Internt | Disabled<br /><br />Disabled | |
+
+| Activity | Method | Permission Needed? | Permission Granted/Not Granted? | Service Needed? | Service Enabled/Disabled? | Testing Result |
+| -------- | ------- | ------------------ | ------------------------------- | --------------- | ------------------------ | -------------- |
 | NewShotRecord_AutoRecord | onClickConnect<br />retrieveBoard | N/A | N/A | Bluetooth | Enabled | |
 | NewShotRecord_AutoRecord | onClickConnect<br />retrieveBoard | N/A | N/A | Bluetooth | Disabled | |
