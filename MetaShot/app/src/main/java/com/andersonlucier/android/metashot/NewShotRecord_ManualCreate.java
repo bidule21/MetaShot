@@ -40,6 +40,10 @@ public class NewShotRecord_ManualCreate extends AppCompatActivity {
         shootingRecordId = getIntent().getStringExtra("SHOOTING_RECORD_ID");
         shootingRecordTitle = getIntent().getStringExtra("SHOOTING_TITLE");
         update = getIntent().getStringExtra("UPDATE");
+        if(update ==null) {
+            update = "false";
+        }
+
         ShotRecordId = getIntent().getStringExtra("SHOT_RECORD_ID");
 
     }
