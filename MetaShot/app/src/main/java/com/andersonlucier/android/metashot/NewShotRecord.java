@@ -141,7 +141,7 @@ public class NewShotRecord extends AppCompatActivity {
                 //show the alert dialog
                 AlertDialog alert = builder.create();
                 alert.show();
-                return false;
+                return true;
             }
         });
     }
