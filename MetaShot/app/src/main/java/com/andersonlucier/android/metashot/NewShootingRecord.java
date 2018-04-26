@@ -47,9 +47,9 @@ public class NewShootingRecord extends AppCompatActivity {
     private Double autofillTemperature;
     AppLocationService appLocationService;
     private static final int GPS_LOCATION_PERMISSION = 0;
-    private static final int INTERNET_PERMISSION = 34;
     private DatabaseShotService dbService;
     private List<GunRecord> gunRecordsList;
+    private boolean autoWeather = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,9 +129,6 @@ public class NewShootingRecord extends AppCompatActivity {
                     if (gpsLocation == null) {
                         showSettingsAlert("GPS");
                     } else {
-                        //check if permission for INTERNET is granted
-                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
-
                             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
                             //check if network connectivity service is available/enabled
@@ -148,11 +145,7 @@ public class NewShootingRecord extends AppCompatActivity {
                                 Toast.makeText(this, "No network connection detected.", Toast
                                         .LENGTH_LONG).show();
                             }
-                        } else {
-                            //if INTERNET permission is not granted, request permission
-                            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, INTERNET_PERMISSION);
                         }
-                    }
                 } else {
                     //if ACCESS_FINE_LOCATION permission is not granted, request permission
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_LOCATION_PERMISSION);
@@ -161,21 +154,34 @@ public class NewShootingRecord extends AppCompatActivity {
 
             //When clicked, data from the edit text fields is sent to the database and saved as a unique shooting record
             case R.id.newShootingCreate:
-                //Set default name for record if field is blank
+                //Set default value for empty fields
                 if (recordName.getText().length() == 0) {
-                    recordName.setText(R.string.recordNameDefault);
+                    recordName.setText(R.string.shootingRecordInputDefault);
+                }
+                if (rangeDist.getText().length() == 0){
+                    rangeDist.setText(R.string.shootingRecordInputDefault);
+                }
+                if (autoGpsLocation.getText().length() == 0){
+                    autoGpsLocation.setText(R.string.shootingRecordInputDefault);
+                }
+                if (weather.getText().length() == 0){
+                    weather.setText(R.string.shootingRecordInputDefault);
+                }
+                if (otherDetails.getText().length() == 0){
+                    otherDetails.setText(R.string.shootingRecordInputDefault);
                 }
 
-                //TODO: Handle instance of user manually entering text strings for location and weather
-                //TODO: Handle instances of empty input fields
                 ShootingRecord shooting = new ShootingRecord();
                 shooting.setTitle(recordName.getText().toString());
                 shooting.setRange(rangeDist.getText().toString());
                 shooting.setLocation(autoGpsLocation.getText().toString());
-                shooting.setTemp(autofillTemperature);
-                shooting.setWind(windFactors);
                 shooting.setDescription(otherDetails.getText().toString());
                 shooting.setWeather(weather.getText().toString());
+
+                if(autoWeather){
+                    shooting.setTemp(autofillTemperature);
+                    shooting.setWind(windFactors);
+                }
 
                 if (itemPosition > 0) {
                     shooting.setTypeOfGun(gunRecordsList.get(itemPosition -1));
@@ -183,8 +189,8 @@ public class NewShootingRecord extends AppCompatActivity {
                 shooting.setLastShotAnalyzed(0);
                 shooting.setId(dbService.createShootingRecord(shooting).Id());
 
-                Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n Range: " + rangeDist.getText().toString() + "\n GPS Location: " + autoGpsLocation.getText().toString() + "\n Weather: " +
-                        weather.getText().toString() + "\n Other Details: " + otherDetails.getText().toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n Range: " + rangeDist.getText().toString() + "\n GPS Location: " + autoGpsLocation.getText().toString() + "\n Weather: " +
+                        //weather.getText().toString() + "\n Other Details: " + otherDetails.getText().toString(), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(new Intent(NewShootingRecord.this, NewShotRecord.class));
                 intent.putExtra("SHOOTING_RECORD_ID", shooting.Id());
@@ -252,6 +258,7 @@ public class NewShootingRecord extends AppCompatActivity {
     //Retrieve weather details at user's current location
     public void getWeatherDetails(Location location) {
 
+        autoWeather = true;
         String lat = Double.toString(location.getLatitude());
         String longi = Double.toString(location.getLongitude());
 
@@ -352,29 +359,6 @@ public class NewShootingRecord extends AppCompatActivity {
                 } else {
                     //Display message to user if permission is denied
                     Toast.makeText(this, "GPS permission denied. Unable to complete request.", Toast.LENGTH_LONG).show();
-                }
-                break;
-            case INTERNET_PERMISSION:
-                //Complete action if permission is granted
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Location gpsLocation = appLocationService.getLocation(LocationManager.GPS_PROVIDER);
-                    ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-                    if (gpsLocation == null){
-                        showSettingsAlert("GPS");
-                    } else {
-                        if (connectivityManager != null) {
-                            if (connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting()) {
-
-                                getWeatherDetails(gpsLocation);
-                            } else {
-                                showSettingsAlert("INTERNET");
-                            }
-                        } else {
-                            //Display message to user if permission is denied
-                            Toast.makeText(this, "Internet permission denied. Unable to complete request.", Toast.LENGTH_LONG).show();
-                        }
-                    }
                 }
                 break;
         }

@@ -21,7 +21,6 @@
     <string name="gpsHint">GPS Location</string>
     <string name="weatherHint">Weather</string>
     <string name="detailsHint">Other Details</string>
-    <string name="recordNameDefault">Default</string>
     <string name="nicknameHint">Weapon Nickname</string>
     <string name="barrelTempHint">Temperature</string>
     <string name="distInputHint">inches</string>
@@ -65,6 +64,8 @@
     <string name="adjustScopeMessage">%1$s\n%2$s</string>
 
     <!-- Other -->
+    <string name="recordNameDefault">Default</string>
+    <string name="shootingRecordInputDefault">Not Specified</string>
     <string name="noWeapon">No Weapon Selected</string>
     <string name="showXYDist">%1$s\n %2$s</string>
     <string name="adjustScopeUp">Adjust scope up %1$s clicks.</string>
