@@ -112,7 +112,18 @@ public class ShotRecordDataSource implements IShotService {
      */
     @Override
     public ShotRecord updateShotRecord(ShotRecord record) {
-        return null;
+        ContentValues values = new ContentValues();
+        String id = record.id();
+        values.put("id", id);
+        values.put("shootingRecordId", record.shootingRecordId());
+        values.put("shotNumber", record.shotNumber());
+        values.put("barrelTemp", record.barrelTemp());
+        values.put("targetX", record.targetX());
+        values.put("targetY", record.targetY());
+
+        database.update(dbName, values,"id" + " = '" + id + "'", null);
+
+        return record;
     }
 
     /**

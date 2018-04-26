@@ -1,5 +1,6 @@
 package com.andersonlucier.android.metashot;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,7 @@ public class NewShotRecord_ManualCreate extends AppCompatActivity {
     private String shootingRecordTitle;
     private DatabaseShotService dbService;
     RadioButton left, right, above, below;
+    private String update, ShotRecordId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,9 @@ public class NewShotRecord_ManualCreate extends AppCompatActivity {
 
         shootingRecordId = getIntent().getStringExtra("SHOOTING_RECORD_ID");
         shootingRecordTitle = getIntent().getStringExtra("SHOOTING_TITLE");
+        update = getIntent().getStringExtra("UPDATE");
+        ShotRecordId = getIntent().getStringExtra("SHOT_RECORD_ID");
+
     }
     public void onClick (View view){
 
@@ -62,10 +67,21 @@ public class NewShotRecord_ManualCreate extends AppCompatActivity {
                        record.setTargetY(verticalDist);
                        dbService.createShotRecord(record);
 
-                       intent = new Intent(new Intent(NewShotRecord_ManualCreate.this, NewShotRecord.class));
-                       intent.putExtra("SHOOTING_RECORD_ID", shootingRecordId);
-                       intent.putExtra("SHOOTING_TITLE", shootingRecordTitle);
-                       startActivity(intent);
+                       if(update.equals("True")) {
+                           Intent returnIntent = new Intent();
+                           returnIntent.putExtra("XVALUE",horizontalDist);
+                           returnIntent.putExtra("YVALUE",verticalDist);
+                           returnIntent.putExtra("SHOT_RECORD_ID", ShotRecordId);
+                           setResult(Activity.RESULT_OK,returnIntent);
+                           finish();
+                       } else {
+                           intent = new Intent(new Intent(NewShotRecord_ManualCreate.this, NewShotRecord.class));
+                           intent.putExtra("SHOOTING_RECORD_ID", shootingRecordId);
+                           intent.putExtra("SHOOTING_TITLE", shootingRecordTitle);
+                           startActivity(intent);
+                       }
+
+
                     }
                 });
                 bullseyeAlertDialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -115,24 +131,41 @@ public class NewShotRecord_ManualCreate extends AppCompatActivity {
                     convertVerticalDist = convertVerticalDist * -1;
                 }
 
-                ShotRecord record = new ShotRecord();
-                record.setShootingRecordId(shootingRecordId);
-                record.setTargetX(convertHorizontalDist);
-                record.setTargetY(convertVerticalDist);
-                dbService.createShotRecord(record);
 
-                Toast.makeText(this, "Vertical Input: " + String.valueOf(convertVerticalDist) + "\n" + "Horizontal Input: " + String.valueOf(convertHorizontalDist), Toast.LENGTH_LONG).show();
-                intent = new Intent(new Intent(NewShotRecord_ManualCreate.this, NewShotRecord.class));
-                intent.putExtra("SHOOTING_RECORD_ID", shootingRecordId);
-                intent.putExtra("SHOOTING_TITLE", shootingRecordTitle);
-                startActivity(intent);
+                if(update.equals("True")) {
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("XVALUE",convertHorizontalDist);
+                    returnIntent.putExtra("YVALUE",convertVerticalDist);
+                    returnIntent.putExtra("SHOT_RECORD_ID", ShotRecordId);
+                    setResult(Activity.RESULT_OK,returnIntent);
+                    finish();
+                } else {
+
+                    ShotRecord record = new ShotRecord();
+                    record.setShootingRecordId(shootingRecordId);
+                    record.setTargetX(convertHorizontalDist);
+                    record.setTargetY(convertVerticalDist);
+                    dbService.createShotRecord(record);
+
+                    Toast.makeText(this, "Vertical Input: " + String.valueOf(convertVerticalDist) + "\n" + "Horizontal Input: " + String.valueOf(convertHorizontalDist), Toast.LENGTH_LONG).show();
+                    intent = new Intent(new Intent(NewShotRecord_ManualCreate.this, NewShotRecord.class));
+                    intent.putExtra("SHOOTING_RECORD_ID", shootingRecordId);
+                    intent.putExtra("SHOOTING_TITLE", shootingRecordTitle);
+                    startActivity(intent);
+                }
                 break;
 
             case R.id.cancelShot:
-                intent = new Intent(new Intent(NewShotRecord_ManualCreate.this, NewShotRecord.class));
-                intent.putExtra("SHOOTING_RECORD_ID", shootingRecordId);
-                intent.putExtra("SHOOTING_TITLE", shootingRecordTitle);
-                startActivity(intent);
+                if(update.equals("True")) {
+                    Intent returnIntent = new Intent();
+                    setResult(Activity.RESULT_CANCELED,returnIntent);
+                    finish();
+                } else {
+                    intent = new Intent(new Intent(NewShotRecord_ManualCreate.this, NewShotRecord.class));
+                    intent.putExtra("SHOOTING_RECORD_ID", shootingRecordId);
+                    intent.putExtra("SHOOTING_TITLE", shootingRecordTitle);
+                    startActivity(intent);
+                }
                 break;
 
             case R.id.goToHome:

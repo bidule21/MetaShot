@@ -7,12 +7,16 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -50,7 +54,9 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
     private MetaWear dbMetaWearObject;
     private String shootingRecordId, shootingRecordTitle;
     private List<String> shotArrayList = new ArrayList<>();
+    private List<ShotRecord> shotRecordList = new ArrayList<>();
     private ListView lv;
+    private Button start, stop, connect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +66,13 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
         shootingRecordId = getIntent().getStringExtra("SHOOTING_RECORD_ID");
         shootingRecordTitle = getIntent().getStringExtra("SHOOTING_TITLE");
 
-        findViewById(R.id.start).setBackgroundColor(16777215);
-        findViewById(R.id.stop).setBackgroundColor(16777215);
+        start = findViewById(R.id.start);
+        stop = findViewById(R.id.stop);
+        connect = findViewById(R.id.connect);
+
+        start.setBackgroundTintList(getResources().getColorStateList(R.color.darkGray));
+        stop.setBackgroundTintList(getResources().getColorStateList(R.color.darkGray));
+
         lv = findViewById(R.id.shotRecordsList);
 
         dbService = new DatabaseShotService(this);
@@ -126,8 +137,30 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i("result", "Activity");
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                double xValue = data.getDoubleExtra("XVALUE",0.0);
+                double yValue = data.getDoubleExtra("YVALUE", 0.0);
+                String shotId = data.getStringExtra("SHOT_RECORD_ID");
+
+                ShotRecord record = dbService.getSingleShotsRecordsById(shotId);
+                record.setTargetX(xValue);
+                record.setTargetY(yValue);
+                dbService.updateShotRecord(record);
+
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Log.i("Metawear", "Cancelled saving coords");
+            }
+        }
+    }
+
     public void addToList(ShotRecord newShot) {
 
+
+        shotRecordList.add(newShot);
         shotArrayList.add("Shot - " + newShot.shotNumber());
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
@@ -136,7 +169,32 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
                 shotArrayList );
         lv.setAdapter(arrayAdapter);
 
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Intent intent = new Intent(NewShotRecord_AutoRecord.this, NewShotRecord_ManualCreate.class);
+                intent.putExtra("UPDATE", "True");
+                intent.putExtra("SHOT_RECORD_ID", shotRecordList.get(position).id());
+                startActivityForResult(intent, 1);
+            }
+        });
+
         Log.i("metashot", "Ading to list test");
+    }
+
+    public void showToastMessage(boolean success) {
+        if (success) {
+            Toast.makeText(this, "Connected to Metawear", Toast.LENGTH_LONG).show();
+            start.setBackgroundTintList(getResources().getColorStateList(R.color.orange));
+            stop.setBackgroundTintList(getResources().getColorStateList(R.color.orange));
+            connect.setBackgroundTintList(getResources().getColorStateList(R.color.darkGray));
+            connect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }});
+        } else {
+            Toast.makeText(this, "Unable to connect to Metawear, press cancel, and try again.", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void retrieveBoard(final String macAddr) {
@@ -190,8 +248,22 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
                     @Override
                     public Void then(Task<Route> task) throws Exception {
                         if(task.isFaulted()) {
-
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showToastMessage(false);
+                                }
+                            });
                         } else {
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showToastMessage(true);
+                                }
+                            });
+
+
                             Log.i("Metawear", "Metawear ready to start " + dbMetaWearObject.macAddress());
                             findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -209,8 +281,6 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
                                 }
                             });
 
-                            findViewById(R.id.start).setBackgroundColor(16753920);
-                            findViewById(R.id.stop).setBackgroundColor(16753920);
                         }
                         return null;
                     }

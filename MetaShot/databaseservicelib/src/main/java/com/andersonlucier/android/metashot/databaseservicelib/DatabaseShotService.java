@@ -210,7 +210,7 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
      */
     @Override
     public ShotRecord updateShotRecord(ShotRecord record) {
-        return null;
+        return ShotDataSource.updateShotRecord(record);
     }
 
 
