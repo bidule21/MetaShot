@@ -3,10 +3,15 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MetaShot.iml" filepath="$PROJECT_DIR$/MetaShot.iml" />
+      <module fileurl="file://C:\Users\Glenn\Desktop\projects\MetaShot\MetaShot\MetaShot.iml" filepath="C:\Users\Glenn\Desktop\projects\MetaShot\MetaShot\MetaShot.iml" />
       <module fileurl="file://$PROJECT_DIR$/adservicelib/adservicelib.iml" filepath="$PROJECT_DIR$/adservicelib/adservicelib.iml" />
+      <module fileurl="file://C:\Users\Glenn\Desktop\projects\MetaShot\MetaShot\adservicelib\adservicelib.iml" filepath="C:\Users\Glenn\Desktop\projects\MetaShot\MetaShot\adservicelib\adservicelib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Glenn\Desktop\projects\MetaShot\MetaShot\app\app.iml" filepath="C:\Users\Glenn\Desktop\projects\MetaShot\MetaShot\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/databaseservicelib/databaseservicelib.iml" filepath="$PROJECT_DIR$/databaseservicelib/databaseservicelib.iml" />
+      <module fileurl="file://C:\Users\Glenn\Desktop\projects\MetaShot\MetaShot\databaseservicelib\databaseservicelib.iml" filepath="C:\Users\Glenn\Desktop\projects\MetaShot\MetaShot\databaseservicelib\databaseservicelib.iml" />
       <module fileurl="file://$PROJECT_DIR$/metawearlib/metawearlib.iml" filepath="$PROJECT_DIR$/metawearlib/metawearlib.iml" />
+      <module fileurl="file://C:\Users\Glenn\Desktop\projects\MetaShot\MetaShot\metawearlib\metawearlib.iml" filepath="C:\Users\Glenn\Desktop\projects\MetaShot\MetaShot\metawearlib\metawearlib.iml" />
     </modules>
   </component>
 </project>

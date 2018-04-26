@@ -1,5 +1,6 @@
 package com.andersonlucier.android.metashot;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.ComponentName;
@@ -11,7 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.andersonlucier.android.metashot.databaseservicelib.DatabaseShotService;
+import com.andersonlucier.android.metashot.databaseservicelib.impl.MetaWear;
+import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
 import com.mbientlab.metawear.Data;
 import com.mbientlab.metawear.MetaWearBoard;
 import com.mbientlab.metawear.Route;
@@ -25,39 +33,73 @@ import com.mbientlab.metawear.builder.function.Function1;
 import com.mbientlab.metawear.data.Acceleration;
 import com.mbientlab.metawear.module.Accelerometer;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+
 import bolts.Continuation;
 import bolts.Task;
 
 public class NewShotRecord_AutoRecord extends AppCompatActivity implements ServiceConnection {
 
     private BtleService.LocalBinder serviceBinder;
-    private final String MW_MAC_ADDRESS= "EA:68:36:0F:8F:3B";
     private MetaWearBoard board;
     private Accelerometer accelerometer;
+    private DatabaseShotService dbService;
+    private EditText macAddress;
+    private MetaWear dbMetaWearObject;
+    private String shootingRecordId, shootingRecordTitle;
+    private List<String> shotArrayList = new ArrayList<>();
+    private ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_shot_record_auto_record);
 
+        shootingRecordId = getIntent().getStringExtra("SHOOTING_RECORD_ID");
+        shootingRecordTitle = getIntent().getStringExtra("SHOOTING_TITLE");
+
         findViewById(R.id.start).setBackgroundColor(16777215);
         findViewById(R.id.stop).setBackgroundColor(16777215);
+        lv = findViewById(R.id.shotRecordsList);
+
+        dbService = new DatabaseShotService(this);
+        dbMetaWearObject = dbService.getMetawear();
+
+        macAddress = findViewById(R.id.metawearMac);
+        macAddress.setText(dbMetaWearObject.macAddress());
 
     }
     public void onClickConnect(View view) {
+        if(!dbMetaWearObject.macAddress().equals(macAddress.getText().toString()) ) {
+            if(dbMetaWearObject.id() == null) {
+                dbMetaWearObject = dbService.createMetawear(dbMetaWearObject);
+            } else {
+                dbMetaWearObject.setMacAddress(macAddress.getText().toString());
+                dbMetaWearObject = dbService.updateMetawear(dbMetaWearObject);
+            }
+        }
+
         getApplicationContext().bindService(new Intent(this, BtleService.class),
                 this, Context.BIND_AUTO_CREATE);
     }
 
     public void onClick (View view){
         board.tearDown();
+        Intent intent;
         switch (view.getId()){
             case R.id.saveRecord:
-                //TODO: add code for sending data to database
-                startActivity(new Intent(NewShotRecord_AutoRecord.this, NewShotRecord.class));
+                intent = new Intent(new Intent(NewShotRecord_AutoRecord.this, NewShotRecord.class));
+                intent.putExtra("SHOOTING_RECORD_ID", shootingRecordId);
+                intent.putExtra("SHOOTING_TITLE", shootingRecordTitle);
+                startActivity(intent);
                 break;
             case R.id.cancelRecord:
-                startActivity(new Intent(NewShotRecord_AutoRecord.this, NewShotRecord.class));
+                intent = new Intent(new Intent(NewShotRecord_AutoRecord.this, NewShotRecord.class));
+                intent.putExtra("SHOOTING_RECORD_ID", shootingRecordId);
+                intent.putExtra("SHOOTING_TITLE", shootingRecordTitle);
+                startActivity(intent);
                 break;
             case R.id.goToHome:
                 startActivity(new Intent(NewShotRecord_AutoRecord.this, MainActivity.class));
@@ -76,12 +118,25 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         serviceBinder = (BtleService.LocalBinder) service;
-        retrieveBoard(MW_MAC_ADDRESS);
+        retrieveBoard(macAddress.getText().toString());
     }
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
 
+    }
+
+    public void addToList(ShotRecord newShot) {
+
+        shotArrayList.add("Shot - " + newShot.shotNumber());
+
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                shotArrayList );
+        lv.setAdapter(arrayAdapter);
+
+        Log.i("metashot", "Ading to list test");
     }
 
     private void retrieveBoard(final String macAddr) {
@@ -111,6 +166,23 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
                                         @Override
                                         public void apply(Data data, Object... env) {
                                             Log.i("Metawear", "Shot Fired at " + data.formattedTimestamp());
+
+                                            try {
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        ShotRecord newShotRecord = new ShotRecord();
+                                                        newShotRecord.setShootingRecordId(shootingRecordId);
+                                                        newShotRecord = dbService.createShotRecord(newShotRecord);
+                                                        addToList(newShotRecord);
+                                                    }
+                                                });
+                                            }
+                                            catch (Exception ex) {
+                                                Log.i("Error", "Error : " + ex.getMessage());
+                                            }
+
+
                                         }
                                     }).end();
                     }
@@ -118,9 +190,9 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
                     @Override
                     public Void then(Task<Route> task) throws Exception {
                         if(task.isFaulted()) {
-                            Log.i("Metawear", "Failed to Connect");
+
                         } else {
-                            Log.i("Metawear", "Metawear ready to start");
+                            Log.i("Metawear", "Metawear ready to start " + dbMetaWearObject.macAddress());
                             findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {

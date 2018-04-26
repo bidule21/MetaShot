@@ -3,9 +3,13 @@ package com.andersonlucier.android.metashot.databaseservicelib;
 import android.content.Context;
 
 import com.andersonlucier.android.metashot.databaselib.GunRecordDataSource;
+import com.andersonlucier.android.metashot.databaselib.MetaWearDataSource;
 import com.andersonlucier.android.metashot.databaselib.ShotRecordDataSource;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.GunRecord;
+import com.andersonlucier.android.metashot.databaseservicelib.impl.MetaWear;
+import com.andersonlucier.android.metashot.databaseservicelib.interfaces.metawear.IMetaWear;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IGunService;
+import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IMetaWearService;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IShotService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
@@ -21,6 +25,7 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
     private ShootingRecordDataSource shootingDataSource;
     private GunRecordDataSource gunDataSource;
     private ShotRecordDataSource ShotDataSource;
+    private MetaWearDataSource metawearDataSource;
 
     public DatabaseShotService(Context context) {
 
@@ -33,6 +38,9 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
 
         ShotDataSource = new ShotRecordDataSource(context);
         ShotDataSource.open();
+
+        metawearDataSource = new MetaWearDataSource(context);
+        metawearDataSource.open();
     }
 
     //Shooting Records
@@ -201,5 +209,29 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
     @Override
     public ShotRecord updateShotRecord(ShotRecord record) {
         return null;
+    }
+
+
+    public MetaWear getMetawear() {
+        List<MetaWear> records = metawearDataSource.getMetawear();
+        if (records.size() == 0) {
+            MetaWear newRecord = new MetaWear();
+            newRecord.setMacAddress("");
+            return newRecord;
+        } else {
+            return records.get(0);
+        }
+    }
+
+    public MetaWear updateMetawear(MetaWear mac) {
+        return metawearDataSource.updateMetawear(mac);
+    }
+
+    public MetaWear createMetawear(MetaWear mac) {
+        return metawearDataSource.createMetawear(mac);
+    }
+
+    public void deleteMetawear(String id) {
+        metawearDataSource.deleteMetawear(id);
     }
 }

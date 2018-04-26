@@ -2,7 +2,10 @@
     <string name="createdshootingrecord">CREATE TABLE shootingRecord(id TEXT primary key not null, title TEXT, datetime TEXT, location TEXT, temp REAL, wind TEXT, description TEXT, gunTypeId TEXT, weather TEXT, range TEXT);</string>
     <string name="createdgunrecord">CREATE TABLE gunRecord(id TEXT primary key not null, name TEXT, description TEXT);</string>
     <string name="createdshotrecord">CREATE TABLE shotRecord(id TEXT primary key not null, shootingRecordId Text, shotNumber REAL, barrelTemp REAL, targetX REAL, targetY REAL);</string>
+    <string name="createmetawearrecord">CREATE TABLE metawear(id TEXT primary key not null, mac TEXT);</string>
     <string name="deleteshootingrecord">DROP TABLE IF EXISTS shootingRecord; </string>
     <string name="deletegunrecord">DROP TABLE IF EXISTS gunRecord; </string>
     <string name="deleteshotrecord">DROP TABLE IF EXISTS shotRecord; </string>
+    <string name="deletemetawearrecord">DROP TABLE IF EXISTS metawear; </string>
+
 </resources>

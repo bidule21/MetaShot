@@ -41,13 +41,19 @@ public class NewShotRecord extends AppCompatActivity {
         shootingRecordName.setText(shootingRecordTitle);
     }
     public void onClick(View view) {
+        Intent intent;
+
         switch (view.getId()) {
             case R.id.autoRecord:
-                startActivity(new Intent(NewShotRecord.this, NewShotRecord_AutoRecord.class));
+
+                intent = new Intent(new Intent(NewShotRecord.this, NewShotRecord_AutoRecord.class));
+                intent.putExtra("SHOOTING_RECORD_ID", shootingRecordId);
+                intent.putExtra("SHOOTING_TITLE", shootingRecordTitle);
+                startActivity(intent);
                 break;
             case R.id.manualCreate:
 
-                Intent intent = new Intent(new Intent(NewShotRecord.this, NewShotRecord_ManualCreate.class));
+                intent = new Intent(new Intent(NewShotRecord.this, NewShotRecord_ManualCreate.class));
                 intent.putExtra("SHOOTING_RECORD_ID", shootingRecordId);
                 intent.putExtra("SHOOTING_TITLE", shootingRecordTitle);
                 startActivity(intent);

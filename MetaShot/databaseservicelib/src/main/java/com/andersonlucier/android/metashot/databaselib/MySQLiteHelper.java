@@ -15,7 +15,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     //Database Name and Version
     private static final String DATABASE_NAME = "metashot.db";
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 10;
 
     //static string of creating and dropping the tables
     private static String DATABASE_SHOOTING_TABLE;
@@ -24,6 +24,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private static String DATABASE_SHOOTING_DELETE;
     private static String DATABASE_SHOT_TABLE;
     private static String DATABASE_SHOT_DELETE;
+    private static String DATABASE_METAWEAR_CREATE;
+    private static String DATABASE_METAWEAR_DELETE;
 
 
     public MySQLiteHelper(Context context) {
@@ -35,6 +37,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         DATABASE_SHOT_TABLE= context.getResources().getString(R.string.createdshotrecord);
         DATABASE_SHOT_DELETE = context.getResources().getString(R.string.deleteshotrecord);
+
+        DATABASE_METAWEAR_CREATE = context.getResources().getString(R.string.createmetawearrecord);
+        DATABASE_METAWEAR_DELETE = context.getResources().getString(R.string.deletemetawearrecord);
     }
 
     /**
@@ -47,6 +52,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         database.execSQL(DATABASE_SHOOTING_TABLE);
         database.execSQL(DATABASE_GUN_TABLE);
         database.execSQL(DATABASE_SHOT_TABLE);
+        database.execSQL(DATABASE_METAWEAR_CREATE);
         Log.v("Database Creation", "the database has been created");
     }
 
@@ -61,6 +67,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(DATABASE_GUN_DELETE);
         db.execSQL(DATABASE_SHOOTING_DELETE);
         db.execSQL(DATABASE_SHOT_DELETE);
+        db.execSQL(DATABASE_METAWEAR_DELETE);
         onCreate(db);
     }
 
