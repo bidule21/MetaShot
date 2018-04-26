@@ -31,4 +31,6 @@ public interface IShooting {
 
     String range();
 
+    int lastShotAnalyzed();
+
 }

@@ -180,7 +180,7 @@ public class NewShootingRecord extends AppCompatActivity {
                 if (itemPosition > 0) {
                     shooting.setTypeOfGun(gunRecordsList.get(itemPosition -1));
                 }
-
+                shooting.setLastShotAnalyzed(0);
                 shooting.setId(dbService.createShootingRecord(shooting).Id());
 
                 Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n Range: " + rangeDist.getText().toString() + "\n GPS Location: " + autoGpsLocation.getText().toString() + "\n Weather: " +

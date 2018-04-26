@@ -15,7 +15,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     //Database Name and Version
     private static final String DATABASE_NAME = "metashot.db";
-    private static final int DATABASE_VERSION = 10;
+    private static final int DATABASE_VERSION = 11;
 
     //static string of creating and dropping the tables
     private static String DATABASE_SHOOTING_TABLE;

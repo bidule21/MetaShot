@@ -30,6 +30,7 @@ public class ShootingRecord implements IShooting {
 
     private String _range;
 
+    private int _lastShot;
 
     @Override
     public String Id() {
@@ -115,7 +116,17 @@ public class ShootingRecord implements IShooting {
 
     @Override
     public String range() {return _range;}
+
     public void setRange(String range) {
         _range = range;
+    }
+
+    @Override
+    public int lastShotAnalyzed() {
+        return _lastShot;
+    }
+
+    public void setLastShotAnalyzed(int shot) {
+        _lastShot = shot;
     }
 }

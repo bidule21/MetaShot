@@ -23,7 +23,7 @@ public class ShootingRecordDataSource implements IShootingService {
     private MySQLiteHelper dbHelper;
     private String dbTableName = "shootingRecord";
     private String[] allColumns = { "id",
-            "title", "datetime", "location", "temp", "wind", "description", "gunTypeId", "weather", "range" };
+            "title", "datetime", "location", "temp", "wind", "description", "gunTypeId", "weather", "range", "lastShotAnalyzed" };
 
     public ShootingRecordDataSource(Context context) {
         dbHelper = new MySQLiteHelper(context);
@@ -59,6 +59,7 @@ public class ShootingRecordDataSource implements IShootingService {
         }
         values.put("weather", record.weather());
         values.put("range", record.range());
+        values.put("lastShotAnalyzed", record.lastShotAnalyzed());
 
         database.insert(dbTableName, null,
                 values);
@@ -117,6 +118,36 @@ public class ShootingRecordDataSource implements IShootingService {
     }
 
     /**
+     * updates a gun record based on the record passed in
+     * @param record gun record to update
+     * @return Gun Record
+     */
+    @Override
+    public ShootingRecord updateShootingRecord(ShootingRecord record) {
+        ContentValues values = new ContentValues();
+        String id = record.Id();
+        values.put("id", id);
+        values.put("title", record.title());
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        values.put("datetime", dateFormat.format(date));
+        values.put("location", record.location());
+        values.put("temp", record.temp());
+        values.put("wind", record.wind());
+        values.put("description", record.description());
+        if(record.typeOfGun() != null) {
+            values.put("gunTypeId", record.gunId());
+        }
+        values.put("weather", record.weather());
+        values.put("range", record.range());
+        values.put("lastShotAnalyzed", record.lastShotAnalyzed());
+
+        database.update(dbTableName, values,"id" + " = '" + id + "'", null);
+
+        return record;
+    }
+
+    /**
      * Populates a Shooting Record from the database cursor
      * @param cursor current database row
      * @return Shooting Record
@@ -142,6 +173,7 @@ public class ShootingRecordDataSource implements IShootingService {
         }
         comment.setWeather(cursor.getString(8));
         comment.setRange(cursor.getString(9));
+        comment.setLastShotAnalyzed(cursor.getInt(10));
         return comment;
     }
 

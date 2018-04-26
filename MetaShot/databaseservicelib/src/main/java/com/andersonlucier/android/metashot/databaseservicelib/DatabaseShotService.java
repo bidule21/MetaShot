@@ -7,16 +7,13 @@ import com.andersonlucier.android.metashot.databaselib.MetaWearDataSource;
 import com.andersonlucier.android.metashot.databaselib.ShotRecordDataSource;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.GunRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.MetaWear;
-import com.andersonlucier.android.metashot.databaseservicelib.interfaces.metawear.IMetaWear;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IGunService;
-import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IMetaWearService;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IShotService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
 import com.andersonlucier.android.metashot.databaselib.ShootingRecordDataSource;
 import com.andersonlucier.android.metashot.databaseservicelib.interfaces.service.IShootingService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseShotService implements IShotService, IShootingService, IGunService {
@@ -94,6 +91,11 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
     public ShootingRecord createShootingRecord(ShootingRecord record) {
         ShootingRecord returnValue = shootingDataSource.createShootingRecord(record);
         return returnValue;
+    }
+
+    @Override
+    public ShootingRecord updateShootingRecord(ShootingRecord record) {
+        return shootingDataSource.updateShootingRecord(record);
     }
 
 

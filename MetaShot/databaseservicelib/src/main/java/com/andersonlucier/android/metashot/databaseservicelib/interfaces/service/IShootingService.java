@@ -18,4 +18,6 @@ public interface IShootingService {
     void deleteShootingRecord(String id);
 
     ShootingRecord createShootingRecord(ShootingRecord record);
+
+    ShootingRecord updateShootingRecord(ShootingRecord record);
 }
