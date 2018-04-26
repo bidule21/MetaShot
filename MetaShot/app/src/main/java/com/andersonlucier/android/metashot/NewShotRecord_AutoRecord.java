@@ -40,6 +40,8 @@ import com.mbientlab.metawear.module.Accelerometer;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import bolts.Continuation;
 import bolts.Task;
@@ -57,6 +59,7 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
     private List<ShotRecord> shotRecordList = new ArrayList<>();
     private ListView lv;
     private Button start, stop, connect;
+    private boolean deviceConnected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +85,19 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
         macAddress.setText(dbMetaWearObject.macAddress());
 
     }
+
+    public boolean validate(String mac) {
+        Pattern p = Pattern.compile("^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$");
+        Matcher m = p.matcher(mac);
+        return m.find();
+    }
+
     public void onClickConnect(View view) {
+        if(!validate(macAddress.getText().toString())) {
+            Toast.makeText(this, "The entered MAC address is not in a proper format. Double check that the MAC address is correct.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         if(!dbMetaWearObject.macAddress().equals(macAddress.getText().toString()) ) {
             if(dbMetaWearObject.id() == null) {
                 dbMetaWearObject = dbService.createMetawear(dbMetaWearObject);
@@ -97,7 +112,12 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
     }
 
     public void onClick (View view){
-        board.tearDown();
+        if(deviceConnected) {
+            accelerometer.stop();
+            accelerometer.acceleration().stop();
+            board.tearDown();
+        }
+
         Intent intent;
         switch (view.getId()){
             case R.id.saveRecord:
@@ -183,15 +203,11 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
 
     public void showToastMessage(boolean success) {
         if (success) {
+            deviceConnected = true;
             Toast.makeText(this, "Connected to Metawear", Toast.LENGTH_LONG).show();
             start.setBackgroundTintList(getResources().getColorStateList(R.color.orange));
             stop.setBackgroundTintList(getResources().getColorStateList(R.color.orange));
-            connect.setBackgroundTintList(getResources().getColorStateList(R.color.darkGray));
-            connect.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                }});
         } else {
             Toast.makeText(this, "Unable to connect to Metawear, press cancel, and try again.", Toast.LENGTH_LONG).show();
         }
@@ -203,6 +219,13 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
         final BluetoothDevice remoteDevice=
                 btManager.getAdapter().getRemoteDevice(macAddr);
 
+        Toast.makeText(this, "Connecting to Metawear, if the device doesn't connect within 10 seconds, press cancel and try again.", Toast.LENGTH_LONG).show();
+        connect.setBackgroundTintList(getResources().getColorStateList(R.color.darkGray));
+        connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }});
         // Create a MetaWear board object for the Bluetooth Device
         board= serviceBinder.getMetaWearBoard(remoteDevice);
         board.connectAsync().onSuccessTask(new Continuation<Void, Task<Route>>() {
