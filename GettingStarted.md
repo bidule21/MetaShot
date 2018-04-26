@@ -7,6 +7,7 @@ MetaShot is written for Android 8.0 (API level 26) with the minimum support of A
 In order to utilize the "automatic recording of shots" functionality in the app, a MetaWear device is necessary. When purchasing a MetaWear device, ensure it contains, at minimum, the following sensors:
 * Accelerometer 
 * Temperature
+
 MetaWear devices can be purchased from https://mbientlab.com/store/.
 
 ## Installation
@@ -24,11 +25,9 @@ Note: Some network providers don’t allow users to install applications from un
 
 ## Getting Started
 In order to use MetaShot to its full potentaial, the following permissions and services are needed:
-* Location permission granted 
+* Location permission granted
+  * Permission requested in app
 * Internet service enabled 
   * Either WiFi or cellular network
 * GPS service enabled
 * Bluetooth service enabled if using MetaWear device
-
-
-
