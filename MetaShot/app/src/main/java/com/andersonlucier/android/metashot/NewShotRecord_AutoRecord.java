@@ -36,6 +36,7 @@ import com.mbientlab.metawear.builder.filter.ThresholdOutput;
 import com.mbientlab.metawear.builder.function.Function1;
 import com.mbientlab.metawear.data.Acceleration;
 import com.mbientlab.metawear.module.Accelerometer;
+import com.mbientlab.metawear.module.Temperature;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
     private BtleService.LocalBinder serviceBinder;
     private MetaWearBoard board;
     private Accelerometer accelerometer;
+    private Temperature temperature;
     private DatabaseShotService dbService;
     private EditText macAddress;
     private MetaWear dbMetaWearObject;
@@ -60,6 +62,7 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
     private ListView lv;
     private Button start, stop, connect;
     private boolean deviceConnected = false;
+    private float currentBarrelTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +182,6 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
 
     public void addToList(ShotRecord newShot) {
 
-
         shotRecordList.add(newShot);
         shotArrayList.add("Shot - " + newShot.shotNumber());
 
@@ -231,9 +233,6 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
         board.connectAsync().onSuccessTask(new Continuation<Void, Task<Route>>() {
             @Override
             public Task<Route> then(Task<Void> task) throws Exception {
-
-                Log.i("MetaWear", "Connecting to " + macAddr);
-
                 accelerometer = board.getModule(Accelerometer.class);
                 accelerometer.configure()
                         .odr(60f)       // Set sampling frequency to 25Hz, or closest valid ODR
@@ -247,21 +246,43 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
                                         @Override
                                         public void apply(Data data, Object... env) {
                                             Log.i("Metawear", "Shot Fired at " + data.formattedTimestamp());
+                                            temperature = board.getModule(Temperature.class);
+                                            final Temperature.Sensor tempSensor = temperature.findSensors(Temperature.SensorType.PRESET_THERMISTOR)[0];
+                                            tempSensor.addRouteAsync(new RouteBuilder() {
+                                                @Override
+                                                public void configure(RouteComponent source) {
+                                                    source.stream(new Subscriber() {
+                                                        @Override
+                                                        public void apply(Data data, Object ... env) {
 
-                                            try {
-                                                runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        ShotRecord newShotRecord = new ShotRecord();
-                                                        newShotRecord.setShootingRecordId(shootingRecordId);
-                                                        newShotRecord = dbService.createShotRecord(newShotRecord);
-                                                        addToList(newShotRecord);
-                                                    }
-                                                });
-                                            }
-                                            catch (Exception ex) {
-                                                Log.i("Error", "Error : " + ex.getMessage());
-                                            }
+                                                            currentBarrelTemp = data.value(Float.class) * 9/5 +32;
+                                                            Log.i("MainActivity", "Temperature (C) = " + currentBarrelTemp);
+                                                            try {
+                                                                runOnUiThread(new Runnable() {
+                                                                    @Override
+                                                                    public void run() {
+                                                                        ShotRecord newShotRecord = new ShotRecord();
+                                                                        newShotRecord.setShootingRecordId(shootingRecordId);
+                                                                        newShotRecord.setBarrelTemp(currentBarrelTemp);
+                                                                        newShotRecord = dbService.createShotRecord(newShotRecord);
+                                                                        addToList(newShotRecord);
+                                                                    }
+                                                                });
+                                                            }
+                                                            catch (Exception ex) {
+                                                                Log.i("Error", "Error : " + ex.getMessage());
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            }).continueWith(new Continuation<Route, Void>() {
+                                                @Override
+                                                public Void then(Task<Route> task) throws Exception {
+                                                    tempSensor.read();
+                                                    return null;
+                                                }
+                                            });
+
 
 
                                         }

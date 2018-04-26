@@ -216,7 +216,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
         shotNumber = String.format("%s", shotRecord.shotNumber());
 
         //populate the barrel temp
-        barrelTemp = String.format("%s", shotRecord.barrelTemp());
+        barrelTemp = String.format("%.02f", shotRecord.barrelTemp());
 
         /*Populate the X and Y distance from center of target.
         A negative X value indicates a shot that was to the left of the target center.
