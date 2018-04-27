@@ -1,10 +1,13 @@
 package com.andersonlucier.android.metashot;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.ColorStateList;
@@ -63,6 +66,7 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
     private Button start, stop, connect;
     private boolean deviceConnected = false;
     private float currentBarrelTemp;
+    private AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,15 +91,16 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
         macAddress = findViewById(R.id.metawearMac);
         macAddress.setText(dbMetaWearObject.macAddress());
 
-    }
+        builder = new AlertDialog.Builder(this);
 
-    public boolean validate(String mac) {
-        Pattern p = Pattern.compile("^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$");
-        Matcher m = p.matcher(mac);
-        return m.find();
     }
 
     public void onClickConnect(View view) {
+        if(!isBluetoothEnabled()) {
+            Toast.makeText(this, "BlueTooth must be enabled to connect to your Metawear device", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         if(!validate(macAddress.getText().toString())) {
             Toast.makeText(this, "The entered MAC address is not in a proper format. Double check that the MAC address is correct.", Toast.LENGTH_LONG).show();
             return;
@@ -180,7 +185,7 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
         }
     }
 
-    public void addToList(ShotRecord newShot) {
+    private void addToList(ShotRecord newShot) {
 
         shotRecordList.add(newShot);
         shotArrayList.add("Shot - " + newShot.shotNumber());
@@ -200,10 +205,55 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
             }
         });
 
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view,
+                                           final int position, long id) {
+
+                //sets the builder popup
+                builder.setTitle("Delete");
+                builder.setMessage("Would you like to delete this shot?");
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        //finds the object title
+                        String item = arrayAdapter.getItem(position);
+                        String[] parts = item.split(" ");
+
+                        //finds the id of the object based on shot number
+                        for(ShotRecord r: shotRecordList) {
+                            if(r.shotNumber() == Integer.parseInt(parts[2])) {
+                                //remove the object from the db
+                                dbService.deleteShotRecord(r.id());
+                                break;
+                            }
+                        }
+                        //remove the object from the Adapter
+                        arrayAdapter.remove(item);
+                        arrayAdapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                    }
+                });
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+
+                //show the alert dialog
+                AlertDialog alert = builder.create();
+                alert.show();
+                return true;
+            }
+        });
+
         Log.i("metashot", "Ading to list test");
     }
 
-    public void showToastMessage(boolean success) {
+    private void showToastMessage(boolean success) {
         if (success) {
             deviceConnected = true;
             Toast.makeText(this, "Connected to Metawear", Toast.LENGTH_LONG).show();
@@ -332,5 +382,17 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
                 return null;
             }
         });
+    }
+
+    private boolean validate(String mac) {
+        Pattern p = Pattern.compile("^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$");
+        Matcher m = p.matcher(mac);
+        return m.find();
+    }
+
+    private boolean isBluetoothEnabled()
+    {
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        return mBluetoothAdapter.isEnabled();
     }
 }
