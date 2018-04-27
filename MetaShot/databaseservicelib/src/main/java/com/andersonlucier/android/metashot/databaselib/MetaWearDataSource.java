@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Data source for the metawear to interact with the database
+ */
 public class MetaWearDataSource implements IMetaWearService {
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
@@ -43,6 +46,10 @@ public class MetaWearDataSource implements IMetaWearService {
         return comment;
     }
 
+    /**
+     * gets a list of metawear records in the database
+     * @return List of MetaWear
+     */
     @Override
     public List<MetaWear> getMetawear() {
         List<MetaWear> records = new ArrayList<>();
@@ -61,6 +68,11 @@ public class MetaWearDataSource implements IMetaWearService {
         return records;
     }
 
+    /**
+     * updates the metawear in the database
+     * @param mac metawear device to update
+     * @return Metawear that was updated
+     */
     @Override
     public MetaWear updateMetawear(MetaWear mac) {
         ContentValues values = new ContentValues();
@@ -73,6 +85,11 @@ public class MetaWearDataSource implements IMetaWearService {
         return mac;
     }
 
+    /**
+     * Creates a metawear in the database
+     * @param mac metawear device to create
+     * @return Metawear
+     */
     @Override
     public MetaWear createMetawear(MetaWear mac) {
         ContentValues values = new ContentValues();
@@ -91,6 +108,10 @@ public class MetaWearDataSource implements IMetaWearService {
         return newRecord;
     }
 
+    /**
+     * Delete the metawear device by the provided id
+     * @param id of the metawear record
+     */
     @Override
     public void deleteMetawear(String id) {
         database.delete(dbName, "id" + " = '" + id + "'", null);

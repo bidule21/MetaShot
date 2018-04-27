@@ -10,8 +10,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,11 +35,9 @@ import com.mbientlab.metawear.builder.RouteComponent;
 import com.mbientlab.metawear.builder.filter.Comparison;
 import com.mbientlab.metawear.builder.filter.ThresholdOutput;
 import com.mbientlab.metawear.builder.function.Function1;
-import com.mbientlab.metawear.data.Acceleration;
 import com.mbientlab.metawear.module.Accelerometer;
 import com.mbientlab.metawear.module.Temperature;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -68,47 +64,61 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
     private float currentBarrelTemp;
     private AlertDialog.Builder builder;
 
+    /**
+     * The on Create method which sets the properties of the activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_shot_record_auto_record);
 
+        //Gets the passed in parameters
         shootingRecordId = getIntent().getStringExtra("SHOOTING_RECORD_ID");
         shootingRecordTitle = getIntent().getStringExtra("SHOOTING_TITLE");
 
+        //gets the metawear interactive buttons
         start = findViewById(R.id.start);
         stop = findViewById(R.id.stop);
         connect = findViewById(R.id.connect);
 
+        //disable the start and stop buttons
         start.setBackgroundTintList(getResources().getColorStateList(R.color.darkGray));
         stop.setBackgroundTintList(getResources().getColorStateList(R.color.darkGray));
 
+        //gets the list
         lv = findViewById(R.id.shotRecordsList);
 
+        //sets the metawear and build objects
         dbService = new DatabaseShotService(this);
         dbMetaWearObject = dbService.getMetawear();
-
-        macAddress = findViewById(R.id.metawearMac);
-        macAddress.setText(dbMetaWearObject.macAddress());
-
         builder = new AlertDialog.Builder(this);
 
+        //sets the mac address
+        macAddress = findViewById(R.id.metawearMac);
+        macAddress.setText(dbMetaWearObject.macAddress());
     }
 
+    /**
+     * On click connect button to begin connecting with the metawear device
+     * @param view View
+     */
     public void onClickConnect(View view) {
+        //check if bluetooth is enabled
         if(!isBluetoothEnabled()) {
             Toast.makeText(this, "BlueTooth must be enabled to connect to your Metawear device", Toast.LENGTH_LONG).show();
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, 0);
-
             return;
         }
 
+        //checks that the provided mac address is valid
         if(!validate(macAddress.getText().toString())) {
             Toast.makeText(this, "The entered MAC address is not in a proper format. Double check that the MAC address is correct.", Toast.LENGTH_LONG).show();
             return;
         }
 
+        //Check to see if it needs to modify the mac address
         if(!dbMetaWearObject.macAddress().equals(macAddress.getText().toString()) ) {
             if(dbMetaWearObject.id() == null) {
                 dbMetaWearObject = dbService.createMetawear(dbMetaWearObject);
@@ -118,10 +128,15 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
             }
         }
 
+        //bind the metawear service
         getApplicationContext().bindService(new Intent(this, BtleService.class),
                 this, Context.BIND_AUTO_CREATE);
     }
 
+    /**
+     * On click function to handle all non metawear interactions
+     * @param view View
+     */
     public void onClick (View view){
         if(deviceConnected) {
             accelerometer.stop();
@@ -188,6 +203,10 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
         }
     }
 
+    /**
+     * Updates the list to include the new shot, and adds the on item click and long item click
+     * @param newShot
+     */
     private void addToList(ShotRecord newShot) {
 
         shotRecordList.add(newShot);
@@ -256,8 +275,13 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
         Log.i("metashot", "Ading to list test");
     }
 
+    /**
+     * Display the toast message depending on if we connected to the metawear device
+     * @param success
+     */
     private void showToastMessage(boolean success) {
         if (success) {
+            //connected, set the buttons color and notify the user
             deviceConnected = true;
             Toast.makeText(this, "Connected to Metawear", Toast.LENGTH_LONG).show();
             start.setBackgroundTintList(getResources().getColorStateList(R.color.orange));
@@ -268,6 +292,10 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
         }
     }
 
+    /**
+     * Sets the interaction with the metawear device
+     * @param macAddr
+     */
     private void retrieveBoard(final String macAddr) {
         final BluetoothManager btManager=
                 (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
@@ -387,12 +415,21 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
         });
     }
 
+    /**
+     * Checks to see if the mac address is valid format
+     * @param mac address of the device
+     * @return Boolean
+     */
     private boolean validate(String mac) {
         Pattern p = Pattern.compile("^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$");
         Matcher m = p.matcher(mac);
         return m.find();
     }
 
+    /**
+     * Checks if the bluetooth is enabled
+     * @return boolean
+     */
     private boolean isBluetoothEnabled()
     {
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();

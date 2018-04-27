@@ -18,6 +18,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Data source for the Shooting records to interact with the database
+ */
 public class ShootingRecordDataSource implements IShootingService {
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;

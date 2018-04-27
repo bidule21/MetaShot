@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Data source for the Gun records to interact with the database
+ */
 public class GunRecordDataSource implements IGunService {
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;

@@ -213,7 +213,10 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
         return ShotDataSource.updateShotRecord(record);
     }
 
-
+    /**
+     * Gets the first metawear device in the database.
+     * @return Metawear device
+     */
     public MetaWear getMetawear() {
         List<MetaWear> records = metawearDataSource.getMetawear();
         if (records.size() == 0) {
@@ -225,14 +228,28 @@ public class DatabaseShotService implements IShotService, IShootingService, IGun
         }
     }
 
+    /**
+     * updates the metawear device with the device being sent in
+     * @param mac metawear device object
+     * @return Metawear device
+     */
     public MetaWear updateMetawear(MetaWear mac) {
         return metawearDataSource.updateMetawear(mac);
     }
 
+    /**
+     * Creates the metawear device in the database
+     * @param mac metawear device to create in the database
+     * @return metawear device to create
+     */
     public MetaWear createMetawear(MetaWear mac) {
         return metawearDataSource.createMetawear(mac);
     }
 
+    /**
+     * Delete the metawear device by the provided id
+     * @param id of the metawear device to delete
+     */
     public void deleteMetawear(String id) {
         metawearDataSource.deleteMetawear(id);
     }

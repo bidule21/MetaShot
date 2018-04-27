@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Data source for the Shot records to interact with the database
+ */
 public class ShotRecordDataSource implements IShotService {
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
