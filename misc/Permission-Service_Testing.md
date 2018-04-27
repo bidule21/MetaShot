@@ -44,5 +44,5 @@
 
 | Activity | Method | Permission Needed? | Permission Granted/Not Granted? | Service Needed? | Service Enabled/Disabled? | Testing Result |
 | -------- | ------- | ------------------ | ------------------------------- | --------------- | ------------------------ | -------------- |
-| NewShotRecord_AutoRecord | onClickConnect<br />retrieveBoard | N/A | N/A | Bluetooth | Enabled | |
-| NewShotRecord_AutoRecord | onClickConnect<br />retrieveBoard | N/A | N/A | Bluetooth | Disabled | |
+| NewShotRecord_AutoRecord | onClickConnect<br />retrieveBoard | N/A | N/A | Bluetooth | Enabled | Attempts to connect to Metawear |
+| NewShotRecord_AutoRecord | onClickConnect<br />retrieveBoard | N/A | N/A | Bluetooth | Disabled | prompts user to turn on bluetooth|
