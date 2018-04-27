@@ -98,6 +98,9 @@ public class NewShotRecord_AutoRecord extends AppCompatActivity implements Servi
     public void onClickConnect(View view) {
         if(!isBluetoothEnabled()) {
             Toast.makeText(this, "BlueTooth must be enabled to connect to your Metawear device", Toast.LENGTH_LONG).show();
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, 0);
+
             return;
         }
 
