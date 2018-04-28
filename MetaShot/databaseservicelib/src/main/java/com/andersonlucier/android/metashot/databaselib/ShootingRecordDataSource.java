@@ -131,9 +131,6 @@ public class ShootingRecordDataSource implements IShootingService {
         String id = record.Id();
         values.put("id", id);
         values.put("title", record.title());
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
-        values.put("datetime", dateFormat.format(date));
         values.put("location", record.location());
         values.put("temp", record.temp());
         values.put("wind", record.wind());
