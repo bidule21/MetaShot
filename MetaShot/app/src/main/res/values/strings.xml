@@ -9,11 +9,15 @@
     <string name="cancel">Cancel</string>
     <string name="create">Create</string>
     <string name="addWeapon">Add Weapon</string>
+    <string name="updateWeapon">Update</string>
     <string name="autoRecord">Automatically Record Shots</string>
     <string name="manualCreate">Manually Create Shots</string>
     <string name="save">Save</string>
     <string name="bullseye">BULLSEYE</string>
     <string name="analyze">Analyze</string>
+    <string name="connect">Connect</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
 
     <!-- Input field hints -->
     <string name="recordNameHint">Name of Record</string>
@@ -24,6 +28,7 @@
     <string name="nicknameHint">Weapon Nickname</string>
     <string name="barrelTempHint">Temperature</string>
     <string name="distInputHint">inches</string>
+    <string name="metawearHint">Metawear Mac Address</string>
 
     <!-- Text Labels -->
     <string name="inventoryHeader">Weapon Inventory:</string>

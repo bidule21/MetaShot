@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -76,7 +77,7 @@ public class NewShootingRecord extends AppCompatActivity {
             list.add(gun.gunName());
         }
 
-        ArrayAdapter<String> adp1 = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> adp1 = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, list);
         adp1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adp1);
@@ -171,6 +172,7 @@ public class NewShootingRecord extends AppCompatActivity {
                     otherDetails.setText(R.string.shootingRecordInputDefault);
                 }
 
+                //Save values to database
                 ShootingRecord shooting = new ShootingRecord();
                 shooting.setTitle(recordName.getText().toString());
                 shooting.setRange(rangeDist.getText().toString());
@@ -178,6 +180,8 @@ public class NewShootingRecord extends AppCompatActivity {
                 shooting.setDescription(otherDetails.getText().toString());
                 shooting.setWeather(weather.getText().toString());
 
+                /*If auto weather was selected, temperature and wind are being saved separately.
+                * This can help guide deeper analytics in future releases.*/
                 if(autoWeather){
                     shooting.setTemp(autofillTemperature);
                     shooting.setWind(windFactors);
@@ -188,9 +192,6 @@ public class NewShootingRecord extends AppCompatActivity {
                 }
                 shooting.setLastShotAnalyzed(0);
                 shooting.setId(dbService.createShootingRecord(shooting).Id());
-
-                //Toast.makeText(this, "Record Name: " + recordName.getText().toString() + "\n Range: " + rangeDist.getText().toString() + "\n GPS Location: " + autoGpsLocation.getText().toString() + "\n Weather: " +
-                        //weather.getText().toString() + "\n Other Details: " + otherDetails.getText().toString(), Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(new Intent(NewShootingRecord.this, NewShotRecord.class));
                 intent.putExtra("SHOOTING_RECORD_ID", shooting.Id());
@@ -344,7 +345,7 @@ public class NewShootingRecord extends AppCompatActivity {
 
     //Handle responses to permissions requests
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case GPS_LOCATION_PERMISSION:
                 //Complete action if permission is granted

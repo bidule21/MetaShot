@@ -16,13 +16,13 @@ import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class NewShotRecord extends AppCompatActivity {
 
     private String shootingRecordId;
     private String shootingRecordTitle;
     private DatabaseShotService dbService;
-    private AlertDialog.Builder builder;
     private List<ShotRecord> records;
 
     @Override
@@ -76,8 +76,6 @@ public class NewShotRecord extends AppCompatActivity {
             return;
         }
 
-        builder = new AlertDialog.Builder(this);
-
         //populates a list of strings for the list
         List<String> gunArrayList = new ArrayList<>();
         for (ShotRecord record : records){
@@ -98,52 +96,6 @@ public class NewShotRecord extends AppCompatActivity {
 
             }
         });
-
-        //sets the long click to allow a user to delete a shot record
-        /*lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                           final int position, long id) {
-
-                //sets the builder popup
-                builder.setTitle("Delete");
-                builder.setMessage("Would you like to delete this shot?");
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        //finds the object title
-                        String item = arrayAdapter.getItem(position);
-                        String[] parts = item.split(" ");
-
-                        //finds the id of the object based on shot number
-                        for(ShotRecord r: records) {
-                            if(r.shotNumber() == Integer.parseInt(parts[2])) {
-                                //remove the object from the db
-                                dbService.deleteShotRecord(r.id());
-                                break;
-                            }
-                        }
-                        //remove the object from the Adapter
-                        arrayAdapter.remove(item);
-                        arrayAdapter.notifyDataSetChanged();
-                        dialog.dismiss();
-                    }
-                });
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing
-                        dialog.dismiss();
-                    }
-                });
-
-                //show the alert dialog
-                AlertDialog alert = builder.create();
-                alert.show();
-                return true;
-            }
-        });*/
     }
 
     public void showShotRecord(int position){
@@ -162,7 +114,7 @@ public class NewShotRecord extends AppCompatActivity {
         shotNumber = String.format("%s", shotRecord.shotNumber());
 
         //populate the barrel temp
-        barrelTemp = String.format("%.02f", shotRecord.barrelTemp());
+        barrelTemp = String.format(Locale.getDefault(),"%.02f", shotRecord.barrelTemp());
 
         /*Populate the X and Y distance from center of target.
         A negative X value indicates a shot that was to the left of the target center.

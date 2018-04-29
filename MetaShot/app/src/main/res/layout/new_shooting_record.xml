@@ -78,7 +78,7 @@
         android:layout_below="@id/gpsManual"
         android:layout_alignStart="@id/weatherManual"
         android:layout_marginStart="20dp"
-        android:background="@drawable/weather2"
+        android:background="@drawable/weather_icon"
         android:onClick="onClick" />
 
     <Spinner

@@ -1,26 +1,23 @@
 package com.andersonlucier.android.metashot;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.andersonlucier.android.metashot.databaseservicelib.DatabaseShotService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
 
@@ -28,7 +25,6 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
     private List<ShotRecord> records;
     private ShootingRecord shootingRecord;
     private String shootingRecordId;
-    private AlertDialog.Builder builder;
     private TextView title, date, range, weaponType, location, weather, description;
     private int shotCounter = 0;
 
@@ -64,19 +60,29 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
                 intent.putExtra("SHOOTING_TITLE", shootingRecord.title());
                 startActivity(intent);
                 break;
+            /*Analyze recent shots and recommend scope adjustments. Recommendations are not
+            provided until 5 shots have been taken. This includes at least 5 shots before the
+            first analysis can occur and at least 5 shots since the last time the analysis
+            button was pressed. lastShotAnalyzed is used as a flag to indicate what array
+            index additional analyses should begin with.*/
             case R.id.analyze:
+                //Verify at least 5 shots have been taken.
                 if (shotCounter < 5){
+                    //Notify user if number of shots is insufficient.
                     showInsufDialog();
                     break;
                 } else {
                     int startIndex;
+                    //If this is the first instance of the user pressing the button.
                     if (shootingRecord.lastShotAnalyzed() == 0){
                         startIndex = 0;
+                    /*Analysis has been previously conducted. This analysis will begin with the shot that
+                    was recorded after the last successful analysis.*/
                     } else {
                         startIndex = shootingRecord.lastShotAnalyzed();
                     }
+                    //Provide scope adjustment recommendations.
                     adjustScope(startIndex, shotCounter);
-                    Log.d("Values", "lastAnalyzed=" + shootingRecord.lastShotAnalyzed());
                     break;
                 }
         }
@@ -85,7 +91,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
     private void populateShootingInformation() {
         //gets the record from the db
         shootingRecord = dbService.getSingleShootingRecord(shootingRecordId);
-        Log.d("Values", "populate-lastShot=" + shootingRecord.lastShotAnalyzed());
+
         //sets the title
         title.setText(String.format("%s", shootingRecord.title()));
 
@@ -128,8 +134,6 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
             return;
         }
 
-        builder = new AlertDialog.Builder(this);
-
         //populates a list of strings for the list
         List<String> gunArrayList = new ArrayList<>();
         for (ShotRecord record : records){
@@ -151,52 +155,6 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
 
             }
         });
-
-        //sets the long click to allow a user to delete a shot record
-        /*lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                           final int position, long id) {
-
-                //sets the builder popup
-                builder.setTitle("Delete");
-                builder.setMessage("Would you like to delete this shot?");
-                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        //finds the object title
-                        String item = arrayAdapter.getItem(position);
-                        String[] parts = item.split(" ");
-
-                        //finds the id of the object based on shot number
-                        for(ShotRecord r: records) {
-                            if(r.shotNumber() == Integer.parseInt(parts[2])) {
-                                //remove the object from the db
-                                dbService.deleteShotRecord(r.id());
-                                break;
-                            }
-                        }
-                        //remove the object from the Adapter
-                        arrayAdapter.remove(item);
-                        arrayAdapter.notifyDataSetChanged();
-                        dialog.dismiss();
-                    }
-                });
-                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do nothing
-                        dialog.dismiss();
-                    }
-                });
-
-                //show the alert dialog
-                AlertDialog alert = builder.create();
-                alert.show();
-                return true;
-            }
-        });*/
     }
 
     public void showShotRecord(int position){
@@ -215,7 +173,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
         shotNumber = String.format("%s", shotRecord.shotNumber());
 
         //populate the barrel temp
-        barrelTemp = String.format("%.02f", shotRecord.barrelTemp());
+        barrelTemp = String.format(Locale.getDefault(), "%.02f", shotRecord.barrelTemp());
 
         /*Populate the X and Y distance from center of target.
         A negative X value indicates a shot that was to the left of the target center.
@@ -305,35 +263,54 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
 
     }
 
+    /*This function is designed to analyze recent shots recorded by the user and provide recommendations
+     for adjusting the rifle scope. The function accepts an integer index and counter. If this is the first
+     analysis conducted, the index will be set to 0 and all recorded shots will be analyzed.
+     If an analysis has been previously conducted, the index will be set to the next shot recorded after
+     the successful analysis, and all subsequent shots will be analyzed. A check is still conducted to verify
+     at least 5 shots have been fired before analysis is conducted.*/
+
+     /*Analysis will calculate a total sum of vertical and horizontal inputs from the shot records. Inputs above
+     or to the right of tge target center are saved as positive values. Inputs to the left or below the target center
+     are saved as negative values. The vertical and horizontal sums are averaged and rounded. These final values
+     are used to recommend scope adjustments. Scope adjustments are provided as number of clicks left/right and
+     up/down. One click is equivalent to one inch away from the center of the target. Clicks cannot be done
+     fractionally.*/
     public void adjustScope(int index, int counter) {
         double verticalAlignment, horizontalAlignment;
         double sumVertical = 0, averageVertical, sumHorizontal = 0, averageHorizontal, averageCounter = 0;
         String verticalAdjustment, horizontalAdjustment;
-        ShotRecord[] record = records.toArray(new ShotRecord[records.size()]);
+        ShotRecord[] record = records.toArray(new ShotRecord[records.size()]); //Convert the shot records list to an array
 
+        //Step through the array of shot records and obtain a total sum of vertical and horizontal inputs.
         for (int i = index; i < counter; i++) {
             sumVertical = sumVertical + record[i].targetY();
             sumHorizontal = sumHorizontal + record[i].targetX();
             averageCounter++;
         }
+        //If less than 5 shots are available for analysis, notify user that more shots are needed.
         if (averageCounter < 5) {
             showInsufDialog();
         } else {
             shootingRecord.setId(shootingRecordId);
             shootingRecord.setDateTime(shootingRecord.datetime());
-            shootingRecord.setLastShotAnalyzed(counter);
+            shootingRecord.setLastShotAnalyzed(counter); //Update lastShotAnalyzed
             dbService.updateShootingRecord(shootingRecord);
 
+            //Calculate average of vertical and horizontal inputs.
             averageVertical = sumVertical / averageCounter;
             averageHorizontal = sumHorizontal / averageCounter;
 
+            //Calculate rounded values
             verticalAlignment = Math.round(averageVertical);
             horizontalAlignment = Math.round(averageHorizontal);
 
+            //All analyzed shots were a bullseye. No scope adjustment is needed.
             if (verticalAlignment == 0 && horizontalAlignment == 0){
                 showNoScopeAdjustDialog();
                 return;
             }
+            //Set vertical adjustment recommendation
             if (verticalAlignment < 0) {
                 verticalAlignment = verticalAlignment * -1;
                 verticalAdjustment = getString(R.string.adjustScopeUp, String.valueOf(verticalAlignment));
@@ -341,19 +318,17 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
             } else {
                 verticalAdjustment = getString(R.string.adjustScopeDown, String.valueOf(verticalAlignment));
             }
-
-
-
+            //Set horizontal adjustment recommendation
             if (horizontalAlignment < 0) {
                 horizontalAlignment = horizontalAlignment * -1;
                 horizontalAdjustment = getString(R.string.adjustScopeRight, String.valueOf(horizontalAlignment));
             } else {
                 horizontalAdjustment = getString(R.string.adjustScopeLeft, String.valueOf(horizontalAlignment));
             }
-            showScopeAdjustDialog(verticalAdjustment, horizontalAdjustment);
+            showScopeAdjustDialog(verticalAdjustment, horizontalAdjustment); //Notify user of scope adjustment recommendations
         }
     }
-
+    //Notify user that more shots are needed before analysis can be conducted.
     public void showInsufDialog(){
         AlertDialog.Builder insufficientShotCount = new AlertDialog.Builder(ViewPreviousShootingRecords_Single.this);
         insufficientShotCount.setTitle(R.string.insufShotCountTitle);
@@ -366,7 +341,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
         });
         insufficientShotCount.show();
     }
-
+    //Notify user of recommended vertical and horizontal scope adjustments.
     public void showScopeAdjustDialog( String verticalAdjustment, String horizontalAdjustment){
         AlertDialog.Builder scopeAdjustDialog = new AlertDialog.Builder(ViewPreviousShootingRecords_Single.this);
         scopeAdjustDialog.setTitle(R.string.adjustScopeTitle);
@@ -379,7 +354,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
         });
         scopeAdjustDialog.show();
     }
-
+    //Notify user no scope adjustments are needed.
     public void showNoScopeAdjustDialog(){
         AlertDialog.Builder noScopeAdjustDialog = new AlertDialog.Builder(ViewPreviousShootingRecords_Single.this);
         noScopeAdjustDialog.setTitle(R.string.noScopeAdjustTitle);

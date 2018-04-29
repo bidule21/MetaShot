@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import com.andersonlucier.android.metashot.databaseservicelib.DatabaseShotService;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
@@ -53,7 +52,9 @@ public class NewShotRecord_ManualCreate extends AppCompatActivity {
 
         switch (view.getId()){
             case R.id.bullseye:
-
+                /*If a shot is a bullseye, the horizontal and vertical distances from the center of the target
+                * will always equal 0. This button allows the user to easily record that a bullseye was hit,
+                * and all relevant data is auto-populated and saved to the database.*/
                 AlertDialog.Builder bullseyeAlertDialog = new AlertDialog.Builder(NewShotRecord_ManualCreate.this);
                 bullseyeAlertDialog.setTitle(R.string.bullseyeTitle);
                 bullseyeAlertDialog.setMessage(R.string.bullseyeMessage);
@@ -97,13 +98,20 @@ public class NewShotRecord_ManualCreate extends AppCompatActivity {
                 });
                 bullseyeAlertDialog.show();
                 break;
-
+            /*When clicked, a shot record is created if the user input was valid.
+            For a shot to be created, the user is required to input a positive value number.
+            User is also required to select a radio button that corresponds to the orientation
+            of the shot relative to the center of the target. Depending on the orientation of the shot
+            relative to the center of the target, user input is converted to accurately reflect position
+            on the relevant axis.*/
             case R.id.createShot:
 
                 double convertHorizontalDist = Double.parseDouble(horizontalDistInput.getText().toString());
                 double convertVerticalDist = Double.parseDouble(verticalDistInput.getText().toString());
 
+                //Validate user input
                 if(convertHorizontalDist < 0 || convertVerticalDist < 0){
+                    //Notify user if input is invalid
                     AlertDialog.Builder invalidDistAlertDialog = new AlertDialog.Builder(NewShotRecord_ManualCreate.this);
                     invalidDistAlertDialog.setTitle(R.string.distTitle);
                     invalidDistAlertDialog.setMessage(R.string.distMessage);
@@ -116,21 +124,23 @@ public class NewShotRecord_ManualCreate extends AppCompatActivity {
                     invalidDistAlertDialog.show();
                     break;
                 }
-
+                //Validate horizontal orientation radio button is selected
                 if(convertHorizontalDist > 0 && !left.isChecked() && !right.isChecked()){
+                    //Notify user if no horizontal orientation radio button is selected
                     noRadioChecked("Horizontal");
                     break;
                 }
-
+                //Validate vertical orientation radio button is selected
                 if(convertVerticalDist > 0 && !above.isChecked() && !below.isChecked()){
+                    //Notify user if no vertical orientation radio button is selected
                     noRadioChecked("Vertical");
                     break;
                 }
-
+                //A shot to the left of the target center is considered negative on the x-axis.
                 if (left.isChecked()){
                     convertHorizontalDist = convertHorizontalDist * -1;
                 }
-
+                //A shot below the target center is considered negative on the y-axis.
                 if(below.isChecked()){
                     convertVerticalDist = convertVerticalDist * -1;
                 }
@@ -151,14 +161,13 @@ public class NewShotRecord_ManualCreate extends AppCompatActivity {
                     record.setTargetY(convertVerticalDist);
                     dbService.createShotRecord(record);
 
-                    Toast.makeText(this, "Vertical Input: " + String.valueOf(convertVerticalDist) + "\n" + "Horizontal Input: " + String.valueOf(convertHorizontalDist), Toast.LENGTH_LONG).show();
                     intent = new Intent(new Intent(NewShotRecord_ManualCreate.this, NewShotRecord.class));
                     intent.putExtra("SHOOTING_RECORD_ID", shootingRecordId);
                     intent.putExtra("SHOOTING_TITLE", shootingRecordTitle);
                     startActivity(intent);
                 }
                 break;
-
+            //When clicked, no record is created. User is redirected to the landing page.
             case R.id.cancelShot:
                 if(update.equals("True")) {
                     Intent returnIntent = new Intent();
@@ -171,7 +180,7 @@ public class NewShotRecord_ManualCreate extends AppCompatActivity {
                     startActivity(intent);
                 }
                 break;
-
+            //When clicked, user is redirected to main landing page
             case R.id.goToHome:
                 startActivity(new Intent(NewShotRecord_ManualCreate.this, MainActivity.class));
                 break;

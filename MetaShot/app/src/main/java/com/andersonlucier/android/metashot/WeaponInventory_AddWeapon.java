@@ -78,6 +78,6 @@ public class WeaponInventory_AddWeapon extends AppCompatActivity {
         weaponDetails.setText(record.details());
 
         Button addWeapon = findViewById(R.id.addNewWeapon);
-        addWeapon.setText("Update");
+        addWeapon.setText(R.string.updateWeapon);
     }
 }
