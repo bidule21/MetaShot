@@ -105,9 +105,19 @@ public class NewShotRecord_ManualCreate extends AppCompatActivity {
             relative to the center of the target, user input is converted to accurately reflect position
             on the relevant axis.*/
             case R.id.createShot:
+                double convertHorizontalDist, convertVerticalDist;
 
-                double convertHorizontalDist = Double.parseDouble(horizontalDistInput.getText().toString());
-                double convertVerticalDist = Double.parseDouble(verticalDistInput.getText().toString());
+                //Handle instance of blank input field
+                if(horizontalDistInput.getText().length() == 0){
+                    convertHorizontalDist = -1;
+                } else {
+                    convertHorizontalDist = Double.parseDouble(horizontalDistInput.getText().toString());
+                }
+                if(verticalDistInput.getText().length() == 0){
+                    convertVerticalDist = -1;
+                } else {
+                    convertVerticalDist = Double.parseDouble(verticalDistInput.getText().toString());
+                }
 
                 //Validate user input
                 if(convertHorizontalDist < 0 || convertVerticalDist < 0){
@@ -144,7 +154,6 @@ public class NewShotRecord_ManualCreate extends AppCompatActivity {
                 if(below.isChecked()){
                     convertVerticalDist = convertVerticalDist * -1;
                 }
-
 
                 if(update.equals("True")) {
                     Intent returnIntent = new Intent();

@@ -56,7 +56,7 @@
     <!-- Alert Text -->
     <string name="alertOK">OK</string>
     <string name="distTitle">ERROR!</string>
-    <string name="distMessage">Distance cannot be less than 0. \nPlease, try again.</string>
+    <string name="distMessage">Distance cannot be blank or less than 0. \n\nPlease, try again.</string>
     <string name="bullseyeTitle">Wow!</string>
     <string name="bullseyeMessage">Great Shot!</string>
     <string name="noRadioTitle">Oops!</string>
