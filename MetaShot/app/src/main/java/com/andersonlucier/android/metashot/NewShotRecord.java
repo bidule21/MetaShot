@@ -177,7 +177,7 @@ public class NewShotRecord extends AppCompatActivity {
             targetXY = getString(R.string.bullseye);
             AlertDialog.Builder showShotRecordDialog = new AlertDialog.Builder(NewShotRecord.this);
             showShotRecordDialog.setTitle(getString(R.string.showShotRecordTitle, shotNoLabel, shotNumber));
-            showShotRecordDialog.setMessage(targetXY);
+            showShotRecordDialog.setMessage(getString(R.string.showShotRecordMessage, barrelTempLabel, barrelTemp, targetXY, ""));
             showShotRecordDialog.setPositiveButton(R.string.alertOK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
