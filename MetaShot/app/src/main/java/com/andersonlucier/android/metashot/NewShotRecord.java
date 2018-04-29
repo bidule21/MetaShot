@@ -100,7 +100,7 @@ public class NewShotRecord extends AppCompatActivity {
         });
 
         //sets the long click to allow a user to delete a shot record
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        /*lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view,
                                            final int position, long id) {
@@ -143,7 +143,7 @@ public class NewShotRecord extends AppCompatActivity {
                 alert.show();
                 return true;
             }
-        });
+        });*/
     }
 
     public void showShotRecord(int position){
