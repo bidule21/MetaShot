@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,7 @@ import com.andersonlucier.android.metashot.databaseservicelib.DatabaseShotServic
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShootingRecord;
 import com.andersonlucier.android.metashot.databaseservicelib.impl.ShotRecord;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
@@ -63,21 +65,18 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case R.id.analyze:
-                Toast.makeText(this, String.valueOf(shotCounter), Toast.LENGTH_LONG).show();
                 if (shotCounter < 5){
-                    AlertDialog.Builder insufficientShotCount = new AlertDialog.Builder(ViewPreviousShootingRecords_Single.this);
-                    insufficientShotCount.setTitle(R.string.insufShotCountTitle);
-                    insufficientShotCount.setMessage(R.string.insufShotCountMessage);
-                    insufficientShotCount.setPositiveButton(R.string.alertOK, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    insufficientShotCount.show();
+                    showInsufDialog();
                     break;
                 } else {
-                    adjustScope();
+                    int startIndex;
+                    if (shootingRecord.lastShotAnalyzed() == 0){
+                        startIndex = 0;
+                    } else {
+                        startIndex = shootingRecord.lastShotAnalyzed();
+                    }
+                    adjustScope(startIndex, shotCounter);
+                    Log.d("Values", "lastAnalyzed=" + shootingRecord.lastShotAnalyzed());
                     break;
                 }
         }
@@ -86,7 +85,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
     private void populateShootingInformation() {
         //gets the record from the db
         shootingRecord = dbService.getSingleShootingRecord(shootingRecordId);
-
+        Log.d("Values", "populate-lastShot=" + shootingRecord.lastShotAnalyzed());
         //sets the title
         title.setText(String.format("%s", shootingRecord.title()));
 
@@ -231,7 +230,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
             targetXY = getString(R.string.bullseye);
             AlertDialog.Builder showShotRecordDialog = new AlertDialog.Builder(ViewPreviousShootingRecords_Single.this);
             showShotRecordDialog.setTitle(getString(R.string.showShotRecordTitle, shotNoLabel, shotNumber));
-            showShotRecordDialog.setMessage(targetXY);
+            showShotRecordDialog.setMessage(getString(R.string.showShotRecordMessage, barrelTempLabel, barrelTemp, targetXY, ""));
             showShotRecordDialog.setPositiveButton(R.string.alertOK, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -306,35 +305,69 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
 
     }
 
-    public void adjustScope(){
+    public void adjustScope(int index, int counter) {
         double verticalAlignment, horizontalAlignment;
         double sumVertical = 0, averageVertical, sumHorizontal = 0, averageHorizontal, averageCounter = 0;
         String verticalAdjustment, horizontalAdjustment;
-        dbService = new DatabaseShotService(this);
+        ShotRecord[] record = records.toArray(new ShotRecord[records.size()]);
 
-        for (ShotRecord record : records){
-            sumVertical = sumVertical + record.targetY();
-            sumHorizontal = sumHorizontal + record.targetX();
+        for (int i = index; i < counter; i++) {
+            sumVertical = sumVertical + record[i].targetY();
+            sumHorizontal = sumHorizontal + record[i].targetX();
             averageCounter++;
         }
-        averageVertical = sumVertical/averageCounter;
-        verticalAlignment = Math.round(averageVertical);
-        if (verticalAlignment < 0){
-            verticalAlignment = verticalAlignment * -1;
-            verticalAdjustment = getString(R.string.adjustScopeUp, String.valueOf(verticalAlignment));
+        if (averageCounter < 5) {
+            showInsufDialog();
         } else {
-            verticalAdjustment = getString(R.string.adjustScopeDown, String.valueOf(verticalAlignment));
-        }
+            shootingRecord.setId(shootingRecordId);
+            shootingRecord.setDateTime(shootingRecord.datetime());
+            shootingRecord.setLastShotAnalyzed(counter);
+            dbService.updateShootingRecord(shootingRecord);
 
-        averageHorizontal = sumHorizontal/averageCounter;
-        horizontalAlignment = Math.round(averageHorizontal);
-        if (horizontalAlignment < 0){
-            horizontalAlignment = horizontalAlignment * -1;
-            horizontalAdjustment = getString(R.string.adjustScopeRight, String.valueOf(horizontalAlignment));
-        } else {
-            horizontalAdjustment = getString(R.string.adjustScopeLeft, String.valueOf(horizontalAlignment));
-        }
+            averageVertical = sumVertical / averageCounter;
+            averageHorizontal = sumHorizontal / averageCounter;
 
+            verticalAlignment = Math.round(averageVertical);
+            horizontalAlignment = Math.round(averageHorizontal);
+
+            if (verticalAlignment == 0 && horizontalAlignment == 0){
+                showNoScopeAdjustDialog();
+                return;
+            }
+            if (verticalAlignment < 0) {
+                verticalAlignment = verticalAlignment * -1;
+                verticalAdjustment = getString(R.string.adjustScopeUp, String.valueOf(verticalAlignment));
+
+            } else {
+                verticalAdjustment = getString(R.string.adjustScopeDown, String.valueOf(verticalAlignment));
+            }
+
+
+
+            if (horizontalAlignment < 0) {
+                horizontalAlignment = horizontalAlignment * -1;
+                horizontalAdjustment = getString(R.string.adjustScopeRight, String.valueOf(horizontalAlignment));
+            } else {
+                horizontalAdjustment = getString(R.string.adjustScopeLeft, String.valueOf(horizontalAlignment));
+            }
+            showScopeAdjustDialog(verticalAdjustment, horizontalAdjustment);
+        }
+    }
+
+    public void showInsufDialog(){
+        AlertDialog.Builder insufficientShotCount = new AlertDialog.Builder(ViewPreviousShootingRecords_Single.this);
+        insufficientShotCount.setTitle(R.string.insufShotCountTitle);
+        insufficientShotCount.setMessage(R.string.insufShotCountMessage);
+        insufficientShotCount.setPositiveButton(R.string.alertOK, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        insufficientShotCount.show();
+    }
+
+    public void showScopeAdjustDialog( String verticalAdjustment, String horizontalAdjustment){
         AlertDialog.Builder scopeAdjustDialog = new AlertDialog.Builder(ViewPreviousShootingRecords_Single.this);
         scopeAdjustDialog.setTitle(R.string.adjustScopeTitle);
         scopeAdjustDialog.setMessage(getString(R.string.adjustScopeMessage, verticalAdjustment, horizontalAdjustment));
@@ -345,5 +378,18 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
             }
         });
         scopeAdjustDialog.show();
+    }
+
+    public void showNoScopeAdjustDialog(){
+        AlertDialog.Builder noScopeAdjustDialog = new AlertDialog.Builder(ViewPreviousShootingRecords_Single.this);
+        noScopeAdjustDialog.setTitle(R.string.noScopeAdjustTitle);
+        noScopeAdjustDialog.setMessage(R.string.noScopeAdjustMessage);
+        noScopeAdjustDialog.setPositiveButton(R.string.alertOK, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        noScopeAdjustDialog.show();
     }
 }
