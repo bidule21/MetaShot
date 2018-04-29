@@ -26,23 +26,23 @@
 ### Test Cases
 | Activity | Method | Permission Needed? | Permission Granted/Not Granted? | Service Needed? | Service Enabled/Disabled? | Testing Result |
 | -------- | ------- | ------------------ | ------------------------------- | --------------- | ------------------------ | -------------- |
-| NewShootingRecord | getGPSLocation | ACCESS_FINE_LOCATION | Granted | Location | Enabled | |
-| NewShootingRecord | getGPSLocation | ACCESS_FINE_LOCATION | Granted | Location | Disabled | |
-| NewShootingRecord | getGPSLocation | ACCESS_FINE_LOCATION | Not Granted | Location | Enabled | |
-| NewShootingRecord | getGPSLocation | ACCESS_FINE_LOCATION | Not Granted | Location | Disabled | |
+| NewShootingRecord | getGPSLocation | ACCESS_FINE_LOCATION | Granted | Location | Enabled | PASS |
+| NewShootingRecord | getGPSLocation | ACCESS_FINE_LOCATION | Granted | Location | Disabled | PASS |
+| NewShootingRecord | getGPSLocation | ACCESS_FINE_LOCATION | Not Granted | Location | Enabled | PASS |
+| NewShootingRecord | getGPSLocation | ACCESS_FINE_LOCATION | Not Granted | Location | Disabled | PASS |
 
 | Activity | Method | Permission Needed? | Permission Granted/Not Granted? | Service Needed? | Service Enabled/Disabled? | Testing Result |
 | -------- | ------- | ------------------ | ------------------------------- | --------------- | ------------------------ | -------------- |
-| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Granted<br /><br />Granted (default) | Location<br /><br />Internt | Enabled<br /><br />Enabled | |
-| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Granted<br /><br />Granted (default) | Location<br /><br />Internt | Disabled<br /><br />Enabled | |
-| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Granted<br /><br />Granted (default) | Location<br /><br />Internt | Enabled<br /><br />Disabled | |
-| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Granted<br /><br />Granted (default) | Location<br /><br />Internt | Disabled<br /><br />Disabled | |
-| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Not Granted<br /><br />Granted (default) | Location<br /><br />Internt | Enabled<br /><br />Enabled | |
-| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Not Granted<br /><br />Granted (default) | Location<br /><br />Internt | Disabled<br /><br />Enabled | |
-| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Not Granted<br /><br />Granted (default) | Location<br /><br />Internt | Enabled<br /><br />Disabled | |
-| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Not Granted<br /><br />Granted (default) | Location<br /><br />Internt | Disabled<br /><br />Disabled | |
+| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Granted<br /><br />Granted (default) | Location<br /><br />Internt | Enabled<br /><br />Enabled | PASS |
+| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Granted<br /><br />Granted (default) | Location<br /><br />Internt | Disabled<br /><br />Enabled | PASS |
+| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Granted<br /><br />Granted (default) | Location<br /><br />Internt | Enabled<br /><br />Disabled | PASS |
+| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Granted<br /><br />Granted (default) | Location<br /><br />Internt | Disabled<br /><br />Disabled | PASS |
+| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Not Granted<br /><br />Granted (default) | Location<br /><br />Internt | Enabled<br /><br />Enabled | PASS |
+| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Not Granted<br /><br />Granted (default) | Location<br /><br />Internt | Disabled<br /><br />Enabled | PASS |
+| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Not Granted<br /><br />Granted (default) | Location<br /><br />Internt | Enabled<br /><br />Disabled | PASS |
+| NewShootingRecord | getWeatherDetails | ACCESS_FINE_LOCATION<br /><br />INTERNET | Not Granted<br /><br />Granted (default) | Location<br /><br />Internt | Disabled<br /><br />Disabled | PASS |
 
 | Activity | Method | Permission Needed? | Permission Granted/Not Granted? | Service Needed? | Service Enabled/Disabled? | Testing Result |
 | -------- | ------- | ------------------ | ------------------------------- | --------------- | ------------------------ | -------------- |
-| NewShotRecord_AutoRecord | onClickConnect<br />retrieveBoard | N/A | N/A | Bluetooth | Enabled | Attempts to connect to Metawear |
-| NewShotRecord_AutoRecord | onClickConnect<br />retrieveBoard | N/A | N/A | Bluetooth | Disabled | prompts user to turn on bluetooth|
+| NewShotRecord_AutoRecord | onClickConnect<br />retrieveBoard | N/A | N/A | Bluetooth | Enabled | PASS |
+| NewShotRecord_AutoRecord | onClickConnect<br />retrieveBoard | N/A | N/A | Bluetooth | Disabled | PASS |
