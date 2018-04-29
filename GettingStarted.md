@@ -31,3 +31,38 @@ In order to use MetaShot to its full potentaial, the following permissions and s
   * Either WiFi or cellular network
 * GPS service enabled
 * Bluetooth service enabled if using MetaWear device
+
+### Landing Page
+
+| <img src="./misc/img/LandingPage.png" /> | <ul><li>Instruction 1</li><li>Instruction 2</li><li>Instruction n</li></ul> |
+|:--:|:----------------------------------------------------:|
+
+### Create New Shooting Record
+| <img src="./misc/img/CreateShootingRecord.png" /> | <ul><li>Instruction 1</li><li>Instruction 2</li><li>Instruction n</li></ul> |
+|:--:|:----------------------------------------------------:|
+
+### Create New Shot Records
+| <img src="./misc/img/CreateShotRecords.png" /> | <ul><li>Instruction 1</li><li>Instruction 2</li><li>Instruction n</li></ul> |
+|:--:|:----------------------------------------------------:|
+
+### Manually Create Shot Records
+| <img src="./misc/img/ManualShot.png" /> | <ul><li>Instruction 1</li><li>Instruction 2</li><li>Instruction n</li></ul> |
+|:--:|:----------------------------------------------------:|
+
+### Automatically Generate Shot Records
+| <img src="./misc/img/AutoShotNotConnected.png" /> | <ul><li>Instruction 1</li><li>Instruction 2</li><li>Instruction n</li></ul> |
+|:-----------:|:----------------------------------------------------:|
+| <img src="./misc/img/AutoShotConnected.png" /> | <ul><li>Instruction 1</li><li>Instruction 2</li><li>Instruction n</li></ul> |
+
+### View Previous Shooting Records
+| <img src="./misc/img/PreviousShootingRecords.png" /> | <ul><li>Instruction 1</li><li>Instruction 2</li><li>Instruction n</li></ul> |
+|:--:|:----------------------------------------------------:|
+
+### View Single Previous Shooting Record
+| <img src="./misc/img/SingleShootingRecord.png" /> | <ul><li>Instruction 1</li><li>Instruction 2</li><li>Instruction n</li></ul> |
+|:--:|:----------------------------------------------------:|
+
+### View/Edit Weapon Inventory
+| <img src="./misc/img/WeaponInventory.png" /> | <ul><li>Instruction 1</li><li>Instruction 2</li><li>Instruction n</li></ul> |
+|:--:|:----------------------------------------------------:|
+| <img src="./misc/img/AddWeapon.png" /> | <ul><li>Instruction 1</li><li>Instruction 2</li><li>Instruction n</li></ul> |
