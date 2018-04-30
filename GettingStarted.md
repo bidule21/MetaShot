@@ -50,7 +50,7 @@ In order to use MetaShot to its full potentaial, the following permissions and s
 |:--:|:----------------------------------------------------:|
 
 ### Automatically Generate Shot Records
-| <img src="./misc/img/AutoShotNotConnected.png" /> | <ul><li>Instruction 1</li><li>Instruction 2</li><li>Instruction n</li></ul> |
+| <img src="./misc/img/AutoShotNotConnected.png" /> | <ul><li>Every Metawear device has its own MAC Address. To find your devices MAC address, we recommend getting the MetaBase app from the play store, this will give you all the information you'll need regarding your Metawear device.</li><li>Once your Metawear device is connected, the start and stop buttons will become active to begin recording your shots.</li><li>Upon a successful shot, a list will be populated where you can edit or delete a shot.</li></ul> |
 |:-----------:|:----------------------------------------------------:|
 | <img src="./misc/img/AutoShotConnected.png" /> | <ul><li>Instruction 1</li><li>Instruction 2</li><li>Instruction n</li></ul> |
 
