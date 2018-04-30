@@ -75,9 +75,9 @@
     <string name="shootingRecordInputDefault">Not Specified</string>
     <string name="noWeapon">No Weapon Selected</string>
     <string name="showXYDist">%1$s\n %2$s</string>
-    <string name="adjustScopeUp">Adjust scope up %1$s clicks.</string>
-    <string name="adjustScopeDown">Adjust scope down %1$s clicks.</string>
-    <string name="adjustScopeLeft">Adjust scope left %1$s clicks.</string>
-    <string name="adjustScopeRight">Adjust scope right %1$s clicks.</string>
+    <string name="adjustScopeUp">Adjust scope up %1$s %2$s.</string>
+    <string name="adjustScopeDown">Adjust scope down %1$s %2$s.</string>
+    <string name="adjustScopeLeft">Adjust scope left %1$s %2$s.</string>
+    <string name="adjustScopeRight">Adjust scope right %1$s %2$s.</string>
 
 </resources>
