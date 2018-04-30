@@ -201,7 +201,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
 
         //set display text for units
         if(shotRecord.targetX() > 0) {
-            if (shotRecord.targetX() == 1) {
+            if (shotRecord.targetX() <= 1) {
                 unitsX = " inch";
             } else {
                 unitsX = " inches";
@@ -211,7 +211,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
             messageX = distanceX + orientationX; //set X message
         } else if (shotRecord.targetX() < 0 ){
             //set display text for units
-            if (shotRecord.targetX() == -1) {
+            if (shotRecord.targetX() >= -1) {
                 unitsX = " inch";
             } else {
                 unitsX = " inches";
@@ -225,7 +225,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
 
         if(shotRecord.targetY() > 0) {
             //set display text for units
-            if (shotRecord.targetY() == 1) {
+            if (shotRecord.targetY() <= 1) {
                 unitsY = " inch";
             } else {
                 unitsY = " inches";
@@ -234,7 +234,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
             orientationY = " above."; //set Y orientation
             messageY = distanceY + orientationY; //set Y message
         } else if (shotRecord.targetY() < 0 ){
-            if (shotRecord.targetY() == -1) {
+            if (shotRecord.targetY() >= -1) {
                 //set display text for units
                 unitsY = " inch";
             } else {
@@ -279,7 +279,7 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
     public void adjustScope(int index, int counter) {
         double verticalAlignment, horizontalAlignment;
         double sumVertical = 0, averageVertical, sumHorizontal = 0, averageHorizontal, averageCounter = 0;
-        String verticalAdjustment, horizontalAdjustment;
+        String verticalAdjustment, verticalUnits,  horizontalAdjustment, horizontalUnits;
         ShotRecord[] record = records.toArray(new ShotRecord[records.size()]); //Convert the shot records list to an array
 
         //Step through the array of shot records and obtain a total sum of vertical and horizontal inputs.
@@ -313,17 +313,37 @@ public class ViewPreviousShootingRecords_Single extends AppCompatActivity {
             //Set vertical adjustment recommendation
             if (verticalAlignment < 0) {
                 verticalAlignment = verticalAlignment * -1;
-                verticalAdjustment = getString(R.string.adjustScopeUp, String.valueOf(verticalAlignment));
+                if (verticalAlignment > 0 && verticalAlignment <= 1){
+                    verticalUnits = "inch";
+                } else {
+                    verticalUnits = "inches";
+                }
+                verticalAdjustment = getString(R.string.adjustScopeUp, String.valueOf(verticalAlignment), verticalUnits);
 
             } else {
-                verticalAdjustment = getString(R.string.adjustScopeDown, String.valueOf(verticalAlignment));
+                if (verticalAlignment > 0 && verticalAlignment <= 1){
+                    verticalUnits = "inch";
+                } else {
+                    verticalUnits = "inches";
+                }
+                verticalAdjustment = getString(R.string.adjustScopeDown, String.valueOf(verticalAlignment), verticalUnits);
             }
             //Set horizontal adjustment recommendation
             if (horizontalAlignment < 0) {
                 horizontalAlignment = horizontalAlignment * -1;
-                horizontalAdjustment = getString(R.string.adjustScopeRight, String.valueOf(horizontalAlignment));
+                if (horizontalAlignment > 0 && horizontalAlignment <= 1){
+                    horizontalUnits = "inch";
+                } else {
+                    horizontalUnits = "inches";
+                }
+                horizontalAdjustment = getString(R.string.adjustScopeRight, String.valueOf(horizontalAlignment), horizontalUnits);
             } else {
-                horizontalAdjustment = getString(R.string.adjustScopeLeft, String.valueOf(horizontalAlignment));
+                if (horizontalAlignment > 0 && horizontalAlignment <= 1){
+                    horizontalUnits = "inch";
+                } else {
+                    horizontalUnits = "inches";
+                }
+                horizontalAdjustment = getString(R.string.adjustScopeLeft, String.valueOf(horizontalAlignment), horizontalUnits);
             }
             showScopeAdjustDialog(verticalAdjustment, horizontalAdjustment); //Notify user of scope adjustment recommendations
         }
